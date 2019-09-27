@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>取出hibernate执行的SQL的结果集 | ligangit</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="LiGang,Li Gang,ligangit">
+  
+  <meta name="description" content="取出hibernate执行的SQL的结果集java取出数据报错最近在一个SSH项目中碰到了一个获取数据的问题，SQL执行后的结果集使用类型转换提取数据时报错。  下面是DAO层实现类中的方法：返回了结果集List。  123456789101112131415161718192021public List&amp;lt;TblSwitch&amp;gt; getPagelist(Integer limit, In">
+<meta name="keywords" content="hibernate,object,java,bug">
+<meta property="og:type" content="article">
+<meta property="og:title" content="取出hibernate执行的SQL的结果集">
+<meta property="og:url" content="http://ligangit.com/2019/09/25/取出hibernate执行的SQL的结果集/index.html">
+<meta property="og:site_name" content="ligangit">
+<meta property="og:description" content="取出hibernate执行的SQL的结果集java取出数据报错最近在一个SSH项目中碰到了一个获取数据的问题，SQL执行后的结果集使用类型转换提取数据时报错。  下面是DAO层实现类中的方法：返回了结果集List。  123456789101112131415161718192021public List&amp;lt;TblSwitch&amp;gt; getPagelist(Integer limit, In">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-09-27T08:23:52.258Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="取出hibernate执行的SQL的结果集">
+<meta name="twitter:description" content="取出hibernate执行的SQL的结果集java取出数据报错最近在一个SSH项目中碰到了一个获取数据的问题，SQL执行后的结果集使用类型转换提取数据时报错。  下面是DAO层实现类中的方法：返回了结果集List。  123456789101112131415161718192021public List&amp;lt;TblSwitch&amp;gt; getPagelist(Integer limit, In">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">Li Gang&#39;s blog</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="/">
+                        <i class="fa fa-home"></i>
+                        <span>主页</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>归档</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>关于</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/logo.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        Li Gang&#39;s blog
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        在码农的世界里挣扎的人
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="Li Gang" target="_blank" href="//ligangit.com">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/ligangit">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="联系QQ"  href="/">
+                            <i class="fa fa-qq fa-2x"></i></a>
+                    
+                        <a title="微信"  href="/">
+                            <i class="fa fa-weixin fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-取出hibernate执行的SQL的结果集" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      取出hibernate执行的SQL的结果集
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/java/">java</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2019-09-25
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <h1 id="取出hibernate执行的SQL的结果集"><a href="#取出hibernate执行的SQL的结果集" class="headerlink" title="取出hibernate执行的SQL的结果集"></a>取出hibernate执行的SQL的结果集</h1><h2 id="java取出数据报错"><a href="#java取出数据报错" class="headerlink" title="java取出数据报错"></a>java取出数据报错</h2><p>最近在一个SSH项目中碰到了一个获取数据的问题，SQL执行后的结果集使用类型转换提取数据时报错。</p>
+<ol>
+<li>下面是DAO层实现类中的方法：返回了结果集List<tblswitch>。</tblswitch></li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> List&lt;TblSwitch&gt; <span class="title">getPagelist</span><span class="params">(Integer limit, Integer offser,</span></span></span><br><span class="line"><span class="function"><span class="params">											  String where, Object[] obj)</span> </span>&#123;</span><br><span class="line">		logger.info(<span class="string">"get getPagelist by:"</span>);</span><br><span class="line">		String sql=<span class="string">"select a.add_user, "</span></span><br><span class="line">				+ <span class="string">" a.old_protocol,a.now_protocol,a.mobile,a.add_time,a.delete_mark,a.update_time,a.id,a.remark "</span></span><br><span class="line">				+ <span class="string">" from tbl_switch a where 1=1 and a.delete_mark=0 "</span>+where+<span class="string">" ORDER BY a.add_time DESC "</span>;</span><br><span class="line">		List&lt;TblSwitch&gt; list=<span class="keyword">null</span>;</span><br><span class="line">		<span class="keyword">try</span>&#123;</span><br><span class="line">			Query query=<span class="keyword">this</span>.getSession().createSQLQuery(sql).setFirstResult(limit).setMaxResults(offser);</span><br><span class="line">			<span class="keyword">if</span>(<span class="keyword">null</span> !=obj&amp;&amp;obj.length&gt;<span class="number">0</span>)&#123;</span><br><span class="line">				<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;obj.length;i++)&#123;</span><br><span class="line">					query.setParameter(i, obj[i]);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			list=query.list();</span><br><span class="line">		&#125;<span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line">			logger.error(<span class="string">"get page getPagelist error:"</span>+e.getMessage());</span><br><span class="line">			e.printStackTrace();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> list;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>在控制层对结果集list进行操作</li>
+</ol>
+<p>​         当我想对结果集进行操作的时候，发现无法对类型进行强制转换（将list中的每个对象强转为TblSwitch类型），在这条语句中会报错，但是我需要取出每个对象的内容。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; list.size(); i++) &#123;</span><br><span class="line">			TblSwitch tblSwitch1=list.get(i);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<p>​          强转Map同样报错</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String, Object&gt; dataMap = (Map&lt;String, Object&gt;) list.get(i);</span><br></pre></td></tr></table></figure>
+
+<p>​            强转Map报错信息：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">27</span>-Sep-<span class="number">2019</span> <span class="number">15</span>:<span class="number">47</span>:<span class="number">26.547</span> 涓ラ噸 [http-nio-<span class="number">8080</span>-exec-<span class="number">8</span>] org.apache.catalina.core.StandardWrapperValve.invoke Servlet.service() <span class="keyword">for</span> servlet [msg] in context with path [] threw exception [Request processing failed; nested exception is java.lang.ClassCastException: [Ljava.lang.Object; cannot be cast to java.util.Map] with root cause</span><br><span class="line"> java.lang.ClassCastException: [Ljava.lang.Object; cannot be cast to java.util.Map</span><br><span class="line">	at com.zhirong.base.web.SwitchNumberController.popSumExport(SwitchNumberController.java:<span class="number">547</span>)</span><br><span class="line">	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)</span><br><span class="line">	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:<span class="number">62</span>)</span><br><span class="line">	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:<span class="number">43</span>)</span><br><span class="line">	at java.lang.reflect.Method.invoke(Method.java:<span class="number">498</span>)</span><br><span class="line">	at org.springframework.web.bind.annotation.support.HandlerMethodInvoker.invokeHandlerMethod(HandlerMethodInvoker.java:<span class="number">176</span>)</span><br><span class="line">	at org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter.invokeHandlerMethod(AnnotationMethodHandlerAdapter.java:<span class="number">426</span>)</span><br><span class="line">	at org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter.handle(AnnotationMethodHandlerAdapter.java:<span class="number">414</span>)</span><br><span class="line">	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:<span class="number">790</span>)</span><br><span class="line">	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:<span class="number">719</span>)</span><br><span class="line">	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:<span class="number">644</span>)</span><br><span class="line">	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:<span class="number">549</span>)</span><br><span class="line">	at javax.servlet.http.HttpServlet.service(HttpServlet.java:<span class="number">635</span>)</span><br><span class="line">	at javax.servlet.http.HttpServlet.service(HttpServlet.java:<span class="number">742</span>)</span><br><span class="line">	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:<span class="number">231</span>)</span><br><span class="line">	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:<span class="number">166</span>)</span><br><span class="line">	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:<span class="number">52</span>)</span><br><span class="line">	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:<span class="number">193</span>)</span><br><span class="line">	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:<span class="number">166</span>)</span><br><span class="line">	at net.bull.javamelody.MonitoringFilter.doFilter(MonitoringFilter.java:<span class="number">203</span>)</span><br><span class="line">	at net.bull.javamelody.MonitoringFilter.doFilter(MonitoringFilter.java:<span class="number">181</span>)</span><br><span class="line">	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:<span class="number">193</span>)</span><br><span class="line">	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:<span class="number">166</span>)</span><br><span class="line">	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:<span class="number">88</span>)</span><br><span class="line">	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:<span class="number">76</span>)</span><br><span class="line">	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:<span class="number">193</span>)</span><br><span class="line">	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:<span class="number">166</span>)</span><br><span class="line">	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:<span class="number">198</span>)</span><br><span class="line">	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:<span class="number">96</span>)</span><br><span class="line">	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:<span class="number">493</span>)</span><br><span class="line">	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:<span class="number">140</span>)</span><br><span class="line">	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:<span class="number">81</span>)</span><br><span class="line">	at org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:<span class="number">650</span>)</span><br><span class="line">	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:<span class="number">87</span>)</span><br><span class="line">	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:<span class="number">342</span>)</span><br><span class="line">	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:<span class="number">800</span>)</span><br><span class="line">	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:<span class="number">66</span>)</span><br><span class="line">	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:<span class="number">806</span>)</span><br><span class="line">	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:<span class="number">1498</span>)</span><br><span class="line">	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:<span class="number">49</span>)</span><br><span class="line">	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:<span class="number">1142</span>)</span><br><span class="line">	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:<span class="number">617</span>)</span><br><span class="line">	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:<span class="number">61</span>)</span><br><span class="line">	at java.lang.Thread.run(Thread.java:<span class="number">745</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="解决方法："><a href="#解决方法：" class="headerlink" title="解决方法："></a>解决方法：</h2><p>​        <strong>将对象赋值给Object map</strong>，这时map中有list中的对象的数据，但是不能用map.getAddUser()的方法获取，这时我<strong>将map强制转换成了Object[] objs</strong>，这样就将一个对象的属性用数组的形式保存起来了，<strong>通过数组下标取值</strong>，获取数据。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; list.size(); i++) &#123;</span><br><span class="line">			Object map=list.get(i);</span><br><span class="line">			Object[] objs=(Object[])map; <span class="comment">//强转object数组对象</span></span><br><span class="line">			<span class="keyword">if</span> (<span class="keyword">null</span>!=objs[<span class="number">0</span>])&#123;</span><br><span class="line">				adduser=objs[<span class="number">0</span>].toString();</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (<span class="keyword">null</span>!=objs[<span class="number">1</span>])&#123;</span><br><span class="line">				oldProtocol=objs[<span class="number">1</span>].toString();</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (<span class="keyword">null</span>!=objs[<span class="number">2</span>])&#123;</span><br><span class="line">				nowProtocol=objs[<span class="number">2</span>].toString();</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (<span class="keyword">null</span>!=objs[<span class="number">3</span>])&#123;</span><br><span class="line">				mobile=objs[<span class="number">3</span>].toString();</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (<span class="keyword">null</span>!=objs[<span class="number">4</span>])&#123;</span><br><span class="line">				addtime=objs[<span class="number">4</span>].toString();</span><br><span class="line">			&#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="页面取值"><a href="#页面取值" class="headerlink" title="页面取值"></a>页面取值</h2><p>页面取值也是同样使用下标获取数据。</p>
+<ol>
+<li>c:if 判断list是否为空；</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;c:<span class="keyword">if</span> test=<span class="string">"$&#123;null != list&#125;"</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>c:forEach 遍历list；</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;c:forEach items=<span class="string">"$&#123;list&#125;"</span> <span class="keyword">var</span>=<span class="string">"dataList"</span> varStatus=<span class="string">"status"</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>${} 取值，利用下标确定对象中的某个属性。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$&#123;dataList[<span class="number">3</span>]&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>页面部分代码</li>
+</ol>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">&lt;c:<span class="keyword">if</span> test=<span class="string">"$&#123;null != list&#125;"</span>&gt;</span><br><span class="line">								&lt;c:forEach items=<span class="string">"$&#123;list&#125;"</span> <span class="keyword">var</span>=<span class="string">"dataList"</span> varStatus=<span class="string">"status"</span>&gt;</span><br><span class="line">									&lt;c:choose&gt;</span><br><span class="line">										&lt;c:when test=<span class="string">"$&#123;status.count % 2 == 0&#125;"</span>&gt;</span><br><span class="line">											&lt;tr style=<span class="string">"background-color:#FFFFFF"</span> onclick=<span class="string">"Zving.DataGrid.onRowClick(this,event);"</span>&gt;</span><br><span class="line">										&lt;/c:when&gt;</span><br><span class="line">										&lt;c:otherwise&gt;</span><br><span class="line">											&lt;tr style=<span class="string">"background-color:#F9FBFC"</span> onclick=<span class="string">"Zving.DataGrid.onRowClick(this,event);"</span>&gt;</span><br><span class="line">										&lt;/c:otherwise&gt;</span><br><span class="line">									&lt;/c:choose&gt;</span><br><span class="line">									&lt;td rowno=<span class="string">"$&#123;(page.page*page.rows) + (status.index+1) &#125;"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"rowNo"</span> style=<span class="string">"text-align: center;"</span>&gt;</span><br><span class="line">										$&#123;(status.index+1)+(page.page*page.rows)&#125;&lt;/td&gt;</span><br><span class="line">                                       &lt;td title=<span class="string">"$&#123;dataList[3] &#125;"</span> style=<span class="string">"text-align: center;"</span>&gt;</span><br><span class="line">											$&#123;dataList[<span class="number">3</span>]&#125;</span><br><span class="line">										&lt;/td&gt;</span><br><span class="line">									&lt;td title=<span class="string">"$&#123;dataList[1] &#125;"</span> style=<span class="string">"text-align: center;"</span>&gt;</span><br><span class="line"></span><br><span class="line">										&lt;c:if test="$&#123;dataList[1]=='0'&#125;"&gt;移动&lt;/c:if&gt;</span><br><span class="line">										&lt;c:if test="$&#123;dataList[1]=='1'&#125;"&gt;联通&lt;/c:if&gt;</span><br><span class="line">										&lt;c:if test="$&#123;dataList[1]=='2'&#125;"&gt;电信&lt;/c:if&gt;</span><br><span class="line">									&lt;/td&gt;</span><br><span class="line">									&lt;td title=<span class="string">"$&#123;dataList[2] &#125;"</span> style=<span class="string">"text-align: center;"</span>&gt;</span><br><span class="line">										&lt;c:if test="$&#123;dataList[2]=='0'&#125;"&gt;移动&lt;/c:if&gt;</span><br><span class="line">										&lt;c:if test="$&#123;dataList[2]=='1'&#125;"&gt;联通&lt;/c:if&gt;</span><br><span class="line">										&lt;c:if test="$&#123;dataList[2]=='2'&#125;"&gt;电信&lt;/c:if&gt;</span><br><span class="line">									&lt;/td&gt;</span><br><span class="line">									&lt;td</span><br><span class="line">										title=<span class="string">"&lt;fmt:formatDate value="</span>$&#123;dataList[<span class="number">4</span>]&#125;<span class="string">" pattern="</span>yyyy-MM-dd<span class="string">" /&gt;"</span></span><br><span class="line">										style=<span class="string">"text-align: center;"</span>&gt;&lt;fmt:formatDate</span><br><span class="line">											value=<span class="string">"$&#123;dataList[4]&#125;"</span> pattern=<span class="string">"yyyy-MM-dd"</span> /&gt;</span><br><span class="line">									&lt;/td&gt;</span><br><span class="line">									&lt;td title="$&#123;dataList[0]&#125;"  style="text-align: center;"&gt;$&#123;dataList[0]&#125;&lt;/td&gt;</span><br><span class="line">                                       &lt;%--&lt;td--%&gt;</span><br><span class="line">                                               &lt;%--title=<span class="string">"&lt;fmt:formatDate value="</span>$&#123;dataList[<span class="number">6</span>]&#125;<span class="string">" pattern="</span>yyyy-MM-dd<span class="string">" /&gt;"</span>--%&gt;</span><br><span class="line">                                               &lt;%--style=<span class="string">"text-align: center;"</span>&gt;&lt;fmt:formatDate--%&gt;</span><br><span class="line">                                               &lt;%--value=<span class="string">"$&#123;dataList[6]&#125;"</span> pattern=<span class="string">"yyyy-MM-dd"</span> /&gt;--%&gt;</span><br><span class="line">                                       &lt;%--&lt;/td&gt;--%&gt;</span><br><span class="line">									&lt;%--&lt;td title="$&#123;dataList[8]&#125;"  style="text-align: center;"&gt;$&#123;dataList[8]&#125;&lt;/td&gt;--%&gt;</span><br><span class="line">									&lt;td title=<span class="string">""</span> style=<span class="string">"text-align: center;"</span>&gt;</span><br><span class="line">										&amp;nbsp;&amp;nbsp;</span><br><span class="line">										&lt;a href="#" onclick="return doUpdate($&#123;dataList[7]&#125;)"&gt;修改&lt;/a&gt;</span><br><span class="line">										&amp;nbsp;&amp;nbsp;</span><br><span class="line">										&lt;a href="#" onclick="return del($&#123;dataList[7]&#125;)"&gt;删除&lt;/a&gt;</span><br><span class="line">									&lt;/td&gt;</span><br><span class="line">									&lt;/tr&gt;</span><br><span class="line">								&lt;/c:forEach&gt;</span><br><span class="line">							&lt;/c:if&gt;</span><br></pre></td></tr></table></figure>
+
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2019年09月27日 16:23</p>
+        <p>原始链接： <a class="post-url" href="/2019/09/25/取出hibernate执行的SQL的结果集/" title="取出hibernate执行的SQL的结果集">http://ligangit.com/2019/09/25/取出hibernate执行的SQL的结果集/</a></p>
+        <footer>
+            <a href="http://ligangit.com">
+                <img src="/images/logo.png" alt="Li Gang">
+                Li Gang
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://ligangit.com/2019/09/25/取出hibernate执行的SQL的结果集/&title=《取出hibernate执行的SQL的结果集》 — ligangit&pic=http://ligangit.comimages/logo.png" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://ligangit.com/2019/09/25/取出hibernate执行的SQL的结果集/&title=《取出hibernate执行的SQL的结果集》 — ligangit&source=在码农的世界里面默默的挣扎着" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://ligangit.com/2019/09/25/取出hibernate执行的SQL的结果集/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《取出hibernate执行的SQL的结果集》 — ligangit&url=http://ligangit.com/2019/09/25/取出hibernate执行的SQL的结果集/&via=http://ligangit.com" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://ligangit.com/2019/09/25/取出hibernate执行的SQL的结果集/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://ligangit.com/2019/09/25/取出hibernate执行的SQL的结果集/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/hibernate/" class="color5">hibernate</a>
+      
+    <a href="/tags/object/" class="color2">object</a>
+      
+    <a href="/tags/java/" class="color5">java</a>
+      
+    <a href="/tags/bug/" class="color4">bug</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#取出hibernate执行的SQL的结果集"><span class="post-toc-text">取出hibernate执行的SQL的结果集</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#java取出数据报错"><span class="post-toc-text">java取出数据报错</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#解决方法："><span class="post-toc-text">解决方法：</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#页面取值"><span class="post-toc-text">页面取值</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+  
+    <a href="/2019/09/04/Typoras学习md语法/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">Typoras学习md语法</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2019 Li Gang<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "http://ligangit.com",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/java/">java</a><a class="category-link" href="/categories/博客/">博客</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/layui/" style="font-size: 10px;">layui</a> <a href="/tags/markdown/" style="font-size: 10px;">markdown</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/test/" style="font-size: 10px;">test</a> <a href="/tags/框架/" style="font-size: 10px;">框架</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="/">
+                    <i class="fa fa-home"></i><span>主页</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>归档</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>关于</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/layui/" style="font-size: 10px;">layui</a> <a href="/tags/markdown/" style="font-size: 10px;">markdown</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/test/" style="font-size: 10px;">test</a> <a href="/tags/框架/" style="font-size: 10px;">框架</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>
