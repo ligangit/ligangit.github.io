@@ -8,20 +8,23 @@
   
     <meta name="keywords" content="LiGang,Li Gang,ligangit">
   
-  <meta name="description" content="需求表中存在很多需要合并的内容，如下图  将两列数据保留一条，并且内容合并在一起，需要将内容顺序拼接。  方法使用left join 连接，将保留的信息，和合并的内容连接； 使用CONCAT(str1,str2,…)  函数，拼接字符串； 使用CHAR_LENGTH(str) 函数，判断内容字符串的长度，便于内容顺序合并。 12345678910111213141516171819202122--">
+  <meta name="description" content="需求表中存在很多需要合并的内容，如下图  将两列数据保留一条，并且内容合并在一起，需要将内容顺序拼接。       方法使用left join 连接，将保留的信息，和合并的内容连接； 使用CONCAT(str1,str2,…)  函数，拼接字符串； 使用CHAR_LENGTH(str) 函数，判断内容字符串的长度，便于内容顺序合并。 12345678910111213141516171819202">
 <meta name="keywords" content="mysql,数据处理">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mysql之数据合并">
 <meta property="og:url" content="http://ligangit.com/2019/10/11/mysql之数据合并/index.html">
 <meta property="og:site_name" content="ligangit">
-<meta property="og:description" content="需求表中存在很多需要合并的内容，如下图  将两列数据保留一条，并且内容合并在一起，需要将内容顺序拼接。  方法使用left join 连接，将保留的信息，和合并的内容连接； 使用CONCAT(str1,str2,…)  函数，拼接字符串； 使用CHAR_LENGTH(str) 函数，判断内容字符串的长度，便于内容顺序合并。 12345678910111213141516171819202122--">
+<meta property="og:description" content="需求表中存在很多需要合并的内容，如下图  将两列数据保留一条，并且内容合并在一起，需要将内容顺序拼接。       方法使用left join 连接，将保留的信息，和合并的内容连接； 使用CONCAT(str1,str2,…)  函数，拼接字符串； 使用CHAR_LENGTH(str) 函数，判断内容字符串的长度，便于内容顺序合并。 12345678910111213141516171819202">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://ligangit.com/.com//content.png">
-<meta property="og:image" content="http://ligangit.com/.com//H:%5Cblog%5Csource%5Cimages%5Ccontent.png">
-<meta property="og:updated_time" content="2019-10-23T02:09:40.847Z">
+<meta property="og:image" content="http://ligangit.com/images/add.png">
+<meta property="og:image" content="http://ligangit.com/images/content.png">
+<meta property="og:image" content="http://ligangit.com/images/add.png">
+<meta property="og:image" content="http://ligangit.com/images/content.png">
+<meta property="og:updated_time" content="2019-10-23T02:15:45.112Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql之数据合并">
-<meta name="twitter:description" content="需求表中存在很多需要合并的内容，如下图  将两列数据保留一条，并且内容合并在一起，需要将内容顺序拼接。  方法使用left join 连接，将保留的信息，和合并的内容连接； 使用CONCAT(str1,str2,…)  函数，拼接字符串； 使用CHAR_LENGTH(str) 函数，判断内容字符串的长度，便于内容顺序合并。 12345678910111213141516171819202122--">
+<meta name="twitter:description" content="需求表中存在很多需要合并的内容，如下图  将两列数据保留一条，并且内容合并在一起，需要将内容顺序拼接。       方法使用left join 连接，将保留的信息，和合并的内容连接； 使用CONCAT(str1,str2,…)  函数，拼接字符串； 使用CHAR_LENGTH(str) 函数，判断内容字符串的长度，便于内容顺序合并。 12345678910111213141516171819202">
 <meta name="twitter:image" content="http://ligangit.com/.com//content.png">
   
   
@@ -152,7 +155,12 @@
             <h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>表中存在很多需要合并的内容，如下图</p>
 <p><img src="/.com//content.png" alt="数据库表内容"></p>
 <p>将两列数据保留一条，并且内容合并在一起，需要将内容顺序拼接。</p>
-<p><img src="/.com//H:%5Cblog%5Csource%5Cimages%5Ccontent.png" alt></p>
+<p><img src="/images/add.png" alt="123"></p>
+<p><img src="/images/content.png" alt="abc"></p>
+<img src="/images/add.png">
+
+<img src="/images/content.png" alt="content">
+
 <h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p>使用left join 连接，将保留的信息，和合并的内容连接；</p>
 <p>使用CONCAT(str1,str2,…)  函数，拼接字符串；</p>
 <p>使用CHAR_LENGTH(str) 函数，判断内容字符串的长度，便于内容顺序合并。</p>
@@ -161,7 +169,7 @@
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2019年10月23日 10:09</p>
+        <p>最后更新： 2019年10月23日 10:15</p>
         <p>原始链接： <a class="post-url" href="/2019/10/11/mysql之数据合并/" title="mysql之数据合并">http://ligangit.com/2019/10/11/mysql之数据合并/</a></p>
         <footer>
             <a href="http://ligangit.com">
