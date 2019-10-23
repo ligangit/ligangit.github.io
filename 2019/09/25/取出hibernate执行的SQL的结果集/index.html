@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="ligangit">
 <meta property="og:description" content="取出hibernate执行的SQL的结果集java取出数据报错最近在一个SSH项目中碰到了一个获取数据的问题，SQL执行后的结果集使用类型转换提取数据时报错。  下面是DAO层实现类中的方法：返回了结果集List。  1234567891011121314151617181920public List&amp;lt;TblSwitch&amp;gt; getPagelist(Integer limit, Inte">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-09-29T05:21:39.214Z">
+<meta property="og:updated_time" content="2019-10-22T03:50:03.091Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="取出hibernate执行的SQL的结果集">
 <meta name="twitter:description" content="取出hibernate执行的SQL的结果集java取出数据报错最近在一个SSH项目中碰到了一个获取数据的问题，SQL执行后的结果集使用类型转换提取数据时报错。  下面是DAO层实现类中的方法：返回了结果集List。  1234567891011121314151617181920public List&amp;lt;TblSwitch&amp;gt; getPagelist(Integer limit, Inte">
@@ -167,7 +167,7 @@
 <h2 id="解决方法："><a href="#解决方法：" class="headerlink" title="解决方法："></a>解决方法：</h2><h3 id="方法一："><a href="#方法一：" class="headerlink" title="方法一："></a>方法一：</h3><p>​        <strong>将对象赋值给Object map</strong>，这时map中有list中的对象的数据，但是不能用map.getAddUser()的方法获取，这时我<strong>将map强制转换成了Object[] objs</strong>，这样就将一个对象的属性用数组的形式保存起来了，<strong>通过数组下标取值</strong>，获取数据。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; list.size(); i++) &#123;</span><br><span class="line">	Object map=list.get(i);</span><br><span class="line">	Object[] objs=(Object[])map; <span class="comment">//强转object数组对象</span></span><br><span class="line">	<span class="keyword">if</span> (<span class="keyword">null</span>!=objs[<span class="number">0</span>])&#123;</span><br><span class="line">		adduser=objs[<span class="number">0</span>].toString();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (<span class="keyword">null</span>!=objs[<span class="number">1</span>])&#123;</span><br><span class="line">		oldProtocol=objs[<span class="number">1</span>].toString();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (<span class="keyword">null</span>!=objs[<span class="number">2</span>])&#123;</span><br><span class="line">		nowProtocol=objs[<span class="number">2</span>].toString();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (<span class="keyword">null</span>!=objs[<span class="number">3</span>])&#123;</span><br><span class="line">		mobile=objs[<span class="number">3</span>].toString();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (<span class="keyword">null</span>!=objs[<span class="number">4</span>])&#123;</span><br><span class="line">		addtime=objs[<span class="number">4</span>].toString();</span><br><span class="line">	&#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="方法二："><a href="#方法二：" class="headerlink" title="方法二："></a>方法二：</h3><p>​        <strong>将SQL结果返回值设置为List</strong>，不在是List<tblswitch>，这时在遍历list的时候可以将list中的对象强转为Map类型。</tblswitch></p>
+<h3 id="方法二："><a href="#方法二：" class="headerlink" title="方法二："></a>方法二：</h3><p>​        <strong>将SQL结果返回值设置为List</strong>，不在是List&lt;TblSwitch&gt;，这时在遍历list的时候可以将list中的对象强转为Map类型。</p>
 <ol>
 <li>修改返回值：</li>
 </ol>
@@ -202,7 +202,7 @@
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2019年09月29日 13:21</p>
+        <p>最后更新： 2019年10月22日 11:50</p>
         <p>原始链接： <a class="post-url" href="/2019/09/25/取出hibernate执行的SQL的结果集/" title="取出hibernate执行的SQL的结果集">http://ligangit.com/2019/09/25/取出hibernate执行的SQL的结果集/</a></p>
         <footer>
             <a href="http://ligangit.com">
@@ -410,7 +410,7 @@
             <a class="category-link" href="/categories/java/">java</a><a class="category-link" href="/categories/mysql/">mysql</a><a class="category-link" href="/categories/博客/">博客</a>
         </div>
         <div id="sidebar-menu-box-tags">
-            <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/markdown/" style="font-size: 10px;">markdown</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a>
+            <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/markdown/" style="font-size: 10px;">markdown</a> <a href="/tags/mysql/" style="font-size: 20px;">mysql</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a>
         </div>
     </div>
     <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
@@ -443,7 +443,7 @@
     <div class="mobile-header-tag-container">
         <span class="title">Tags</span>
         <div id="mobile-header-container-tags">
-            <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/markdown/" style="font-size: 10px;">markdown</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a>
+            <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/markdown/" style="font-size: 10px;">markdown</a> <a href="/tags/mysql/" style="font-size: 20px;">mysql</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a>
         </div>
     </div>
 </div>
