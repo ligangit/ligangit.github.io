@@ -8,18 +8,18 @@
   
     <meta name="keywords" content="LiGang,Li Gang,ligangit">
   
-  <meta name="description" content="mysql存储过程学习1、申明存储过程1CREATE DEFINER = CURRENT_USER PROCEDURE `demo`()  2、存储过程开始和结束符号所有的内容SQL语句都是写在BEGIN   END 里面。 123BEGIN	#Routine body goes here...END;  3、变量定义 int类型： 变量名 num，类型 int，无符号， 默认值 4000000。">
+  <meta name="description" content="​    进行Java Web 项目的时候，经常需要执行数据库查询，有时对一些表数据进行统计，特别是统计分析的时候，原有的SQL执行会比较慢，而且每次点击都会比较慢，如今使用存储过程，可以将那些不需要实时展示的统计数据统计并存储在统计结果表里面，提高查询速度。 mysql存储过程学习1、申明存储过程1CREATE DEFINER = CURRENT_USER PROCEDURE `demo`()">
 <meta name="keywords" content="mysql,存储过程,游标">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mysql存储过程学习">
 <meta property="og:url" content="http://ligangit.com/2019/09/29/mysql存储过程编写/index.html">
 <meta property="og:site_name" content="ligangit">
-<meta property="og:description" content="mysql存储过程学习1、申明存储过程1CREATE DEFINER = CURRENT_USER PROCEDURE `demo`()  2、存储过程开始和结束符号所有的内容SQL语句都是写在BEGIN   END 里面。 123BEGIN	#Routine body goes here...END;  3、变量定义 int类型： 变量名 num，类型 int，无符号， 默认值 4000000。">
+<meta property="og:description" content="​    进行Java Web 项目的时候，经常需要执行数据库查询，有时对一些表数据进行统计，特别是统计分析的时候，原有的SQL执行会比较慢，而且每次点击都会比较慢，如今使用存储过程，可以将那些不需要实时展示的统计数据统计并存储在统计结果表里面，提高查询速度。 mysql存储过程学习1、申明存储过程1CREATE DEFINER = CURRENT_USER PROCEDURE `demo`()">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-09-29T05:21:34.790Z">
+<meta property="og:updated_time" content="2019-11-01T09:35:04.689Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql存储过程学习">
-<meta name="twitter:description" content="mysql存储过程学习1、申明存储过程1CREATE DEFINER = CURRENT_USER PROCEDURE `demo`()  2、存储过程开始和结束符号所有的内容SQL语句都是写在BEGIN   END 里面。 123BEGIN	#Routine body goes here...END;  3、变量定义 int类型： 变量名 num，类型 int，无符号， 默认值 4000000。">
+<meta name="twitter:description" content="​    进行Java Web 项目的时候，经常需要执行数据库查询，有时对一些表数据进行统计，特别是统计分析的时候，原有的SQL执行会比较慢，而且每次点击都会比较慢，如今使用存储过程，可以将那些不需要实时展示的统计数据统计并存储在统计结果表里面，提高查询速度。 mysql存储过程学习1、申明存储过程1CREATE DEFINER = CURRENT_USER PROCEDURE `demo`()">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -146,7 +146,8 @@
     <div class="article-entry post-content" itemprop="articleBody">
       
             
-            <h2 id="mysql存储过程学习"><a href="#mysql存储过程学习" class="headerlink" title="mysql存储过程学习"></a>mysql存储过程学习</h2><h3 id="1、申明存储过程"><a href="#1、申明存储过程" class="headerlink" title="1、申明存储过程"></a>1、申明存储过程</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE DEFINER = CURRENT_USER PROCEDURE `demo`()</span><br></pre></td></tr></table></figure>
+            <p>​    进行Java Web 项目的时候，经常需要执行数据库查询，有时对一些表数据进行统计，特别是统计分析的时候，原有的SQL执行会比较慢，而且每次点击都会比较慢，如今使用存储过程，可以将那些不需要实时展示的统计数据统计并存储在统计结果表里面，提高查询速度。</p>
+<h2 id="mysql存储过程学习"><a href="#mysql存储过程学习" class="headerlink" title="mysql存储过程学习"></a>mysql存储过程学习</h2><h3 id="1、申明存储过程"><a href="#1、申明存储过程" class="headerlink" title="1、申明存储过程"></a>1、申明存储过程</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE DEFINER = CURRENT_USER PROCEDURE `demo`()</span><br></pre></td></tr></table></figure>
 
 <h3 id="2、存储过程开始和结束符号"><a href="#2、存储过程开始和结束符号" class="headerlink" title="2、存储过程开始和结束符号"></a>2、存储过程开始和结束符号</h3><p>所有的内容SQL语句都是写在BEGIN   END 里面。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">BEGIN</span><br><span class="line">	#Routine body goes here...</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
@@ -242,7 +243,7 @@
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2019年09月29日 13:21</p>
+        <p>最后更新： 2019年11月01日 17:35</p>
         <p>原始链接： <a class="post-url" href="/2019/09/29/mysql存储过程编写/" title="mysql存储过程学习">http://ligangit.com/2019/09/29/mysql存储过程编写/</a></p>
         <footer>
             <a href="http://ligangit.com">
