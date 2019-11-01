@@ -8,24 +8,20 @@
   
     <meta name="keywords" content="LiGang,Li Gang,ligangit">
   
-  <meta name="description" content="需求表中存在很多需要合并的内容，如下图  将两列数据保留一条，并且内容合并在一起，需要将内容顺序拼接。       方法使用left join 连接，将保留的信息，和合并的内容连接； 使用CONCAT(str1,str2,…)  函数，拼接字符串； 使用CHAR_LENGTH(str) 函数，判断内容字符串的长度，便于内容顺序合并。 12345678910111213141516171819202">
+  <meta name="description" content="需求表中存在很多需要合并的内容，如下图  将两列数据保留一条，并且内容合并在一起，需要将内容顺序拼接。 方法使用left join 连接，将保留的信息，和合并的内容连接； 使用CONCAT(str1,str2,…)  函数，拼接字符串； 使用CHAR_LENGTH(str) 函数，判断内容字符串的长度，便于内容顺序合并。 12345678910111213141516171819202122--">
 <meta name="keywords" content="mysql,数据处理">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mysql之数据合并">
 <meta property="og:url" content="http://ligangit.com/2019/10/11/mysql之数据合并/index.html">
 <meta property="og:site_name" content="ligangit">
-<meta property="og:description" content="需求表中存在很多需要合并的内容，如下图  将两列数据保留一条，并且内容合并在一起，需要将内容顺序拼接。       方法使用left join 连接，将保留的信息，和合并的内容连接； 使用CONCAT(str1,str2,…)  函数，拼接字符串； 使用CHAR_LENGTH(str) 函数，判断内容字符串的长度，便于内容顺序合并。 12345678910111213141516171819202">
+<meta property="og:description" content="需求表中存在很多需要合并的内容，如下图  将两列数据保留一条，并且内容合并在一起，需要将内容顺序拼接。 方法使用left join 连接，将保留的信息，和合并的内容连接； 使用CONCAT(str1,str2,…)  函数，拼接字符串； 使用CHAR_LENGTH(str) 函数，判断内容字符串的长度，便于内容顺序合并。 12345678910111213141516171819202122--">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://ligangit.com/.com//content.png">
-<meta property="og:image" content="http://ligangit.com/images/add.png">
 <meta property="og:image" content="http://ligangit.com/images/content.png">
-<meta property="og:image" content="http://ligangit.com/images/add.png">
-<meta property="og:image" content="http://ligangit.com/images/content.png">
-<meta property="og:updated_time" content="2019-10-23T02:15:45.112Z">
+<meta property="og:updated_time" content="2019-11-01T09:19:50.492Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql之数据合并">
-<meta name="twitter:description" content="需求表中存在很多需要合并的内容，如下图  将两列数据保留一条，并且内容合并在一起，需要将内容顺序拼接。       方法使用left join 连接，将保留的信息，和合并的内容连接； 使用CONCAT(str1,str2,…)  函数，拼接字符串； 使用CHAR_LENGTH(str) 函数，判断内容字符串的长度，便于内容顺序合并。 12345678910111213141516171819202">
-<meta name="twitter:image" content="http://ligangit.com/.com//content.png">
+<meta name="twitter:description" content="需求表中存在很多需要合并的内容，如下图  将两列数据保留一条，并且内容合并在一起，需要将内容顺序拼接。 方法使用left join 连接，将保留的信息，和合并的内容连接； 使用CONCAT(str1,str2,…)  函数，拼接字符串； 使用CHAR_LENGTH(str) 函数，判断内容字符串的长度，便于内容顺序合并。 12345678910111213141516171819202122--">
+<meta name="twitter:image" content="http://ligangit.com/images/content.png">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -153,14 +149,8 @@
       
             
             <h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>表中存在很多需要合并的内容，如下图</p>
-<p><img src="/.com//content.png" alt="数据库表内容"></p>
-<p>将两列数据保留一条，并且内容合并在一起，需要将内容顺序拼接。</p>
-<p><img src="/images/add.png" alt="123"></p>
 <p><img src="/images/content.png" alt="abc"></p>
-<img src="/images/add.png">
-
-<img src="/images/content.png" alt="content">
-
+<p>将两列数据保留一条，并且内容合并在一起，需要将内容顺序拼接。</p>
 <h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p>使用left join 连接，将保留的信息，和合并的内容连接；</p>
 <p>使用CONCAT(str1,str2,…)  函数，拼接字符串；</p>
 <p>使用CHAR_LENGTH(str) 函数，判断内容字符串的长度，便于内容顺序合并。</p>
@@ -169,7 +159,7 @@
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2019年10月23日 10:15</p>
+        <p>最后更新： 2019年11月01日 17:19</p>
         <p>原始链接： <a class="post-url" href="/2019/10/11/mysql之数据合并/" title="mysql之数据合并">http://ligangit.com/2019/10/11/mysql之数据合并/</a></p>
         <footer>
             <a href="http://ligangit.com">
@@ -296,6 +286,16 @@
 
 <nav id="article-nav">
   
+    <a href="/2019/11/01/博客加载图片/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          博客加载图片
+        
+      </span>
+    </a>
+  
   
     <a href="/2019/09/29/mysql存储过程编写/" id="article-nav-older" class="article-nav-link-wrap">
       <span class="article-nav-title">mysql存储过程学习</span>
@@ -363,7 +363,7 @@
             <a class="category-link" href="/categories/java/">java</a><a class="category-link" href="/categories/mysql/">mysql</a><a class="category-link" href="/categories/博客/">博客</a>
         </div>
         <div id="sidebar-menu-box-tags">
-            <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/markdown/" style="font-size: 10px;">markdown</a> <a href="/tags/mysql/" style="font-size: 20px;">mysql</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a>
+            <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/markdown/" style="font-size: 10px;">markdown</a> <a href="/tags/mysql/" style="font-size: 20px;">mysql</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a>
         </div>
     </div>
     <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
@@ -396,7 +396,7 @@
     <div class="mobile-header-tag-container">
         <span class="title">Tags</span>
         <div id="mobile-header-container-tags">
-            <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/markdown/" style="font-size: 10px;">markdown</a> <a href="/tags/mysql/" style="font-size: 20px;">mysql</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a>
+            <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/markdown/" style="font-size: 10px;">markdown</a> <a href="/tags/mysql/" style="font-size: 20px;">mysql</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a>
         </div>
     </div>
 </div>
