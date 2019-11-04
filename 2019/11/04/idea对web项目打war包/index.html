@@ -3,25 +3,32 @@
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
   
-  <title>mysql之数据合并 | ligangit</title>
+  <title>idea对web项目打war包 | ligangit</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
     <meta name="keywords" content="LiGang,Li Gang,ligangit">
   
-  <meta name="description" content="​    在进行数据库的数据整理的时候，特别是对新老平台、规则替换的时候，会碰到数据合并的问题，我将这次整理过程的数据合并写了这篇博客。 需求表中存在很多需要合并的内容，如下图  将两列数据保留一条，并且内容合并在一起，需要将内容顺序拼接。 方法使用left join 连接，将保留的信息，和合并的内容连接； 使用CONCAT(str1,str2,…)  函数，拼接字符串； 使用CHAR_LENGT">
-<meta name="keywords" content="mysql,数据处理">
+  <meta name="description" content="​    很多时候，完成项目需要打成war包，然后部署在服务器里面，对于小白来说，一开始会不知道怎么打包，我就是经历过，所以将这个打包的过程写下来。 ​    下面有两种打包方式，一种是传统的web项目，一种是maven项目。 传统web项目打war包1、File –&amp;gt;Project Structure，如下图：  2、点击”Artifacts“，然后在右边的界面中点击”十“号，选择”Web">
+<meta name="keywords" content="java,idea,打包">
 <meta property="og:type" content="article">
-<meta property="og:title" content="mysql之数据合并">
-<meta property="og:url" content="http://ligangit.com/2019/10/11/mysql之数据合并/index.html">
+<meta property="og:title" content="idea对web项目打war包">
+<meta property="og:url" content="http://ligangit.com/2019/11/04/idea对web项目打war包/index.html">
 <meta property="og:site_name" content="ligangit">
-<meta property="og:description" content="​    在进行数据库的数据整理的时候，特别是对新老平台、规则替换的时候，会碰到数据合并的问题，我将这次整理过程的数据合并写了这篇博客。 需求表中存在很多需要合并的内容，如下图  将两列数据保留一条，并且内容合并在一起，需要将内容顺序拼接。 方法使用left join 连接，将保留的信息，和合并的内容连接； 使用CONCAT(str1,str2,…)  函数，拼接字符串； 使用CHAR_LENGT">
+<meta property="og:description" content="​    很多时候，完成项目需要打成war包，然后部署在服务器里面，对于小白来说，一开始会不知道怎么打包，我就是经历过，所以将这个打包的过程写下来。 ​    下面有两种打包方式，一种是传统的web项目，一种是maven项目。 传统web项目打war包1、File –&amp;gt;Project Structure，如下图：  2、点击”Artifacts“，然后在右边的界面中点击”十“号，选择”Web">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://ligangit.com/images/content.png">
-<meta property="og:updated_time" content="2019-11-04T08:51:17.172Z">
+<meta property="og:image" content="http://ligangit.com/images/idea_package/add_model.png">
+<meta property="og:image" content="http://ligangit.com/images/idea_package/add_war2.png">
+<meta property="og:image" content="http://ligangit.com/images/idea_package/bulid_war1.png">
+<meta property="og:image" content="http://ligangit.com/images/idea_package/clean.png">
+<meta property="og:image" content="http://ligangit.com/images/idea_package/bulid.png">
+<meta property="og:image" content="http://ligangit.com/images/idea_package/old_war.png">
+<meta property="og:image" content="http://ligangit.com/images/idea_package/maven.png">
+<meta property="og:image" content="http://ligangit.com/images/idea_package/maven_war.png">
+<meta property="og:updated_time" content="2019-11-04T09:46:23.776Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="mysql之数据合并">
-<meta name="twitter:description" content="​    在进行数据库的数据整理的时候，特别是对新老平台、规则替换的时候，会碰到数据合并的问题，我将这次整理过程的数据合并写了这篇博客。 需求表中存在很多需要合并的内容，如下图  将两列数据保留一条，并且内容合并在一起，需要将内容顺序拼接。 方法使用left join 连接，将保留的信息，和合并的内容连接； 使用CONCAT(str1,str2,…)  函数，拼接字符串； 使用CHAR_LENGT">
-<meta name="twitter:image" content="http://ligangit.com/images/content.png">
+<meta name="twitter:title" content="idea对web项目打war包">
+<meta name="twitter:description" content="​    很多时候，完成项目需要打成war包，然后部署在服务器里面，对于小白来说，一开始会不知道怎么打包，我就是经历过，所以将这个打包的过程写下来。 ​    下面有两种打包方式，一种是传统的web项目，一种是maven项目。 传统web项目打war包1、File –&amp;gt;Project Structure，如下图：  2、点击”Artifacts“，然后在右边的界面中点击”十“号，选择”Web">
+<meta name="twitter:image" content="http://ligangit.com/images/idea_package/add_model.png">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -112,14 +119,14 @@
     </div>
 </header>
       <div class="outer">
-        <section id="main" class="body-wrap"><article id="post-mysql之数据合并" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main" class="body-wrap"><article id="post-idea对web项目打war包" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="post-title" itemprop="name">
-      mysql之数据合并
+      idea对web项目打war包
     </h1>
     <div class="post-title-bar">
       <ul>
@@ -127,12 +134,12 @@
               <li>
                   <i class="fa fa-book"></i>
                   
-                      <a href="/categories/mysql/">mysql</a>
+                      <a href="/categories/java/">java</a>
                   
               </li>
           
         <li>
-          <i class="fa fa-calendar"></i>  2019-10-11
+          <i class="fa fa-calendar"></i>  2019-11-04
         </li>
         <li>
           <i class="fa fa-eye"></i>
@@ -148,20 +155,31 @@
     <div class="article-entry post-content" itemprop="articleBody">
       
             
-            <p>​    在进行数据库的数据整理的时候，特别是对新老平台、规则替换的时候，会碰到数据合并的问题，我将这次整理过程的数据合并写了这篇博客。</p>
-<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>表中存在很多需要合并的内容，如下图</p>
-<p><img src="/images/content.png" alt="abc"></p>
-<p>将两列数据保留一条，并且内容合并在一起，需要将内容顺序拼接。</p>
-<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><p>使用left join 连接，将保留的信息，和合并的内容连接；</p>
-<p>使用CONCAT(str1,str2,…)  函数，拼接字符串；</p>
-<p>使用CHAR_LENGTH(str) 函数，判断内容字符串的长度，便于内容顺序合并。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">-- 3、保存需要合并的内容</span><br><span class="line">create table smcontent22 (</span><br><span class="line">    select SM_ID ,destaddr , DATE_FORMAT(sendtime,&apos;%Y-%m-%d&apos;)  sendtime,SM_CONTENT </span><br><span class="line">    from tbl_smresult</span><br><span class="line">    where PROTOCOLTYPE=3 </span><br><span class="line">        and SM_CONTENT not like &apos;【政务外网短信平台】%&apos;</span><br><span class="line">    and pktotal&gt;1) ;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">-- 4.2 合并两条短信的内容</span><br><span class="line">  UPDATE  tbl_smresult a </span><br><span class="line">  left join smcontent22 b </span><br><span class="line">  on  a.SM_ID =b.SM_ID </span><br><span class="line">  and a.PROTOCOLTYPE=&apos;3&apos; </span><br><span class="line">  and a.destaddr=b.destaddr</span><br><span class="line"> set a.SM_CONTENT= CONCAT(a.SM_CONTENT,b.SM_CONTENT) </span><br><span class="line"> where   a.SM_ID =b.SM_ID </span><br><span class="line"> and a.PROTOCOLTYPE=&apos;3&apos; </span><br><span class="line"> and a.destaddr=b.destaddr </span><br><span class="line"> and DATE_FORMAT(a.sendtime,&apos;%Y-%m-%d&apos;)=b.sendtime </span><br><span class="line"> and CHAR_LENGTH(b.SM_CONTENT)&lt;67 </span><br><span class="line"> and a.SM_CONTENT like &apos;【政务外网短信平台】%&apos; ;</span><br></pre></td></tr></table></figure>
-
+            <p>​    很多时候，完成项目需要打成war包，然后部署在服务器里面，对于小白来说，一开始会不知道怎么打包，我就是经历过，所以将这个打包的过程写下来。</p>
+<p>​    下面有两种打包方式，一种是传统的web项目，一种是maven项目。</p>
+<h2 id="传统web项目打war包"><a href="#传统web项目打war包" class="headerlink" title="传统web项目打war包"></a>传统web项目打war包</h2><p>1、File –&gt;Project Structure，如下图：</p>
+<p><img src="/images/idea_package/add_model.png" alt="打开结构目录"></p>
+<p>2、点击”Artifacts“，然后在右边的界面中点击”十“号，选择”Web Application:Archive“，选择打包项，选择后就可以点击”Apply“按钮了，操作如下图：</p>
+<p><img src="/images/idea_package/add_war2.png" alt="打开结构目录"></p>
+<p>3、执行打包过程，点击”Build”，选择“Build Artifacts”，选择war包，然后先点击“Clean”,清空下，清空之后，在此点击”Build”，选择“Build Artifacts”，选择war包，然后先点击“Bulid”,清空下，操作如下图：</p>
+<p><img src="/images/idea_package/bulid_war1.png" alt="打开结构目录"></p>
+<p><img src="/images/idea_package/clean.png" alt="打开结构目录"></p>
+<p><img src="/images/idea_package/bulid.png" alt="打开结构目录"></p>
+<p>4、打包好的War包在classes  –&gt; artifacts ,如下图</p>
+<p><img src="/images/idea_package/old_war.png" alt="打开结构目录"></p>
+<h2 id="Maven项目打war包"><a href="#Maven项目打war包" class="headerlink" title="Maven项目打war包"></a>Maven项目打war包</h2><p>1、点击窗口右边的”Maven”，弹出窗口；</p>
+<p>2、点击“Clean”，先清空项目；</p>
+<p>3、点击“Insatll”，打jar包；</p>
+<p>4、点击“Pagkage”，打War包。</p>
+<p>具体操作如下图：</p>
+<p><img src="/images/idea_package/maven.png" alt="打开结构目录"></p>
+<p>5、打包好的War包在target文件夹下 ,如下图</p>
+<p><img src="/images/idea_package/maven_war.png" alt="打开结构目录"></p>
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2019年11月04日 16:51</p>
-        <p>原始链接： <a class="post-url" href="/2019/10/11/mysql之数据合并/" title="mysql之数据合并">http://ligangit.com/2019/10/11/mysql之数据合并/</a></p>
+        <p>最后更新： 2019年11月04日 17:46</p>
+        <p>原始链接： <a class="post-url" href="/2019/11/04/idea对web项目打war包/" title="idea对web项目打war包">http://ligangit.com/2019/11/04/idea对web项目打war包/</a></p>
         <footer>
             <a href="http://ligangit.com">
                 <img src="/images/logo.png" alt="Li Gang">
@@ -218,7 +236,7 @@
     <div class="post-share-list" id="share-list">
         <ul class="share-icons">
           <li>
-            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://ligangit.com/2019/10/11/mysql之数据合并/&title=《mysql之数据合并》 — ligangit&pic=/images/mysql.png" data-title="微博">
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://ligangit.com/2019/11/04/idea对web项目打war包/&title=《idea对web项目打war包》 — ligangit&pic=http://ligangit.comimages/logo.png" data-title="微博">
               <i class="fa fa-weibo"></i>
             </a>
           </li>
@@ -228,22 +246,22 @@
             </a>
           </li>
           <li>
-            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://ligangit.com/2019/10/11/mysql之数据合并/&title=《mysql之数据合并》 — ligangit&source=在码农的世界里面默默的挣扎着" data-title="QQ">
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://ligangit.com/2019/11/04/idea对web项目打war包/&title=《idea对web项目打war包》 — ligangit&source=在码农的世界里面默默的挣扎着" data-title="QQ">
               <i class="fa fa-qq"></i>
             </a>
           </li>
           <li>
-            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://ligangit.com/2019/10/11/mysql之数据合并/" data-title="Facebook">
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://ligangit.com/2019/11/04/idea对web项目打war包/" data-title="Facebook">
               <i class="fa fa-facebook"></i>
             </a>
           </li>
           <li>
-            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《mysql之数据合并》 — ligangit&url=http://ligangit.com/2019/10/11/mysql之数据合并/&via=http://ligangit.com" data-title="Twitter">
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《idea对web项目打war包》 — ligangit&url=http://ligangit.com/2019/11/04/idea对web项目打war包/&via=http://ligangit.com" data-title="Twitter">
               <i class="fa fa-twitter"></i>
             </a>
           </li>
           <li>
-            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://ligangit.com/2019/10/11/mysql之数据合并/" data-title="Google+">
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://ligangit.com/2019/11/04/idea对web项目打war包/" data-title="Google+">
               <i class="fa fa-google-plus"></i>
             </a>
           </li>
@@ -253,7 +271,7 @@
 <div class="post-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;" id="wxShare-close">×</a>
     <p>扫一扫，分享到微信</p>
-    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://ligangit.com/2019/10/11/mysql之数据合并/" alt="微信分享二维码">
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://ligangit.com/2019/11/04/idea对web项目打war包/" alt="微信分享二维码">
 </div>
 
 <div class="mask"></div>
@@ -265,9 +283,11 @@
   <li class="article-footer-tags">
     <i class="fa fa-tags"></i>
       
-    <a href="/tags/mysql/" class="color1">mysql</a>
+    <a href="/tags/java/" class="color5">java</a>
       
-    <a href="/tags/数据处理/" class="color5">数据处理</a>
+    <a href="/tags/idea/" class="color5">idea</a>
+      
+    <a href="/tags/打包/" class="color3">打包</a>
       
   </li>
 
@@ -280,26 +300,16 @@
 
     <aside class="post-toc-pos post-toc-top" id="post-toc">
         <nav class="post-toc-wrap">
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#需求"><span class="post-toc-text">需求</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#方法"><span class="post-toc-text">方法</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#传统web项目打war包"><span class="post-toc-text">传统web项目打war包</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Maven项目打war包"><span class="post-toc-text">Maven项目打war包</span></a></li></ol>
         </nav>
     </aside>
     
 
 <nav id="article-nav">
   
-    <a href="/2019/11/01/博客加载图片/" id="article-nav-newer" class="article-nav-link-wrap">
-
-      <span class="article-nav-title">
-        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
-        
-          博客加载图片
-        
-      </span>
-    </a>
   
-  
-    <a href="/2019/09/29/mysql存储过程编写/" id="article-nav-older" class="article-nav-link-wrap">
-      <span class="article-nav-title">mysql存储过程学习</span>
+    <a href="/2019/11/01/博客加载图片/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">博客加载图片</span>
       <i class="fa fa-hand-o-right" aria-hidden="true"></i>
     </a>
   
