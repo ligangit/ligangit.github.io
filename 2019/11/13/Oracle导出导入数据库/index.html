@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>Oracle导出导入数据库 | ligangit</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="LiGang,Li Gang,ligangit">
+  
+  <meta name="description" content="Oracle数据库导出1、查询地址​        查询数据库配置的地址 1select * from dba_directories;  2、导出​        进入Oracle服务器，打开CMD，运行导出命令。 语法：12345678910111213--语法expdp   oracle_user_name/oracle_user_pwd@ip:port/ ORACLE_SID     di">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Oracle导出导入数据库">
+<meta property="og:url" content="http://ligangit.com/2019/11/13/Oracle导出导入数据库/index.html">
+<meta property="og:site_name" content="ligangit">
+<meta property="og:description" content="Oracle数据库导出1、查询地址​        查询数据库配置的地址 1select * from dba_directories;  2、导出​        进入Oracle服务器，打开CMD，运行导出命令。 语法：12345678910111213--语法expdp   oracle_user_name/oracle_user_pwd@ip:port/ ORACLE_SID     di">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://ligangit.com/images/oracle/oracle_login.png">
+<meta property="og:image" content="http://ligangit.com/images/oracle/oracle_address.png">
+<meta property="og:image" content="http://ligangit.com/images/oracle/oracle_address.png">
+<meta property="og:updated_time" content="2019-11-13T10:08:00.950Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Oracle导出导入数据库">
+<meta name="twitter:description" content="Oracle数据库导出1、查询地址​        查询数据库配置的地址 1select * from dba_directories;  2、导出​        进入Oracle服务器，打开CMD，运行导出命令。 语法：12345678910111213--语法expdp   oracle_user_name/oracle_user_pwd@ip:port/ ORACLE_SID     di">
+<meta name="twitter:image" content="http://ligangit.com/images/oracle/oracle_login.png">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">Li Gang&#39;s blog</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="/">
+                        <i class="fa fa-home"></i>
+                        <span>主页</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>归档</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>关于</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/logo.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        Li Gang&#39;s blog
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        在码农的世界里挣扎的人
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="Li Gang" target="_blank" href="//ligangit.com">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/ligangit">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="联系QQ"  href="/">
+                            <i class="fa fa-qq fa-2x"></i></a>
+                    
+                        <a title="微信"  href="/">
+                            <i class="fa fa-weixin fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-Oracle导出导入数据库" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      Oracle导出导入数据库
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2019-11-13
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <h1 id="Oracle数据库导出"><a href="#Oracle数据库导出" class="headerlink" title="Oracle数据库导出"></a>Oracle数据库导出</h1><h2 id="1、查询地址"><a href="#1、查询地址" class="headerlink" title="1、查询地址"></a>1、查询地址</h2><p>​        查询数据库配置的地址</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> dba_directories;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2、导出"><a href="#2、导出" class="headerlink" title="2、导出"></a>2、导出</h2><p>​        进入Oracle服务器，打开CMD，运行导出命令。</p>
+<h4 id="语法："><a href="#语法：" class="headerlink" title="语法："></a>语法：</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--语法</span></span><br><span class="line">expdp   oracle_user_name/oracle_user_pwd@ip:port/ ORACLE_SID     directory=file_save_address  DUMPFILE=exprot_file_name.dmp  logfile=exprot_logfile_name.log REUSE_DUMPFILES = Y  version=version_num</span><br><span class="line"></span><br><span class="line"><span class="comment">--名词解释(这些名词都需要换成个人实际的信息)</span></span><br><span class="line"><span class="comment">--oracle_user_name   数据库用户名称</span></span><br><span class="line"><span class="comment">--oracle_user_pwd	 数据库用户密码</span></span><br><span class="line"><span class="comment">--ip	 ip地址（服务器ip地址，个人登录Oracle时填写的IP，也是数据库的ip地址）</span></span><br><span class="line"><span class="comment">--port	端口号</span></span><br><span class="line"><span class="comment">--ORACLE_SID	数据库实例</span></span><br><span class="line"><span class="comment">--file_save_address	数据库保存路径（是数据库配置地址的别名）</span></span><br><span class="line"><span class="comment">--exprot_file_name.dmp	导出数据库名称（.dmp不能更改）</span></span><br><span class="line"><span class="comment">--exprot_logfile_name.log 导出数据库生成的日志文件名称（.log不能更改）</span></span><br><span class="line"><span class="comment">--version_num	数据库版本 （version=version_num 可以不带上）</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="示例："><a href="#示例：" class="headerlink" title="示例："></a>示例：</h4><ol>
+<li>本人登录Oracle的用户信息：</li>
+</ol>
+<p><img src="/images/oracle/oracle_login.png" alt="oracle_login"></p>
+<p>​        2、执行SQL语句：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> dba_directories;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>得到地址信息：</li>
+</ol>
+<p>​    <img src="/images/oracle/oracle_address.png" alt="oracle_address"></p>
+<p>​        我选择将导出文件保存在<strong>G:\app\Administrator/admin/credit/dpdump/</strong>目录下，所以选择的file_save_address为<strong>DATA_PUMP_DIR</strong>，这个地址是Oracle服务器所安装的主机中的地址。</p>
+<ol start="3">
+<li>在Oracle服务器所安装的主机上运行CMD命令</li>
+</ol>
+<p>​        导出mydb用户下的数据库，并将地址保存在DATA_PUMP_DIR 目录下，导出文件名为mydb20191113_expdp.dmp ，导出的日志文件为mydb20191113_expdp.log，Oracle数据库版本为11.2.0.1.0</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--示例</span></span><br><span class="line">expdp   mydb/123456@192.168.168.138:1521/CREDIT     directory=DATA_PUMP_DIR  DUMPFILE=mydb20191113_expdp.dmp  logfile=mydb20191113_expdp.log REUSE_DUMPFILES = Y  version=11.2.0.1.0</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>注意：</li>
+</ol>
+<p>​        DATA_PUMP_DIR 是在Oracle管理工具中执行SQL语句后的地址信息中有一条地址名称。</p>
+<h1 id="Oracle数据库导入"><a href="#Oracle数据库导入" class="headerlink" title="Oracle数据库导入"></a>Oracle数据库导入</h1><h2 id="1、查询用户名"><a href="#1、查询用户名" class="headerlink" title="1、查询用户名"></a>1、查询用户名</h2><p>​    查询需要导入的数据库的用户名是否存在，如果不存在需要创建用户、创建表空间，创建好之后，再执行导入数据库操作；如果用户存在则直接执行导入数据库操作。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> dba_users;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2、创建用户、表空间"><a href="#2、创建用户、表空间" class="headerlink" title="2、创建用户、表空间"></a>2、创建用户、表空间</h2><h4 id="查询Oracle地址"><a href="#查询Oracle地址" class="headerlink" title="查询Oracle地址"></a>查询Oracle地址</h4><p>​    在执行创建用户、表空间之前，我们需要知道表空间的创建的地址，继续使用查询地址SQL（在需要导入的数据库中执行），查看Oracle的地址。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> dba_directories;</span><br></pre></td></tr></table></figure>
+
+<p>​    继续使用导出时的Oracle数据库：</p>
+<p>​    <img src="/images/oracle/oracle_address.png" alt="oracle_address"></p>
+<h4 id="语法：-1"><a href="#语法：-1" class="headerlink" title="语法："></a>语法：</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--创建表空间</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">tablespace</span> oracle_user_name <span class="keyword">datafile</span> <span class="string">'oracle_address/tablespace_name.DBF'</span> <span class="keyword">size</span> <span class="number">200</span>m <span class="keyword">reuse</span> <span class="keyword">autoextend</span> <span class="keyword">on</span> <span class="keyword">next</span> <span class="number">200</span>m <span class="keyword">maxsize</span> <span class="keyword">unlimited</span> <span class="keyword">default</span> <span class="keyword">storage</span>(<span class="keyword">initial</span> <span class="number">128</span>k <span class="keyword">next</span> <span class="number">128</span>k <span class="keyword">minextents</span> <span class="number">2</span> <span class="keyword">maxextents</span> <span class="keyword">unlimited</span>);</span><br><span class="line"><span class="comment">--创建表空间中的用户</span></span><br><span class="line"><span class="keyword">create</span> <span class="keyword">user</span> user_name <span class="keyword">identified</span> <span class="keyword">by</span> user_password <span class="keyword">default</span> <span class="keyword">tablespace</span> tablespace_name;</span><br><span class="line"><span class="comment">--授权</span></span><br><span class="line"><span class="keyword">grant</span> dba,<span class="keyword">connect</span>,<span class="keyword">resource</span>,<span class="keyword">create</span> <span class="keyword">any</span> <span class="keyword">table</span>,<span class="keyword">select</span> <span class="keyword">any</span> <span class="keyword">table</span>,<span class="keyword">update</span> <span class="keyword">any</span> <span class="keyword">table</span>,<span class="keyword">insert</span> <span class="keyword">any</span> <span class="keyword">table</span>,<span class="keyword">delete</span> <span class="keyword">any</span> <span class="keyword">table</span> ,<span class="keyword">drop</span> <span class="keyword">any</span> <span class="keyword">table</span> <span class="keyword">to</span> tablespace_name;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">--名词解释(这些名词都可以换成自己需要的)</span></span><br><span class="line"><span class="comment">--oracle_address	查询数据库地址时的地址，也是导入文件存放的地址</span></span><br><span class="line"><span class="comment">--tablespace_name	表空间名称</span></span><br><span class="line"><span class="comment">--user_name		用户名</span></span><br><span class="line"><span class="comment">--user_password	用户密码</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="示例：-1"><a href="#示例：-1" class="headerlink" title="示例："></a>示例：</h4><p>​    我选择在<strong>E:/export_dir</strong>目录下创建表空间qydj，用户名为qydj，密码为1。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">tablespace</span> NECIPS_ZSTZSB <span class="keyword">datafile</span> <span class="string">'E:/export_dir/qydj.DBF'</span> <span class="keyword">size</span> <span class="number">200</span>m <span class="keyword">reuse</span> <span class="keyword">autoextend</span> <span class="keyword">on</span> <span class="keyword">next</span> <span class="number">200</span>m <span class="keyword">maxsize</span> <span class="keyword">unlimited</span> <span class="keyword">default</span> <span class="keyword">storage</span>(<span class="keyword">initial</span> <span class="number">128</span>k <span class="keyword">next</span> <span class="number">128</span>k <span class="keyword">minextents</span> <span class="number">2</span> <span class="keyword">maxextents</span> <span class="keyword">unlimited</span>);</span><br><span class="line"><span class="keyword">create</span> <span class="keyword">user</span> qydj <span class="keyword">identified</span> <span class="keyword">by</span> <span class="number">1</span> <span class="keyword">default</span> <span class="keyword">tablespace</span> qydj;</span><br><span class="line"><span class="keyword">grant</span> dba,<span class="keyword">connect</span>,<span class="keyword">resource</span>,<span class="keyword">create</span> <span class="keyword">any</span> <span class="keyword">table</span>,<span class="keyword">select</span> <span class="keyword">any</span> <span class="keyword">table</span>,<span class="keyword">update</span> <span class="keyword">any</span> <span class="keyword">table</span>,<span class="keyword">insert</span> <span class="keyword">any</span> <span class="keyword">table</span>,<span class="keyword">delete</span> <span class="keyword">any</span> <span class="keyword">table</span> ,<span class="keyword">drop</span> <span class="keyword">any</span> <span class="keyword">table</span> <span class="keyword">to</span> qydj;</span><br></pre></td></tr></table></figure>
+
+<h2 id="导入数据"><a href="#导入数据" class="headerlink" title="导入数据"></a>导入数据</h2><ol>
+<li><p>首先将需要导入的数据库文件复制到Oracle的一个地址目录下；</p>
+</li>
+<li><p>执行CMD导入命令。</p>
+</li>
+</ol>
+<h4 id="语法：-2"><a href="#语法：-2" class="headerlink" title="语法："></a>语法：</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">impdp  user_name/user_password    directory=EXPORT_DIR  dumpfile=exprot_file_name.DMP   remap_schema=old_schema:new_schema  remap_tablespace=old_tablespace:new_tablespace     logfile=import_file_log.log</span><br><span class="line"></span><br><span class="line"><span class="comment">--名词解释(这些名词都换成自己实际的内容)</span></span><br><span class="line"><span class="comment">--user_name		刚创建的用户名</span></span><br><span class="line"><span class="comment">--user_password	刚创建的用户的密码</span></span><br><span class="line"><span class="comment">--oracle_address	需要导入的数据库的文件地址（这个地址是在oracle中配置好的，我们将数据库的.dmp文件复制到这个目录下）</span></span><br><span class="line"><span class="comment">--old_schema		模式名称（一般为导入数据库的用户名）</span></span><br><span class="line"><span class="comment">--new_schema		模式名称（一般为刚创建的用户名）</span></span><br><span class="line"><span class="comment">--old_tablespace	表空间（导入数据库的表空间）</span></span><br><span class="line"><span class="comment">--new_tablespace	表空间（刚创建的表空间）</span></span><br><span class="line"><span class="comment">--import_file_log	日志文件（导入操作生成的日志文件）</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="示例：-2"><a href="#示例：-2" class="headerlink" title="示例："></a>示例：</h4><p>​    将之前导出的数据库导入到上一步创建的qydj用户下。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">impdp  qydj/1    directory=oracle_address  dumpfile=mydb20191113_expdp.DMP   remap_schema=mydb:qydj  remap_tablespace=mydb:qydj     logfile=qydj20191113.log</span><br></pre></td></tr></table></figure>
+
+<p>​    <strong>注意：</strong></p>
+<p>​    我们在导入的时候可能会报用户名已存在，视图、存储过程报错（已编译，但有警告），这些是没关系的，这些可能是我们的视图、存储过程跨用户查询了数据。</p>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2019年11月13日 18:08</p>
+        <p>原始链接： <a class="post-url" href="/2019/11/13/Oracle导出导入数据库/" title="Oracle导出导入数据库">http://ligangit.com/2019/11/13/Oracle导出导入数据库/</a></p>
+        <footer>
+            <a href="http://ligangit.com">
+                <img src="/images/logo.png" alt="Li Gang">
+                Li Gang
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://ligangit.com/2019/11/13/Oracle导出导入数据库/&title=《Oracle导出导入数据库》 — ligangit&pic=http://ligangit.comimages/logo.png" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://ligangit.com/2019/11/13/Oracle导出导入数据库/&title=《Oracle导出导入数据库》 — ligangit&source=在码农的世界里面默默的挣扎着" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://ligangit.com/2019/11/13/Oracle导出导入数据库/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Oracle导出导入数据库》 — ligangit&url=http://ligangit.com/2019/11/13/Oracle导出导入数据库/&via=http://ligangit.com" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://ligangit.com/2019/11/13/Oracle导出导入数据库/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://ligangit.com/2019/11/13/Oracle导出导入数据库/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Oracle数据库导出"><span class="post-toc-text">Oracle数据库导出</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1、查询地址"><span class="post-toc-text">1、查询地址</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2、导出"><span class="post-toc-text">2、导出</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#语法："><span class="post-toc-text">语法：</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#示例："><span class="post-toc-text">示例：</span></a></li></ol></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Oracle数据库导入"><span class="post-toc-text">Oracle数据库导入</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1、查询用户名"><span class="post-toc-text">1、查询用户名</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2、创建用户、表空间"><span class="post-toc-text">2、创建用户、表空间</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#查询Oracle地址"><span class="post-toc-text">查询Oracle地址</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#语法：-1"><span class="post-toc-text">语法：</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#示例：-1"><span class="post-toc-text">示例：</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#导入数据"><span class="post-toc-text">导入数据</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#语法：-2"><span class="post-toc-text">语法：</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#示例：-2"><span class="post-toc-text">示例：</span></a></li></ol></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+  
+    <a href="/2019/11/06/idea打开新Web项目并运行/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">idea打开新Web项目并运行</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2019 Li Gang<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "http://ligangit.com",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/java/">java</a><a class="category-link" href="/categories/mysql/">mysql</a><a class="category-link" href="/categories/博客/">博客</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/idea/" style="font-size: 15px;">idea</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/markdown/" style="font-size: 15px;">markdown</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/web/" style="font-size: 15px;">web</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="/">
+                    <i class="fa fa-home"></i><span>主页</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>归档</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>关于</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/idea/" style="font-size: 15px;">idea</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/markdown/" style="font-size: 15px;">markdown</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/web/" style="font-size: 15px;">web</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>
