@@ -3,36 +3,30 @@
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
   
-  <title>idea打开新Web项目并运行 | ligangit</title>
+  <title>Oracle判断值相等 | ligangit</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
     <meta name="keywords" content="LiGang,Li Gang,ligangit">
   
-  <meta name="description" content="​    记得刚开始使用idea的时候，拿到一个web项目，却不知道怎么跑起来，这几天打开完整的Web项目有点多，而且一开始也忘记了怎么配置，今天就写了这篇博客。 一、配置Web结构（设置war包）1、使用IDEA打开项目，进入Project Structure点击File，选择Project Structure，操作如下图：  2、添加Modules点击Modules，然后点击”十“按钮，选择W">
-<meta name="keywords" content="java,idea,web">
+  <meta name="description" content="Oracle判断两个数据是否相等1、表数据student表：  middle表：  2、判断两个都不可能为空数据直接使用 “=”： 1select * from student s,middle sc where s.sid=sc.sid  结果如下：  3、判断两个可能为空的数据继续使用“=”，发现为NULL数据不能判断相等 12select * from student s,middle sc">
+<meta name="keywords" content="oracle,sql">
 <meta property="og:type" content="article">
-<meta property="og:title" content="idea打开新Web项目并运行">
-<meta property="og:url" content="http://ligangit.com/2019/11/06/idea打开新Web项目并运行/index.html">
+<meta property="og:title" content="Oracle判断值相等">
+<meta property="og:url" content="http://ligangit.com/2020/03/24/Oracle判断值相等/index.html">
 <meta property="og:site_name" content="ligangit">
-<meta property="og:description" content="​    记得刚开始使用idea的时候，拿到一个web项目，却不知道怎么跑起来，这几天打开完整的Web项目有点多，而且一开始也忘记了怎么配置，今天就写了这篇博客。 一、配置Web结构（设置war包）1、使用IDEA打开项目，进入Project Structure点击File，选择Project Structure，操作如下图：  2、添加Modules点击Modules，然后点击”十“按钮，选择W">
+<meta property="og:description" content="Oracle判断两个数据是否相等1、表数据student表：  middle表：  2、判断两个都不可能为空数据直接使用 “=”： 1select * from student s,middle sc where s.sid=sc.sid  结果如下：  3、判断两个可能为空的数据继续使用“=”，发现为NULL数据不能判断相等 12select * from student s,middle sc">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://ligangit.com/images/idea_open_run/project_structure.png">
-<meta property="og:image" content="http://ligangit.com/images/idea_open_run/add_web.png">
-<meta property="og:image" content="http://ligangit.com/images/idea_open_run/update_modules.png">
-<meta property="og:image" content="http://ligangit.com/images/idea_open_run/artifacts_add.png">
-<meta property="og:image" content="http://ligangit.com/images/idea_open_run/select_modules.png">
-<meta property="og:image" content="http://ligangit.com/images/idea_open_run/add_jar.png">
-<meta property="og:image" content="http://ligangit.com/images/idea_open_run/select_jar.png">
-<meta property="og:image" content="http://ligangit.com/images/idea_open_run/jar_modules.png">
-<meta property="og:image" content="http://ligangit.com/images/idea_open_run/add_tomcat.png">
-<meta property="og:image" content="http://ligangit.com/images/idea_open_run/config_tomcat.png">
-<meta property="og:image" content="http://ligangit.com/images/idea_open_run/add_fix.png">
-<meta property="og:image" content="http://ligangit.com/images/idea_open_run/success.png">
-<meta property="og:updated_time" content="2019-11-08T08:02:34.411Z">
+<meta property="og:image" content="http://ligangit.com/images/oracle/oracle_equal_student.png">
+<meta property="og:image" content="http://ligangit.com/images/oracle/oracle_equal_middle.png">
+<meta property="og:image" content="http://ligangit.com/images/oracle/oracle_equal_result1.png">
+<meta property="og:image" content="http://ligangit.com/images/oracle/oracle_equal_result2.png">
+<meta property="og:image" content="http://ligangit.com/images/oracle/oracle_equal_result3.png">
+<meta property="og:image" content="http://ligangit.com/images/oracle/oracle_equal_result4.png">
+<meta property="og:updated_time" content="2020-03-24T03:37:08.495Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="idea打开新Web项目并运行">
-<meta name="twitter:description" content="​    记得刚开始使用idea的时候，拿到一个web项目，却不知道怎么跑起来，这几天打开完整的Web项目有点多，而且一开始也忘记了怎么配置，今天就写了这篇博客。 一、配置Web结构（设置war包）1、使用IDEA打开项目，进入Project Structure点击File，选择Project Structure，操作如下图：  2、添加Modules点击Modules，然后点击”十“按钮，选择W">
-<meta name="twitter:image" content="http://ligangit.com/images/idea_open_run/project_structure.png">
+<meta name="twitter:title" content="Oracle判断值相等">
+<meta name="twitter:description" content="Oracle判断两个数据是否相等1、表数据student表：  middle表：  2、判断两个都不可能为空数据直接使用 “=”： 1select * from student s,middle sc where s.sid=sc.sid  结果如下：  3、判断两个可能为空的数据继续使用“=”，发现为NULL数据不能判断相等 12select * from student s,middle sc">
+<meta name="twitter:image" content="http://ligangit.com/images/oracle/oracle_equal_student.png">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -123,14 +117,14 @@
     </div>
 </header>
       <div class="outer">
-        <section id="main" class="body-wrap"><article id="post-idea打开新Web项目并运行" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main" class="body-wrap"><article id="post-Oracle判断值相等" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="post-title" itemprop="name">
-      idea打开新Web项目并运行
+      Oracle判断值相等
     </h1>
     <div class="post-title-bar">
       <ul>
@@ -138,12 +132,12 @@
               <li>
                   <i class="fa fa-book"></i>
                   
-                      <a href="/categories/java/">java</a>
+                      <a href="/categories/sql/">sql</a>
                   
               </li>
           
         <li>
-          <i class="fa fa-calendar"></i>  2019-11-06
+          <i class="fa fa-calendar"></i>  2020-03-24
         </li>
         <li>
           <i class="fa fa-eye"></i>
@@ -159,43 +153,36 @@
     <div class="article-entry post-content" itemprop="articleBody">
       
             
-            <p>​    记得刚开始使用idea的时候，拿到一个web项目，却不知道怎么跑起来，这几天打开完整的Web项目有点多，而且一开始也忘记了怎么配置，今天就写了这篇博客。</p>
-<h2 id="一、配置Web结构（设置war包）"><a href="#一、配置Web结构（设置war包）" class="headerlink" title="一、配置Web结构（设置war包）"></a>一、配置Web结构（设置war包）</h2><h4 id="1、使用IDEA打开项目，进入Project-Structure"><a href="#1、使用IDEA打开项目，进入Project-Structure" class="headerlink" title="1、使用IDEA打开项目，进入Project Structure"></a>1、使用IDEA打开项目，进入Project Structure</h4><p>点击File，选择Project Structure，操作如下图：</p>
-<p><img src="/images/idea_open_run/project_structure.png" alt="project_structure"></p>
-<h4 id="2、添加Modules"><a href="#2、添加Modules" class="headerlink" title="2、添加Modules"></a>2、添加Modules</h4><p>点击Modules，然后点击”十“按钮，选择Web，操作如下图：</p>
-<p><img src="/images/idea_open_run/add_web.png" alt="add_web"></p>
-<p>点击Web后会得到下面的效果图，在在图中我修改好了web.xml文件路径、根路径，我们将红色框中的内容改为自己web项目中web.xml的路径信息就可以了：</p>
-<p><img src="/images/idea_open_run/update_modules.png" alt="update_modules"></p>
-<h4 id="3、添加Artifacts"><a href="#3、添加Artifacts" class="headerlink" title="3、添加Artifacts"></a>3、添加Artifacts</h4><p>点击Artifacts，然后点击”十“按钮，选择Web Application:Exploded，点击 From Modules…，然后会弹出选择Modules框，操作如下图：</p>
-<p><img src="/images/idea_open_run/artifacts_add.png" alt="artifacts_add"></p>
-<p>选择我们刚创建号的Modules，点击OK，如下图：</p>
-<p><img src="/images/idea_open_run/select_modules.png" alt="select_modules"></p>
-<h4 id="4、添加jar包"><a href="#4、添加jar包" class="headerlink" title="4、添加jar包"></a>4、添加jar包</h4><p>点击Libraris，然后点击”十“按钮，选择Java，操作如下图：</p>
-<p><img src="/images/idea_open_run/add_jar.png" alt="add_jar"></p>
-<p>选择jar包，jar包在WEB-INF文件夹下的lib文件夹中，我们可以之间选择lib文件夹，也可以选择lib中的jar包，选择之后会弹出选择Modules框，点击OK就可以了，操作如下图：</p>
-<p><img src="/images/idea_open_run/select_jar.png" alt="select_jar"></p>
-<p><img src="/images/idea_open_run/jar_modules.png" alt="jar_modules"></p>
-<h4 id="5、点击Apply，点击OK"><a href="#5、点击Apply，点击OK" class="headerlink" title="5、点击Apply，点击OK"></a>5、点击Apply，点击OK</h4><h2 id="二、配置tomcat"><a href="#二、配置tomcat" class="headerlink" title="二、配置tomcat"></a>二、配置tomcat</h2><h4 id="1、添加tomcat-sercer"><a href="#1、添加tomcat-sercer" class="headerlink" title="1、添加tomcat sercer"></a>1、添加tomcat sercer</h4><p>点击Add Configuration，再点击“十”按钮，然后将鼠标焦点放置在Tomcat Server上，选择Local，进入Tomcat信息配置窗口，操作如下图：</p>
-<p><img src="/images/idea_open_run/add_tomcat.png" alt="add_tomcat"></p>
-<h4 id="2、配置Tomcat信息"><a href="#2、配置Tomcat信息" class="headerlink" title="2、配置Tomcat信息"></a>2、配置Tomcat信息</h4><p>弹出的Tomcat信息窗口如下图：</p>
-<p><img src="/images/idea_open_run/config_tomcat.png" alt="config_tomcat"></p>
-<p>第一项 是设置的IDEA显示的Tomcat名称；</p>
-<p>第二项 是自己的Tomcat版本；</p>
-<p>第三项 是JRE，可以选择自己安装的JDK下的jre文件</p>
-<p>第四项 是运行的web包，即之前配置的war包</p>
-<p>我们需要点击Fix，添加运行的war包，点击Fix后，出现如下界面：</p>
-<p><img src="/images/idea_open_run/add_fix.png" alt="add_fix"></p>
-<p>在这里我们可以修改项目访问路径，如果像上面的界面一样，那么访问项目的URL就是：</p>
-<p> <a href="http://localhost:8080/zhirong_wisdomFire_war_exploded" target="_blank" rel="noopener">http://localhost:8080/zhirong_wisdomFire_war_exploded</a> </p>
-<p>其中“/zhirong_wisdomFire_war_exploded ”就是8080后面的项目路径，我们可以修改成自己想要的值，如“/”，那么访问地址就是： <a href="http://localhost:8080/" target="_blank" rel="noopener">http://localhost:8080/</a></p>
-<h4 id="3、最后点击“Apply”，点击”OK“"><a href="#3、最后点击“Apply”，点击”OK“" class="headerlink" title="3、最后点击“Apply”，点击”OK“"></a>3、最后点击“Apply”，点击”OK“</h4><p>得到如下界面</p>
-<p><img src="/images/idea_open_run/success.png" alt="success"></p>
-<p>我们点击红色方框中的绿色三角形按钮，即“启动”按钮就可以启动项目了。</p>
+            <h1 id="Oracle判断两个数据是否相等"><a href="#Oracle判断两个数据是否相等" class="headerlink" title="Oracle判断两个数据是否相等"></a>Oracle判断两个数据是否相等</h1><h2 id="1、表数据"><a href="#1、表数据" class="headerlink" title="1、表数据"></a>1、表数据</h2><p>student表：</p>
+<p><img src="/images/oracle/oracle_equal_student.png" alt="oracle_address"></p>
+<p>middle表：</p>
+<p><img src="/images/oracle/oracle_equal_middle.png" alt="oracle_address"></p>
+<h2 id="2、判断两个都不可能为空数据"><a href="#2、判断两个都不可能为空数据" class="headerlink" title="2、判断两个都不可能为空数据"></a>2、判断两个都不可能为空数据</h2><p>直接使用 “=”：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> student s,middle sc <span class="keyword">where</span> s.sid=sc.sid</span><br></pre></td></tr></table></figure>
+
+<p>结果如下：</p>
+<p><img src="/images/oracle/oracle_equal_result1.png" alt="oracle_address"></p>
+<h2 id="3、判断两个可能为空的数据"><a href="#3、判断两个可能为空的数据" class="headerlink" title="3、判断两个可能为空的数据"></a>3、判断两个可能为空的数据</h2><p>继续使用“=”，发现<strong>为NULL数据不能判断相等</strong></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> student s,middle sc <span class="keyword">where</span> s.sid=sc.sid</span><br><span class="line">	<span class="keyword">and</span> s.email=sc.email</span><br></pre></td></tr></table></figure>
+
+<p>结果如下：</p>
+<p><img src="/images/oracle/oracle_equal_result2.png" alt="oracle_address"></p>
+<p>使用 NVL 函数：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> student,sc <span class="keyword">where</span> student.sid=sc.sid</span><br><span class="line"> <span class="keyword">and</span>  NVL(student.email,<span class="number">0</span>)  =  NVL(sc.email,<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
+<p>结果如下：</p>
+<p><img src="/images/oracle/oracle_equal_result3.png" alt="oracle_address"></p>
+<h2 id="4、NVL函数"><a href="#4、NVL函数" class="headerlink" title="4、NVL函数"></a>4、NVL函数</h2><p><strong>NVL函数的格式如下：NVL(expr1,expr2)</strong></p>
+<p>含义是：如果oracle第一个参数为空那么显示第二个参数的值，如果第一个参数的值不为空，则显示第一个参数本来的值。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> sname, NVL(email, <span class="string">'123456@qq.com'</span>) <span class="keyword">from</span> student</span><br></pre></td></tr></table></figure>
+
+<p>结果如下：</p>
+<p><img src="/images/oracle/oracle_equal_result4.png" alt="oracle_address"></p>
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2019年11月08日 16:02</p>
-        <p>原始链接： <a class="post-url" href="/2019/11/06/idea打开新Web项目并运行/" title="idea打开新Web项目并运行">http://ligangit.com/2019/11/06/idea打开新Web项目并运行/</a></p>
+        <p>最后更新： 2020年03月24日 11:37</p>
+        <p>原始链接： <a class="post-url" href="/2020/03/24/Oracle判断值相等/" title="Oracle判断值相等">http://ligangit.com/2020/03/24/Oracle判断值相等/</a></p>
         <footer>
             <a href="http://ligangit.com">
                 <img src="/images/logo.png" alt="Li Gang">
@@ -252,7 +239,7 @@
     <div class="post-share-list" id="share-list">
         <ul class="share-icons">
           <li>
-            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://ligangit.com/2019/11/06/idea打开新Web项目并运行/&title=《idea打开新Web项目并运行》 — ligangit&pic=images/idea.png" data-title="微博">
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://ligangit.com/2020/03/24/Oracle判断值相等/&title=《Oracle判断值相等》 — ligangit&pic=images/oracle.jpg" data-title="微博">
               <i class="fa fa-weibo"></i>
             </a>
           </li>
@@ -262,22 +249,22 @@
             </a>
           </li>
           <li>
-            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://ligangit.com/2019/11/06/idea打开新Web项目并运行/&title=《idea打开新Web项目并运行》 — ligangit&source=在码农的世界里面默默的挣扎着" data-title="QQ">
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://ligangit.com/2020/03/24/Oracle判断值相等/&title=《Oracle判断值相等》 — ligangit&source=在码农的世界里面默默的挣扎着" data-title="QQ">
               <i class="fa fa-qq"></i>
             </a>
           </li>
           <li>
-            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://ligangit.com/2019/11/06/idea打开新Web项目并运行/" data-title="Facebook">
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://ligangit.com/2020/03/24/Oracle判断值相等/" data-title="Facebook">
               <i class="fa fa-facebook"></i>
             </a>
           </li>
           <li>
-            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《idea打开新Web项目并运行》 — ligangit&url=http://ligangit.com/2019/11/06/idea打开新Web项目并运行/&via=http://ligangit.com" data-title="Twitter">
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Oracle判断值相等》 — ligangit&url=http://ligangit.com/2020/03/24/Oracle判断值相等/&via=http://ligangit.com" data-title="Twitter">
               <i class="fa fa-twitter"></i>
             </a>
           </li>
           <li>
-            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://ligangit.com/2019/11/06/idea打开新Web项目并运行/" data-title="Google+">
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://ligangit.com/2020/03/24/Oracle判断值相等/" data-title="Google+">
               <i class="fa fa-google-plus"></i>
             </a>
           </li>
@@ -287,7 +274,7 @@
 <div class="post-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;" id="wxShare-close">×</a>
     <p>扫一扫，分享到微信</p>
-    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://ligangit.com/2019/11/06/idea打开新Web项目并运行/" alt="微信分享二维码">
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://ligangit.com/2020/03/24/Oracle判断值相等/" alt="微信分享二维码">
 </div>
 
 <div class="mask"></div>
@@ -299,11 +286,9 @@
   <li class="article-footer-tags">
     <i class="fa fa-tags"></i>
       
-    <a href="/tags/java/" class="color5">java</a>
+    <a href="/tags/oracle/" class="color2">oracle</a>
       
-    <a href="/tags/idea/" class="color5">idea</a>
-      
-    <a href="/tags/web/" class="color4">web</a>
+    <a href="/tags/sql/" class="color4">sql</a>
       
   </li>
 
@@ -316,26 +301,16 @@
 
     <aside class="post-toc-pos post-toc-top" id="post-toc">
         <nav class="post-toc-wrap">
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#一、配置Web结构（设置war包）"><span class="post-toc-text">一、配置Web结构（设置war包）</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1、使用IDEA打开项目，进入Project-Structure"><span class="post-toc-text">1、使用IDEA打开项目，进入Project Structure</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2、添加Modules"><span class="post-toc-text">2、添加Modules</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3、添加Artifacts"><span class="post-toc-text">3、添加Artifacts</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#4、添加jar包"><span class="post-toc-text">4、添加jar包</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#5、点击Apply，点击OK"><span class="post-toc-text">5、点击Apply，点击OK</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#二、配置tomcat"><span class="post-toc-text">二、配置tomcat</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#1、添加tomcat-sercer"><span class="post-toc-text">1、添加tomcat sercer</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#2、配置Tomcat信息"><span class="post-toc-text">2、配置Tomcat信息</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#3、最后点击“Apply”，点击”OK“"><span class="post-toc-text">3、最后点击“Apply”，点击”OK“</span></a></li></ol></li></ol></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Oracle判断两个数据是否相等"><span class="post-toc-text">Oracle判断两个数据是否相等</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1、表数据"><span class="post-toc-text">1、表数据</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2、判断两个都不可能为空数据"><span class="post-toc-text">2、判断两个都不可能为空数据</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3、判断两个可能为空的数据"><span class="post-toc-text">3、判断两个可能为空的数据</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#4、NVL函数"><span class="post-toc-text">4、NVL函数</span></a></li></ol></li></ol>
         </nav>
     </aside>
     
 
 <nav id="article-nav">
   
-    <a href="/2019/11/13/Oracle导出导入数据库/" id="article-nav-newer" class="article-nav-link-wrap">
-
-      <span class="article-nav-title">
-        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
-        
-          Oracle导出导入数据库
-        
-      </span>
-    </a>
   
-  
-    <a href="/2019/11/04/idea对web项目打war包/" id="article-nav-older" class="article-nav-link-wrap">
-      <span class="article-nav-title">idea对web项目打war包</span>
+    <a href="/2020/03/20/Spring学习-Bean配置/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">Spring学习-Bean配置</span>
       <i class="fa fa-hand-o-right" aria-hidden="true"></i>
     </a>
   
