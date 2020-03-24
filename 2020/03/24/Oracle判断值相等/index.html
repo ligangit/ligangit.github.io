@@ -22,7 +22,7 @@
 <meta property="og:image" content="http://ligangit.com/images/oracle/oracle_equal_result2.png">
 <meta property="og:image" content="http://ligangit.com/images/oracle/oracle_equal_result3.png">
 <meta property="og:image" content="http://ligangit.com/images/oracle/oracle_equal_result4.png">
-<meta property="og:updated_time" content="2020-03-24T03:37:08.495Z">
+<meta property="og:updated_time" content="2020-03-24T03:46:54.147Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Oracle判断值相等">
 <meta name="twitter:description" content="Oracle判断两个数据是否相等1、表数据student表：  middle表：  2、判断两个都不可能为空数据直接使用 “=”： 1select * from student s,middle sc where s.sid=sc.sid  结果如下：  3、判断两个可能为空的数据继续使用“=”，发现为NULL数据不能判断相等 12select * from student s,middle sc">
@@ -178,10 +178,13 @@
 
 <p>结果如下：</p>
 <p><img src="/images/oracle/oracle_equal_result4.png" alt="oracle_address"></p>
+<p><strong>注意：</strong></p>
+<p>NVL(expr1,expr2)，expr1为变量，expr2为当expr1为空时，设置的默认值（一般为0）；</p>
+<p>其中：<strong>NVL(expr1, 0)和NVL(expr1, ‘0’)的效果一样</strong>，最终expr1为空时值结果都为<strong>字符串‘0’</strong>。</p>
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2020年03月24日 11:37</p>
+        <p>最后更新： 2020年03月24日 11:46</p>
         <p>原始链接： <a class="post-url" href="/2020/03/24/Oracle判断值相等/" title="Oracle判断值相等">http://ligangit.com/2020/03/24/Oracle判断值相等/</a></p>
         <footer>
             <a href="http://ligangit.com">
