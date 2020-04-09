@@ -3,22 +3,35 @@
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
   
-  <title>Spring学习-Bean配置 | ligangit</title>
+  <title>java数据库保存文件路径注意事项 | ligangit</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
     <meta name="keywords" content="LiGang,Li Gang,ligangit">
   
-  <meta name="description" content="在码农的世界里面默默的挣扎着">
+  <meta name="description" content="Java上传或下载文件路径存储数据库注意事项数据库中存储全路径易造成读取文件为空​    我们使用java下载或上传文件，文件路径一般都是保存在数据库中，如在数据库中建一张和此文件相关的表，其中包含文件路径字段。 ​    我们上传或下载文件的时候一般都是使用绝对路径，如: D:/files/img1.png，而且我们在数据库中也直接把这整个绝对路径存储在里面了。 ​    这就可能导致文件读取是">
+<meta name="keywords" content="sql,java">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Spring学习-Bean配置">
-<meta property="og:url" content="http://ligangit.com/2020/03/20/Spring学习-Bean配置/index.html">
+<meta property="og:title" content="java数据库保存文件路径注意事项">
+<meta property="og:url" content="http://ligangit.com/2020/04/09/java数据库保存文件路径注意事项/index.html">
 <meta property="og:site_name" content="ligangit">
-<meta property="og:description" content="在码农的世界里面默默的挣扎着">
+<meta property="og:description" content="Java上传或下载文件路径存储数据库注意事项数据库中存储全路径易造成读取文件为空​    我们使用java下载或上传文件，文件路径一般都是保存在数据库中，如在数据库中建一张和此文件相关的表，其中包含文件路径字段。 ​    我们上传或下载文件的时候一般都是使用绝对路径，如: D:/files/img1.png，而且我们在数据库中也直接把这整个绝对路径存储在里面了。 ​    这就可能导致文件读取是">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-03-20T06:50:14.361Z">
+<meta property="og:image" content="http://ligangit.com/images/SaveURL/save_url1.png">
+<meta property="og:image" content="http://ligangit.com/images/SaveURL/save_url2.png">
+<meta property="og:image" content="http://ligangit.com/images/SaveURL/save_url3.png">
+<meta property="og:image" content="http://ligangit.com/images/SaveURL/save_url4.png">
+<meta property="og:image" content="http://ligangit.com/images/SaveURL/save_url5.png">
+<meta property="og:image" content="http://ligangit.com/images/SaveURL/save_url8.png">
+<meta property="og:image" content="http://ligangit.com/images/SaveURL/save_url9.png">
+<meta property="og:image" content="http://ligangit.com/images/SaveURL/save_url6.png">
+<meta property="og:image" content="http://ligangit.com/images/SaveURL/save_url7.png">
+<meta property="og:image" content="http://ligangit.com/images/SaveURL/save_url4.png">
+<meta property="og:image" content="http://ligangit.com/images/SaveURL/save_url5.png">
+<meta property="og:updated_time" content="2020-04-09T08:56:18.435Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Spring学习-Bean配置">
-<meta name="twitter:description" content="在码农的世界里面默默的挣扎着">
+<meta name="twitter:title" content="java数据库保存文件路径注意事项">
+<meta name="twitter:description" content="Java上传或下载文件路径存储数据库注意事项数据库中存储全路径易造成读取文件为空​    我们使用java下载或上传文件，文件路径一般都是保存在数据库中，如在数据库中建一张和此文件相关的表，其中包含文件路径字段。 ​    我们上传或下载文件的时候一般都是使用绝对路径，如: D:/files/img1.png，而且我们在数据库中也直接把这整个绝对路径存储在里面了。 ​    这就可能导致文件读取是">
+<meta name="twitter:image" content="http://ligangit.com/images/SaveURL/save_url1.png">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -109,20 +122,27 @@
     </div>
 </header>
       <div class="outer">
-        <section id="main" class="body-wrap"><article id="post-Spring学习-Bean配置" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main" class="body-wrap"><article id="post-java数据库保存文件路径注意事项" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="post-title" itemprop="name">
-      Spring学习-Bean配置
+      java数据库保存文件路径注意事项
     </h1>
     <div class="post-title-bar">
       <ul>
           
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/java/">java</a>
+                  
+              </li>
+          
         <li>
-          <i class="fa fa-calendar"></i>  2020-03-20
+          <i class="fa fa-calendar"></i>  2020-04-09
         </li>
         <li>
           <i class="fa fa-eye"></i>
@@ -138,11 +158,51 @@
     <div class="article-entry post-content" itemprop="articleBody">
       
             
-            
+            <h1 id="Java上传或下载文件路径存储数据库注意事项"><a href="#Java上传或下载文件路径存储数据库注意事项" class="headerlink" title="Java上传或下载文件路径存储数据库注意事项"></a>Java上传或下载文件路径存储数据库注意事项</h1><h2 id="数据库中存储全路径易造成读取文件为空"><a href="#数据库中存储全路径易造成读取文件为空" class="headerlink" title="数据库中存储全路径易造成读取文件为空"></a>数据库中存储全路径易造成读取文件为空</h2><p>​    我们使用java下载或上传文件，文件路径一般都是保存在数据库中，如在数据库中建一张和此文件相关的表，其中包含文件路径字段。</p>
+<p>​    我们上传或下载文件的时候一般都是使用绝对路径，如: D:/files/img1.png，而且我们在数据库中也直接把这整个绝对路径存储在里面了。</p>
+<p>​    这就可能导致文件读取是因路径问题导致读取出来的文件为空。</p>
+<p>​    特别是<strong>磁盘挂载</strong>后，很容易造成读取、下载出来的文件内容是空的。</p>
+<p>​    注：磁盘挂载</p>
+<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>​    当我们上传和下载的方法不在同一个服务器上的时候，我们上传的路径可能是 D:/files/Apk/线上4_8.apk ，并且保存在数据库中：</p>
+<p><img src="/images/SaveURL/save_url1.png" alt="打开结构目录"></p>
+<p>我们下载时读取的是数据库中的绝对路径，从数据库中得到了文件所在路径为D:/files/Apk/线上4_8.apk ，但是下载接口在另外一台服务器上，我们采用了<strong>磁盘挂载</strong>后，在下载接口所在服务器访问上传的文件所在的路径为Z:/Apk/线上4_8.apk，</p>
+<p><img src="/images/SaveURL/save_url2.png" alt="打开结构目录"></p>
+<p>当我们下载时，下载接口读取的路劲为D:/files/Apk/线上4_8.apk ，实际需要为Z:/Apk/线上4_8.apk，所以造成了下载的文件为空。</p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><ol>
+<li>改数据库存储：</li>
+</ol>
+<p>​    数据库中存放的文件路径为文件名称，或者文件夹+/+文件名称</p>
+<p><img src="/images/SaveURL/save_url3.png" alt="打开结构目录"></p>
+<ol start="2">
+<li><p>改java后台路径获取代码</p>
+<p>我们将绝对路径的盘符放在配置文件中，当我们读取、上传、下载的时候<strong>从配置文件中获取盘符，将盘符和文件名一起组成绝对路径</strong>。</p>
+<p>如：配置文件添加属性 uploadApk</p>
+<p><img src="/images/SaveURL/save_url4.png" alt="打开结构目录"></p>
+<p><img src="/images/SaveURL/save_url5.png" alt="打开结构目录"></p>
+<p><strong>修改前</strong>上传保存数据库java代码：</p>
+<p><img src="/images/SaveURL/save_url8.png" alt="打开结构目录"></p>
+<p><strong>修改后</strong>上传保存数据库java代码：</p>
+<p><img src="/images/SaveURL/save_url9.png" alt="打开结构目录"></p>
+<p><strong>修改前</strong>下载java代码：</p>
+<p><img src="/images/SaveURL/save_url6.png" alt="打开结构目录"></p>
+<p><strong>修改后</strong>下载java代码：</p>
+<p><img src="/images/SaveURL/save_url7.png" alt="打开结构目录"></p>
+<p>这样我们读取、下载时获取的路径就是Z:/Apk/线上4_8.apk</p>
+</li>
+<li><p>配置文件修改</p>
+<p>我们在部署项目的时候，只需要将<strong>上传文件项目</strong>部署时将配置文件修改为</p>
+<p><img src="/images/SaveURL/save_url4.png" alt="打开结构目录"></p>
+<p>下载文件项目部署时修改配置文件修改为</p>
+<p><img src="/images/SaveURL/save_url5.png" alt="打开结构目录"></p>
+</li>
+<li><p>成功获取正确的文件！</p>
+</li>
+</ol>
+
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2020年03月20日 14:50</p>
-        <p>原始链接： <a class="post-url" href="/2020/03/20/Spring学习-Bean配置/" title="Spring学习-Bean配置">http://ligangit.com/2020/03/20/Spring学习-Bean配置/</a></p>
+        <p>最后更新： 2020年04月09日 16:56</p>
+        <p>原始链接： <a class="post-url" href="/2020/04/09/java数据库保存文件路径注意事项/" title="java数据库保存文件路径注意事项">http://ligangit.com/2020/04/09/java数据库保存文件路径注意事项/</a></p>
         <footer>
             <a href="http://ligangit.com">
                 <img src="/images/logo.png" alt="Li Gang">
@@ -199,7 +259,7 @@
     <div class="post-share-list" id="share-list">
         <ul class="share-icons">
           <li>
-            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://ligangit.com/2020/03/20/Spring学习-Bean配置/&title=《Spring学习-Bean配置》 — ligangit&pic=http://ligangit.comimages/logo.png" data-title="微博">
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://ligangit.com/2020/04/09/java数据库保存文件路径注意事项/&title=《java数据库保存文件路径注意事项》 — ligangit&pic=images/java.jpg" data-title="微博">
               <i class="fa fa-weibo"></i>
             </a>
           </li>
@@ -209,22 +269,22 @@
             </a>
           </li>
           <li>
-            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://ligangit.com/2020/03/20/Spring学习-Bean配置/&title=《Spring学习-Bean配置》 — ligangit&source=在码农的世界里面默默的挣扎着" data-title="QQ">
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://ligangit.com/2020/04/09/java数据库保存文件路径注意事项/&title=《java数据库保存文件路径注意事项》 — ligangit&source=在码农的世界里面默默的挣扎着" data-title="QQ">
               <i class="fa fa-qq"></i>
             </a>
           </li>
           <li>
-            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://ligangit.com/2020/03/20/Spring学习-Bean配置/" data-title="Facebook">
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://ligangit.com/2020/04/09/java数据库保存文件路径注意事项/" data-title="Facebook">
               <i class="fa fa-facebook"></i>
             </a>
           </li>
           <li>
-            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Spring学习-Bean配置》 — ligangit&url=http://ligangit.com/2020/03/20/Spring学习-Bean配置/&via=http://ligangit.com" data-title="Twitter">
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《java数据库保存文件路径注意事项》 — ligangit&url=http://ligangit.com/2020/04/09/java数据库保存文件路径注意事项/&via=http://ligangit.com" data-title="Twitter">
               <i class="fa fa-twitter"></i>
             </a>
           </li>
           <li>
-            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://ligangit.com/2020/03/20/Spring学习-Bean配置/" data-title="Google+">
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://ligangit.com/2020/04/09/java数据库保存文件路径注意事项/" data-title="Google+">
               <i class="fa fa-google-plus"></i>
             </a>
           </li>
@@ -234,7 +294,7 @@
 <div class="post-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;" id="wxShare-close">×</a>
     <p>扫一扫，分享到微信</p>
-    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://ligangit.com/2020/03/20/Spring学习-Bean配置/" alt="微信分享二维码">
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://ligangit.com/2020/04/09/java数据库保存文件路径注意事项/" alt="微信分享二维码">
 </div>
 
 <div class="mask"></div>
@@ -243,6 +303,15 @@
         <ul class="article-footer-menu">
             
             
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/sql/" class="color4">sql</a>
+      
+    <a href="/tags/java/" class="color5">java</a>
+      
+  </li>
+
         </ul>
         
     </footer>
@@ -250,22 +319,18 @@
 </article>
 
 
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Java上传或下载文件路径存储数据库注意事项"><span class="post-toc-text">Java上传或下载文件路径存储数据库注意事项</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#数据库中存储全路径易造成读取文件为空"><span class="post-toc-text">数据库中存储全路径易造成读取文件为空</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#原因"><span class="post-toc-text">原因</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#解决方案"><span class="post-toc-text">解决方案</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
 
 <nav id="article-nav">
   
-    <a href="/2020/03/24/Oracle判断值相等/" id="article-nav-newer" class="article-nav-link-wrap">
-
-      <span class="article-nav-title">
-        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
-        
-          Oracle判断值相等
-        
-      </span>
-    </a>
   
-  
-    <a href="/2020/01/18/SprongBoot学习-自动配置原理/" id="article-nav-older" class="article-nav-link-wrap">
-      <span class="article-nav-title">SprongBoot学习-自动配置原理</span>
+    <a href="/2020/03/24/Spring学习-定时任务/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">Spring学习-定时任务</span>
       <i class="fa fa-hand-o-right" aria-hidden="true"></i>
     </a>
   
