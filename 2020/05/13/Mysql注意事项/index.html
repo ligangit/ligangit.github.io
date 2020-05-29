@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>Mysql注意事项（一） | ligangit</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="LiGang,Li Gang,ligangit">
+  
+  <meta name="description" content="Mysql注意事项（一）1、通配符*检索所有的列。 不建议使用​    通常，除非你确定需要表中的每个列，否则最好别使用*通配符，虽然使用通配符可能会使你自己省事，不用明确列出所需列，但检索不需要的列通常会降低检索和应用程序的性能。 优点​    由于不明确指定列名（因为星号检索每个列），所以能检索出名字未知的列。 2、DISTINCT​    用于检索不同的行（去重）。 不能部分使用DISTIN">
+<meta name="keywords" content="sql,mysql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mysql注意事项（一）">
+<meta property="og:url" content="http://ligangit.com/2020/05/13/Mysql注意事项/index.html">
+<meta property="og:site_name" content="ligangit">
+<meta property="og:description" content="Mysql注意事项（一）1、通配符*检索所有的列。 不建议使用​    通常，除非你确定需要表中的每个列，否则最好别使用*通配符，虽然使用通配符可能会使你自己省事，不用明确列出所需列，但检索不需要的列通常会降低检索和应用程序的性能。 优点​    由于不明确指定列名（因为星号检索每个列），所以能检索出名字未知的列。 2、DISTINCT​    用于检索不同的行（去重）。 不能部分使用DISTIN">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://ligangit.com/images/MysqlNotice/DISTINCT_all.png">
+<meta property="og:image" content="http://ligangit.com/images/MysqlNotice/DISTINCT_one.png">
+<meta property="og:image" content="http://ligangit.com/images/MysqlNotice/DISTINCT_two.png">
+<meta property="og:image" content="http://ligangit.com/images/MysqlNotice/LIMIT_5.png">
+<meta property="og:image" content="http://ligangit.com/images/MysqlNotice/LIMIT_34.png">
+<meta property="og:image" content="http://ligangit.com/images/MysqlNotice/WHERE_AND_OR.png">
+<meta property="og:image" content="http://ligangit.com/images/MysqlNotice/LIKE2.png">
+<meta property="og:image" content="http://ligangit.com/images/MysqlNotice/DATE1.png">
+<meta property="og:image" content="http://ligangit.com/images/MysqlNotice/DATE2.png">
+<meta property="og:image" content="http://ligangit.com/images/MysqlNotice/COUNT1.png">
+<meta property="og:image" content="http://ligangit.com/images/MysqlNotice/COUNT2.png">
+<meta property="og:image" content="http://ligangit.com/images/MysqlNotice/SUM1.png">
+<meta property="og:image" content="http://ligangit.com/images/MysqlNotice/SUM2.png">
+<meta property="og:image" content="http://ligangit.com/images/MysqlNotice/AVG1.png">
+<meta property="og:updated_time" content="2020-05-14T15:56:08.435Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mysql注意事项（一）">
+<meta name="twitter:description" content="Mysql注意事项（一）1、通配符*检索所有的列。 不建议使用​    通常，除非你确定需要表中的每个列，否则最好别使用*通配符，虽然使用通配符可能会使你自己省事，不用明确列出所需列，但检索不需要的列通常会降低检索和应用程序的性能。 优点​    由于不明确指定列名（因为星号检索每个列），所以能检索出名字未知的列。 2、DISTINCT​    用于检索不同的行（去重）。 不能部分使用DISTIN">
+<meta name="twitter:image" content="http://ligangit.com/images/MysqlNotice/DISTINCT_all.png">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">Li Gang&#39;s blog</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="/">
+                        <i class="fa fa-home"></i>
+                        <span>主页</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>归档</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>关于</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/logo.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        Li Gang&#39;s blog
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        在码农的世界里挣扎的人
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="Li Gang" target="_blank" href="//ligangit.com">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/ligangit">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="联系QQ"  href="/">
+                            <i class="fa fa-qq fa-2x"></i></a>
+                    
+                        <a title="微信"  href="/">
+                            <i class="fa fa-weixin fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-Mysql注意事项" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      Mysql注意事项（一）
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/sql/">sql</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2020-05-13
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <h1 id="Mysql注意事项（一）"><a href="#Mysql注意事项（一）" class="headerlink" title="Mysql注意事项（一）"></a>Mysql注意事项（一）</h1><h2 id="1、通配符"><a href="#1、通配符" class="headerlink" title="1、通配符*"></a>1、通配符*</h2><p>检索所有的列。</p>
+<h3 id="不建议使用"><a href="#不建议使用" class="headerlink" title="不建议使用"></a>不建议使用</h3><p>​    通常，除非你确定需要表中的每个列，否则最好别使用*通配符，虽然使用通配符可能会使你自己省事，不用明确列出所需列，但检索不需要的列通常会降低检索和应用程序的性能。</p>
+<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><p>​    由于不明确指定列名（因为星号检索每个列），所以能检索出名字未知的列。</p>
+<h2 id="2、DISTINCT"><a href="#2、DISTINCT" class="headerlink" title="2、DISTINCT"></a>2、DISTINCT</h2><p>​    用于检索不同的行（去重）。</p>
+<h3 id="不能部分使用DISTINCT"><a href="#不能部分使用DISTINCT" class="headerlink" title="不能部分使用DISTINCT"></a>不能部分使用DISTINCT</h3><p>​    DISTINCT关键字应用于所有列而不仅是前置它的列。如果给出SELECT DISTINCT vend_id,prod_price FROM products ；会查找出vend_id和prod_price都不相同的内容，而不是vend_id去除重复，除非指定的两个列都不同，否则所有列都将被检索出来。</p>
+<p>示例：</p>
+<p><strong>表数据</strong>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM products;</span><br></pre></td></tr></table></figure>
+
+<p>结果：共14条记录</p>
+<p><img src="/images/MysqlNotice/DISTINCT_all.png" alt="表数据"></p>
+<p><strong>使用DISTINCT获取供应商</strong>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT DISTINCT vend_id FROM products;</span><br></pre></td></tr></table></figure>
+
+<p>结果：共4条记录</p>
+<p><img src="/images/MysqlNotice/DISTINCT_one.png" alt="获取供应商"></p>
+<p><strong>部分使用DISTINCT</strong>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT DISTINCT vend_id,prod_price FROM products;</span><br></pre></td></tr></table></figure>
+
+<p>结果：共12条记录</p>
+<p><img src="/images/MysqlNotice/DISTINCT_two.png" alt="部分使用DISTINCT"></p>
+<p>结果查出了vend_id和prod_price都不相同的内容；</p>
+<h2 id="3、LIMIT"><a href="#3、LIMIT" class="headerlink" title="3、LIMIT"></a>3、LIMIT</h2><p>限制结果，指定返回的行</p>
+<h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><p>示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name </span><br><span class="line">FROM products</span><br><span class="line">LIMIT 5;</span><br></pre></td></tr></table></figure>
+
+<p>结果：返回前5行</p>
+<p><img src="/images/MysqlNotice/LIMIT_5.png" alt="LIMIT使用"></p>
+<p>示例：获取行3开始的4行，即第4至第8行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name </span><br><span class="line">FROM products</span><br><span class="line">LIMIT 3,4;</span><br></pre></td></tr></table></figure>
+
+<p>等价于：从行3开始取4行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name </span><br><span class="line">FROM products</span><br><span class="line">LIMIT 4 OFFSET 3;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/MysqlNotice/LIMIT_34.png" alt="LIMIT使用"></p>
+<h3 id="注意：行0"><a href="#注意：行0" class="headerlink" title="注意：行0"></a>注意：行0</h3><p><strong>行0</strong> ：检索出来的第一行为行0而不是行1.因此，LIMIT 1,1将检索出第二行而不是第一行。</p>
+<h2 id="4、ORDER-BY"><a href="#4、ORDER-BY" class="headerlink" title="4、ORDER BY"></a>4、ORDER BY</h2><p>​    排序数据，降序DESC，升序ASC（默认，即如果不指定DESC、也不指定ASC，则假定为ASC）</p>
+<h3 id="在多个列上降序排序"><a href="#在多个列上降序排序" class="headerlink" title="在多个列上降序排序"></a>在多个列上降序排序</h3><p>​    如果想在多个列上进行降序排序，<strong>必须对每个列</strong>指定DESC关键字。</p>
+<h3 id="ORDER-BY-子句的位置"><a href="#ORDER-BY-子句的位置" class="headerlink" title="ORDER BY 子句的位置"></a>ORDER BY 子句的位置</h3><p>​    在给出ORDER BY 子句时，应该保证它位于FROM子句之后，如果使用LIMIT，它必须位于ORDER BY 之后。使用子句的次序不对将产生错误消息。</p>
+<h2 id="5、WHERE"><a href="#5、WHERE" class="headerlink" title="5、WHERE"></a>5、WHERE</h2><p>​    过滤数据</p>
+<h3 id="WHERE子句的位置"><a href="#WHERE子句的位置" class="headerlink" title="WHERE子句的位置"></a>WHERE子句的位置</h3><p>​    在给出WHERE子句时，应该保证它位于FROM子句之后，如果同时使用ORDER BY，应该让ORDER BY位于WHERE 之后，否则将会产生错误。</p>
+<h3 id="BETWEEN-范围值检查"><a href="#BETWEEN-范围值检查" class="headerlink" title="BETWEEN 范围值检查"></a>BETWEEN 范围值检查</h3><p>BETWEEN匹配范围中的所有值，<strong>包括指定的开始值和结束值</strong>。</p>
+<h3 id="NULL-空值检查"><a href="#NULL-空值检查" class="headerlink" title="NULL 空值检查"></a>NULL 空值检查</h3><p>​    NULL 无值，它与字段包含0,、空字符串或仅仅包含空格不同。</p>
+<h3 id="NULL与不匹配"><a href="#NULL与不匹配" class="headerlink" title="NULL与不匹配"></a>NULL与不匹配</h3><p><strong>IS NULL</strong> 和 <strong>IS NOT NULL</strong> 即<strong>为空</strong>和<strong>不为空</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">--IS NULL</span><br><span class="line">SELECT cust_id </span><br><span class="line">From customers</span><br><span class="line">where cust_email IS NULL;</span><br><span class="line"></span><br><span class="line">-- IS NOT NULL</span><br><span class="line">SELECT cust_id </span><br><span class="line">From customers</span><br><span class="line">where cust_email  IS NOT NULL;</span><br></pre></td></tr></table></figure>
+
+<p>在过滤数据时，一定要验证返回数据中确定给出了被过滤列具有NULL的行。</p>
+<h3 id="AND、OR"><a href="#AND、OR" class="headerlink" title="AND、OR"></a>AND、OR</h3><p>注意：AND比OR的优先级更高，建议在WHERE子句中使用圆括号；</p>
+<p>示例：（未使用圆括号）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name,prod_price</span><br><span class="line">FROM products</span><br><span class="line">WHERE vend_id=1002 OR vend_id=1003 AND prod_price&gt;=10;</span><br></pre></td></tr></table></figure>
+
+<p>结果：</p>
+<p><img src="/images/MysqlNotice/WHERE_AND_OR.png" alt="LIMIT使用"></p>
+<p>分析：</p>
+<p>​    SQL在处理OR操作符之前，优先处理AND操作符。当SQL看到上述的WHERE子句时，它理解为<del>由供应商1003制造的任何价格为10美元（含）以上的产品，或者由供应商1002制造的任何产品，不管其价格如何</del>。换句话说，由于AND在计算次序中优先级更高，操作符被错误的组合了。</p>
+<h3 id="IN、NOT"><a href="#IN、NOT" class="headerlink" title="IN、NOT"></a>IN、NOT</h3><p><strong>IN操作符</strong></p>
+<p>​    与OR操作符相比较，IN有如下优点（建议替换OR）：</p>
+<ul>
+<li>在使用长的合法选项清单时，IN操作符的语法更清楚且更直观；</li>
+<li>在使用IN时，计算次序更容易管理（因为使用的操作符更少）；</li>
+<li>IN操作符一般比OR操作符清单执行更快；</li>
+<li>IN最大的优点是可以包含其他SELECT语句，使得能够更动态地建立WHERE子句。</li>
+</ul>
+<p><strong>NOT操作符</strong></p>
+<p>​    使用NOT对IN、BETWEEN和EXISTS子句取反。</p>
+<h2 id="6、LIKE、通配符-和"><a href="#6、LIKE、通配符-和" class="headerlink" title="6、LIKE、通配符%和_"></a>6、LIKE、通配符%和_</h2><p>​    LIKE指示MYSQL，后跟的搜索模式利用通配符匹配而<strong>不是直接相等匹配</strong>进行比较，<strong>匹配整个列</strong>；</p>
+<p>示例1：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name</span><br><span class="line">FROM products</span><br><span class="line">WHERE prod_name LIKE &apos;1000&apos;</span><br></pre></td></tr></table></figure>
+
+<p>结果：不会返回prod_name为1000的行</p>
+<p>​    %表示任何字符出现任意次数；</p>
+<p>示例2：使用了通配符%的LIKE</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_name</span><br><span class="line">FROM products</span><br><span class="line">WHERE prod_name LIKE &apos;%1000&apos;</span><br></pre></td></tr></table></figure>
+
+<p>结果：不会返回prod_name为1000的行</p>
+<p><img src="/images/MysqlNotice/LIKE2.png" alt="LIMIT使用"></p>
+<p>​    _表示任意单个字符出现一次。</p>
+<p>​    通配符搜索的处理一般比其他搜索所花<strong>时间更长</strong>。</p>
+<h3 id="NULL与-通配符"><a href="#NULL与-通配符" class="headerlink" title="NULL与%通配符"></a>NULL与%通配符</h3><p>​    %通配符几乎可以匹配任何东西，但是<strong>不能匹配NULL</strong></p>
+<h3 id="通配符使用技巧"><a href="#通配符使用技巧" class="headerlink" title="通配符使用技巧"></a>通配符使用技巧</h3><ul>
+<li>不要过度使用通配符。如果其他操作符能达到相同的目的，应该使用其他操作符。</li>
+<li>在确定需要使用通配符时，除非<strong>绝对有必要</strong>，否则<strong>不要把它们用在搜索模式的开始出</strong>。把通配符置于搜索模式的开始处，搜索起来是最慢的。</li>
+<li>仔细注意通配符的配置。如果放错地方，可能不会返回想要的数据。</li>
+</ul>
+<h2 id="7、日期和时间处理函数"><a href="#7、日期和时间处理函数" class="headerlink" title="7、日期和时间处理函数"></a>7、日期和时间处理函数</h2><p>​    MySQL使用的日期格式为yyyy-mm-dd；</p>
+<h3 id="日期比较"><a href="#日期比较" class="headerlink" title="日期比较"></a>日期比较</h3><p>​    示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT cust_id,order_num,order_date</span><br><span class="line">FROM orders</span><br><span class="line">WHERE order_date=&apos;2005-09-01&apos;</span><br></pre></td></tr></table></figure>
+
+<p>​    结果：</p>
+<p><img src="/images/MysqlNotice/DATE1.png" alt="LIMIT使用"></p>
+<p>​    注意：<strong>使用<em>WHERE order_date=’2005-09-01</em>‘ 可靠吗？</strong></p>
+<p>​    <em>order_date</em>的数据类型为<em>datetime</em>，这种类型存储日期和时间值，表中的<strong>时间值为<em>00:00:00</em></strong>，但实际中很可能并不总是这样。比如：<em>order_date</em>值为<em>2005-09-01 11:30:05</em>，则<em>WHERE order_date=’2005-09-01’</em>失败，即使给出具有该日期的一行，也不会检索出来，因为<strong>WHERE匹配失败</strong>。</p>
+<p>​    <strong>解决方案</strong>：</p>
+<p>​    <strong>使用Date()函数</strong>。<em>Date(order_date)</em>函数指示MySQL仅提取列的日期部分，更可靠的SELECT语句为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT cust_id,order_num,order_date</span><br><span class="line">FROM orders</span><br><span class="line">WHERE DATE(order_date)=&apos;2005-09-01&apos;</span><br></pre></td></tr></table></figure>
+
+<p>​    结果：</p>
+<p><img src="/images/MysqlNotice/DATE2.png" alt="LIMIT使用"></p>
+<h3 id="建议"><a href="#建议" class="headerlink" title="建议"></a>建议</h3><p>​    <strong>如果要的是日期，请使用Date()</strong>。</p>
+<p>​    <em>如果你想要的仅是日期，则使用Date()是一个良好的习惯，即使你如果知道相应的列只包含日期也是如此</em>。这样，如果由于某种原因表中以后有日期和时间值，你的SQL代码也不用改变。当然，也存在一个Time()函数，在你只想要时间时应该使用它。</p>
+<h2 id="8、聚集函数"><a href="#8、聚集函数" class="headerlink" title="8、聚集函数"></a>8、聚集函数</h2><h3 id="AVG-函数"><a href="#AVG-函数" class="headerlink" title="AVG()函数"></a>AVG()函数</h3><p>​    通过对表中行数计算并计算特定列值之和，求得该列的平均值。</p>
+<p>​    <strong>只能用于单列</strong> 。AVG()只能用来确定特定数值列的平均值，而且列名必须作为函数参数给出。为了获得多个列的平均值，必须使用多个AVG()函数。</p>
+<p>​    <strong>NULL值</strong> 。AVG()函数忽略列值为NULL的行。</p>
+<h3 id="COUNT-函数"><a href="#COUNT-函数" class="headerlink" title="COUNT()函数"></a>COUNT()函数</h3><ul>
+<li><p>使用<strong>COUNT(*)</strong>对表中行的数目进行计数，不管表列中<strong>包含的是空值（NULL）还是非空值</strong>；</p>
+</li>
+<li><p>使用<strong>COUNT(column)</strong>对特定列中<strong>具有值</strong>的行进行计数，<strong>忽略NULL值</strong>。</p>
+<p> 示例1：</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT COUNT(*) AS num_cust</span><br><span class="line">FROM customers;</span><br></pre></td></tr></table></figure>
+
+<p>​    结果1：对所有行计数，不管行中各列有什么值</p>
+<p><img src="/images/MysqlNotice/COUNT1.png" alt="LIMIT使用"></p>
+<p>​    示例2：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT COUNT(cust_email) AS num_cust</span><br><span class="line">FROM customers;</span><br></pre></td></tr></table></figure>
+
+<p>​    结果2：对cust_email列中<strong>有值</strong>的计数</p>
+<p><img src="/images/MysqlNotice/COUNT2.png" alt="LIMIT使用"></p>
+<pre><code>### MAX()函数、MIN()函数</code></pre><p>​    MAX()返回指定列中的最大值；</p>
+<p>​    MIN()返回指定列中的最小值。</p>
+<p>​    <strong>对非数值数据使用MAX()或MIN()</strong>    返回文本列中的最大值或最小值。</p>
+<h3 id="SUM-函数"><a href="#SUM-函数" class="headerlink" title="SUM()函数"></a>SUM()函数</h3><p>​    用来返回指定列值的和（总计）。</p>
+<p>​    示例1：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT SUM(quantity) AS items_ordered</span><br><span class="line">FROM orderitems</span><br><span class="line">WHERE order_num=20005;</span><br></pre></td></tr></table></figure>
+
+<p>​    结果1：</p>
+<p><img src="/images/MysqlNotice/SUM1.png" alt="LIMIT使用"></p>
+<p>​    <strong>在多列上进行计算</strong>    利用标准的算术操作符，所有聚集函数都可用来执行多个列上的计算。</p>
+<p>​    示例2：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT SUM(item_price*quantity) AS items_ordered</span><br><span class="line">FROM orderitems</span><br><span class="line">WHERE order_num=20005;</span><br></pre></td></tr></table></figure>
+
+<p>​    结果2：</p>
+<p><img src="/images/MysqlNotice/SUM2.png" alt="LIMIT使用"></p>
+<h3 id="聚集不同值"><a href="#聚集不同值" class="headerlink" title="聚集不同值"></a>聚集不同值</h3><p>​    对聚合函数AVG()、COUNT()、MAX()、MIN()、SUM()的使用：</p>
+<ul>
+<li>对所有的行执行计算，指定ALL参数或不给参数（因为ALL是默认行为）；</li>
+<li>只包含不同的值，指定DISTINCT参数。</li>
+</ul>
+<p>使用<strong>DISTINCT</strong>，查询特定供应商提供的产品的平均价格。</p>
+<p>示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT AVG(DISTINCT prod_price) AS avg_price</span><br><span class="line">FROM products</span><br><span class="line">WHERE vend_id=1003;</span><br></pre></td></tr></table></figure>
+
+<p>结果：使用了DISTINCT，平均值只考虑各个不同的价格</p>
+<p><img src="/images/MysqlNotice/AVG1.png" alt="LIMIT使用"></p>
+<p><strong>注意</strong>：如果指定列名，则DISTINCT只能用于COUNT()。DISTINCT不能用于COUNT(*)，因此不允许使用<em>COUNT(DISTINCT)</em>，否则会产生错误。类似的，DISTINCT必须使用列名，不能用于计算或表达式。</p>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2020年05月14日 23:56</p>
+        <p>原始链接： <a class="post-url" href="/2020/05/13/Mysql注意事项/" title="Mysql注意事项（一）">http://ligangit.com/2020/05/13/Mysql注意事项/</a></p>
+        <footer>
+            <a href="http://ligangit.com">
+                <img src="/images/logo.png" alt="Li Gang">
+                Li Gang
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://ligangit.com/2020/05/13/Mysql注意事项/&title=《Mysql注意事项（一）》 — ligangit&pic=images/mysql.png" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://ligangit.com/2020/05/13/Mysql注意事项/&title=《Mysql注意事项（一）》 — ligangit&source=在码农的世界里面默默的挣扎着" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://ligangit.com/2020/05/13/Mysql注意事项/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Mysql注意事项（一）》 — ligangit&url=http://ligangit.com/2020/05/13/Mysql注意事项/&via=http://ligangit.com" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://ligangit.com/2020/05/13/Mysql注意事项/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://ligangit.com/2020/05/13/Mysql注意事项/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/sql/" class="color4">sql</a>
+      
+    <a href="/tags/mysql/" class="color1">mysql</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Mysql注意事项（一）"><span class="post-toc-text">Mysql注意事项（一）</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1、通配符"><span class="post-toc-text">1、通配符*</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#不建议使用"><span class="post-toc-text">不建议使用</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#优点"><span class="post-toc-text">优点</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2、DISTINCT"><span class="post-toc-text">2、DISTINCT</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#不能部分使用DISTINCT"><span class="post-toc-text">不能部分使用DISTINCT</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3、LIMIT"><span class="post-toc-text">3、LIMIT</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#使用方法"><span class="post-toc-text">使用方法</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#注意：行0"><span class="post-toc-text">注意：行0</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#4、ORDER-BY"><span class="post-toc-text">4、ORDER BY</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#在多个列上降序排序"><span class="post-toc-text">在多个列上降序排序</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#ORDER-BY-子句的位置"><span class="post-toc-text">ORDER BY 子句的位置</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#5、WHERE"><span class="post-toc-text">5、WHERE</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#WHERE子句的位置"><span class="post-toc-text">WHERE子句的位置</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#BETWEEN-范围值检查"><span class="post-toc-text">BETWEEN 范围值检查</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#NULL-空值检查"><span class="post-toc-text">NULL 空值检查</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#NULL与不匹配"><span class="post-toc-text">NULL与不匹配</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#AND、OR"><span class="post-toc-text">AND、OR</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#IN、NOT"><span class="post-toc-text">IN、NOT</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#6、LIKE、通配符-和"><span class="post-toc-text">6、LIKE、通配符%和_</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#NULL与-通配符"><span class="post-toc-text">NULL与%通配符</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#通配符使用技巧"><span class="post-toc-text">通配符使用技巧</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#7、日期和时间处理函数"><span class="post-toc-text">7、日期和时间处理函数</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#日期比较"><span class="post-toc-text">日期比较</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#建议"><span class="post-toc-text">建议</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#8、聚集函数"><span class="post-toc-text">8、聚集函数</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#AVG-函数"><span class="post-toc-text">AVG()函数</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#COUNT-函数"><span class="post-toc-text">COUNT()函数</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#SUM-函数"><span class="post-toc-text">SUM()函数</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#聚集不同值"><span class="post-toc-text">聚集不同值</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+    <a href="/2020/05/13/Mysql注意事项（一）/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          Mysql注意事项（一）
+        
+      </span>
+    </a>
+  
+  
+    <a href="/2020/04/23/java获取windows和linux的区别/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">java获取windows和linux的区别</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2020 Li Gang<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "http://ligangit.com",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/SpringBoot/">SpringBoot</a><a class="category-link" href="/categories/java/">java</a><a class="category-link" href="/categories/sql/">sql</a><a class="category-link" href="/categories/博客/">博客</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/SpringBoot/" style="font-size: 17.5px;">SpringBoot</a> <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/idea/" style="font-size: 12.5px;">idea</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/markdown/" style="font-size: 12.5px;">markdown</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/oracle/" style="font-size: 12.5px;">oracle</a> <a href="/tags/sql/" style="font-size: 20px;">sql</a> <a href="/tags/web/" style="font-size: 12.5px;">web</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a> <a href="/tags/自动配置/" style="font-size: 10px;">自动配置</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="/">
+                    <i class="fa fa-home"></i><span>主页</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>归档</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>关于</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/SpringBoot/" style="font-size: 17.5px;">SpringBoot</a> <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/idea/" style="font-size: 12.5px;">idea</a> <a href="/tags/java/" style="font-size: 15px;">java</a> <a href="/tags/markdown/" style="font-size: 12.5px;">markdown</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/oracle/" style="font-size: 12.5px;">oracle</a> <a href="/tags/sql/" style="font-size: 20px;">sql</a> <a href="/tags/web/" style="font-size: 12.5px;">web</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a> <a href="/tags/自动配置/" style="font-size: 10px;">自动配置</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>
