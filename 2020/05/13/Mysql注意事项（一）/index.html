@@ -8,13 +8,13 @@
   
     <meta name="keywords" content="LiGang,Li Gang,ligangit">
   
-  <meta name="description" content="Mysql注意事项（一）1、通配符*检索所有的列。 不建议使用​    通常，除非你确定需要表中的每个列，否则最好别使用*通配符，虽然使用通配符可能会使你自己省事，不用明确列出所需列，但检索不需要的列通常会降低检索和应用程序的性能。 优点​    由于不明确指定列名（因为星号检索每个列），所以能检索出名字未知的列。 2、DISTINCT​    用于检索不同的行（去重）。 不能部分使用DISTIN">
+  <meta name="description" content="最近回顾了一下MySQL，发现了一些MySQL需要注意的事项，同时也作为学习笔记，记录下来。 Mysql注意事项（一）1、通配符*检索所有的列。 不建议使用​    通常，除非你确定需要表中的每个列，否则最好别使用*通配符，虽然使用通配符可能会使你自己省事，不用明确列出所需列，但检索不需要的列通常会降低检索和应用程序的性能。 优点​    由于不明确指定列名（因为星号检索每个列），所以能检索出名字">
 <meta name="keywords" content="sql,mysql">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Mysql注意事项（一）">
 <meta property="og:url" content="http://ligangit.com/2020/05/13/Mysql注意事项（一）/index.html">
 <meta property="og:site_name" content="ligangit">
-<meta property="og:description" content="Mysql注意事项（一）1、通配符*检索所有的列。 不建议使用​    通常，除非你确定需要表中的每个列，否则最好别使用*通配符，虽然使用通配符可能会使你自己省事，不用明确列出所需列，但检索不需要的列通常会降低检索和应用程序的性能。 优点​    由于不明确指定列名（因为星号检索每个列），所以能检索出名字未知的列。 2、DISTINCT​    用于检索不同的行（去重）。 不能部分使用DISTIN">
+<meta property="og:description" content="最近回顾了一下MySQL，发现了一些MySQL需要注意的事项，同时也作为学习笔记，记录下来。 Mysql注意事项（一）1、通配符*检索所有的列。 不建议使用​    通常，除非你确定需要表中的每个列，否则最好别使用*通配符，虽然使用通配符可能会使你自己省事，不用明确列出所需列，但检索不需要的列通常会降低检索和应用程序的性能。 优点​    由于不明确指定列名（因为星号检索每个列），所以能检索出名字">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://ligangit.com/images/MysqlNotice/DISTINCT_all.png">
 <meta property="og:image" content="http://ligangit.com/images/MysqlNotice/DISTINCT_one.png">
@@ -30,10 +30,10 @@
 <meta property="og:image" content="http://ligangit.com/images/MysqlNotice/SUM1.png">
 <meta property="og:image" content="http://ligangit.com/images/MysqlNotice/SUM2.png">
 <meta property="og:image" content="http://ligangit.com/images/MysqlNotice/AVG1.png">
-<meta property="og:updated_time" content="2020-05-29T02:40:09.826Z">
+<meta property="og:updated_time" content="2020-06-02T01:31:48.862Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mysql注意事项（一）">
-<meta name="twitter:description" content="Mysql注意事项（一）1、通配符*检索所有的列。 不建议使用​    通常，除非你确定需要表中的每个列，否则最好别使用*通配符，虽然使用通配符可能会使你自己省事，不用明确列出所需列，但检索不需要的列通常会降低检索和应用程序的性能。 优点​    由于不明确指定列名（因为星号检索每个列），所以能检索出名字未知的列。 2、DISTINCT​    用于检索不同的行（去重）。 不能部分使用DISTIN">
+<meta name="twitter:description" content="最近回顾了一下MySQL，发现了一些MySQL需要注意的事项，同时也作为学习笔记，记录下来。 Mysql注意事项（一）1、通配符*检索所有的列。 不建议使用​    通常，除非你确定需要表中的每个列，否则最好别使用*通配符，虽然使用通配符可能会使你自己省事，不用明确列出所需列，但检索不需要的列通常会降低检索和应用程序的性能。 优点​    由于不明确指定列名（因为星号检索每个列），所以能检索出名字">
 <meta name="twitter:image" content="http://ligangit.com/images/MysqlNotice/DISTINCT_all.png">
   
   
@@ -161,7 +161,8 @@
     <div class="article-entry post-content" itemprop="articleBody">
       
             
-            <h1 id="Mysql注意事项（一）"><a href="#Mysql注意事项（一）" class="headerlink" title="Mysql注意事项（一）"></a>Mysql注意事项（一）</h1><h2 id="1、通配符"><a href="#1、通配符" class="headerlink" title="1、通配符*"></a>1、通配符*</h2><p>检索所有的列。</p>
+            <p>最近回顾了一下MySQL，发现了一些MySQL需要注意的事项，同时也作为学习笔记，记录下来。</p>
+<h1 id="Mysql注意事项（一）"><a href="#Mysql注意事项（一）" class="headerlink" title="Mysql注意事项（一）"></a>Mysql注意事项（一）</h1><h2 id="1、通配符"><a href="#1、通配符" class="headerlink" title="1、通配符*"></a>1、通配符*</h2><p>检索所有的列。</p>
 <h3 id="不建议使用"><a href="#不建议使用" class="headerlink" title="不建议使用"></a>不建议使用</h3><p>​    通常，除非你确定需要表中的每个列，否则最好别使用*通配符，虽然使用通配符可能会使你自己省事，不用明确列出所需列，但检索不需要的列通常会降低检索和应用程序的性能。</p>
 <h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><p>​    由于不明确指定列名（因为星号检索每个列），所以能检索出名字未知的列。</p>
 <h2 id="2、DISTINCT"><a href="#2、DISTINCT" class="headerlink" title="2、DISTINCT"></a>2、DISTINCT</h2><p>​    用于检索不同的行（去重）。</p>
@@ -310,7 +311,7 @@
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2020年05月29日 10:40</p>
+        <p>最后更新： 2020年06月02日 09:31</p>
         <p>原始链接： <a class="post-url" href="/2020/05/13/Mysql注意事项（一）/" title="Mysql注意事项（一）">http://ligangit.com/2020/05/13/Mysql注意事项（一）/</a></p>
         <footer>
             <a href="http://ligangit.com">
@@ -514,7 +515,7 @@
             <a class="category-link" href="/categories/SpringBoot/">SpringBoot</a><a class="category-link" href="/categories/java/">java</a><a class="category-link" href="/categories/sql/">sql</a><a class="category-link" href="/categories/前端/">前端</a><a class="category-link" href="/categories/博客/">博客</a><a class="category-link" href="/categories/服务器软件/">服务器软件</a>
         </div>
         <div id="sidebar-menu-box-tags">
-            <a href="/tags/JS/" style="font-size: 10px;">JS</a> <a href="/tags/SpringBoot/" style="font-size: 17.5px;">SpringBoot</a> <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/Util/" style="font-size: 10px;">Util</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/idea/" style="font-size: 12.5px;">idea</a> <a href="/tags/java/" style="font-size: 17.5px;">java</a> <a href="/tags/markdown/" style="font-size: 12.5px;">markdown</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/oracle/" style="font-size: 12.5px;">oracle</a> <a href="/tags/sql/" style="font-size: 20px;">sql</a> <a href="/tags/web/" style="font-size: 12.5px;">web</a> <a href="/tags/前端/" style="font-size: 10px;">前端</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/服务器软件/" style="font-size: 10px;">服务器软件</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a> <a href="/tags/自动配置/" style="font-size: 10px;">自动配置</a>
+            <a href="/tags/Echarts/" style="font-size: 10px;">Echarts</a> <a href="/tags/JS/" style="font-size: 12.5px;">JS</a> <a href="/tags/SpringBoot/" style="font-size: 17.5px;">SpringBoot</a> <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/Util/" style="font-size: 10px;">Util</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/idea/" style="font-size: 12.5px;">idea</a> <a href="/tags/java/" style="font-size: 17.5px;">java</a> <a href="/tags/markdown/" style="font-size: 12.5px;">markdown</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/oracle/" style="font-size: 12.5px;">oracle</a> <a href="/tags/sql/" style="font-size: 20px;">sql</a> <a href="/tags/web/" style="font-size: 12.5px;">web</a> <a href="/tags/前端/" style="font-size: 12.5px;">前端</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/服务器软件/" style="font-size: 10px;">服务器软件</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a> <a href="/tags/自动配置/" style="font-size: 10px;">自动配置</a>
         </div>
     </div>
     <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
@@ -547,7 +548,7 @@
     <div class="mobile-header-tag-container">
         <span class="title">Tags</span>
         <div id="mobile-header-container-tags">
-            <a href="/tags/JS/" style="font-size: 10px;">JS</a> <a href="/tags/SpringBoot/" style="font-size: 17.5px;">SpringBoot</a> <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/Util/" style="font-size: 10px;">Util</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/idea/" style="font-size: 12.5px;">idea</a> <a href="/tags/java/" style="font-size: 17.5px;">java</a> <a href="/tags/markdown/" style="font-size: 12.5px;">markdown</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/oracle/" style="font-size: 12.5px;">oracle</a> <a href="/tags/sql/" style="font-size: 20px;">sql</a> <a href="/tags/web/" style="font-size: 12.5px;">web</a> <a href="/tags/前端/" style="font-size: 10px;">前端</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/服务器软件/" style="font-size: 10px;">服务器软件</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a> <a href="/tags/自动配置/" style="font-size: 10px;">自动配置</a>
+            <a href="/tags/Echarts/" style="font-size: 10px;">Echarts</a> <a href="/tags/JS/" style="font-size: 12.5px;">JS</a> <a href="/tags/SpringBoot/" style="font-size: 17.5px;">SpringBoot</a> <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/Util/" style="font-size: 10px;">Util</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/idea/" style="font-size: 12.5px;">idea</a> <a href="/tags/java/" style="font-size: 17.5px;">java</a> <a href="/tags/markdown/" style="font-size: 12.5px;">markdown</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/oracle/" style="font-size: 12.5px;">oracle</a> <a href="/tags/sql/" style="font-size: 20px;">sql</a> <a href="/tags/web/" style="font-size: 12.5px;">web</a> <a href="/tags/前端/" style="font-size: 12.5px;">前端</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/服务器软件/" style="font-size: 10px;">服务器软件</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a> <a href="/tags/自动配置/" style="font-size: 10px;">自动配置</a>
         </div>
     </div>
 </div>

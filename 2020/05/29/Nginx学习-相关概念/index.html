@@ -8,22 +8,22 @@
   
     <meta name="keywords" content="LiGang,Li Gang,ligangit">
   
-  <meta name="description" content="Nginx相关概念什么是Nginx​        Nginx (engine x) 是一个高性能的HTTP和反向代理web服务器，同时也提供了IMAP/POP3/SMTP服务。  特点是占有内存少，并发能力强，事实上nginx的并发能力在同类型的网页服务器中表现较好 。 **Nginx专为性能优化而开发，性能是其最重要的考量,实现上非常注重效率 。**它支持内核Poll模型，能经受高负载的考验,">
+  <meta name="description" content="主要学习几个概念：Nginx，正向代理、反向代理、负载均衡、动静分离。 Nginx相关概念什么是Nginx​        Nginx (engine x) 是一个高性能的HTTP和反向代理web服务器，同时也提供了IMAP/POP3/SMTP服务。  特点是占有内存少，并发能力强，事实上nginx的并发能力在同类型的网页服务器中表现较好 。 **Nginx专为性能优化而开发，性能是其最重要的考量">
 <meta name="keywords" content="nginx,服务器软件">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Nginx学习-相关概念">
 <meta property="og:url" content="http://ligangit.com/2020/05/29/Nginx学习-相关概念/index.html">
 <meta property="og:site_name" content="ligangit">
-<meta property="og:description" content="Nginx相关概念什么是Nginx​        Nginx (engine x) 是一个高性能的HTTP和反向代理web服务器，同时也提供了IMAP/POP3/SMTP服务。  特点是占有内存少，并发能力强，事实上nginx的并发能力在同类型的网页服务器中表现较好 。 **Nginx专为性能优化而开发，性能是其最重要的考量,实现上非常注重效率 。**它支持内核Poll模型，能经受高负载的考验,">
+<meta property="og:description" content="主要学习几个概念：Nginx，正向代理、反向代理、负载均衡、动静分离。 Nginx相关概念什么是Nginx​        Nginx (engine x) 是一个高性能的HTTP和反向代理web服务器，同时也提供了IMAP/POP3/SMTP服务。  特点是占有内存少，并发能力强，事实上nginx的并发能力在同类型的网页服务器中表现较好 。 **Nginx专为性能优化而开发，性能是其最重要的考量">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://ligangit.com/images/Nginx/agency.png">
 <meta property="og:image" content="http://ligangit.com/images/Nginx/balance.jpg">
 <meta property="og:image" content="http://ligangit.com/images/Nginx/balance.png">
 <meta property="og:image" content="http://ligangit.com/images/Nginx/static.png">
-<meta property="og:updated_time" content="2020-06-01T02:46:44.006Z">
+<meta property="og:updated_time" content="2020-06-02T01:27:58.312Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Nginx学习-相关概念">
-<meta name="twitter:description" content="Nginx相关概念什么是Nginx​        Nginx (engine x) 是一个高性能的HTTP和反向代理web服务器，同时也提供了IMAP/POP3/SMTP服务。  特点是占有内存少，并发能力强，事实上nginx的并发能力在同类型的网页服务器中表现较好 。 **Nginx专为性能优化而开发，性能是其最重要的考量,实现上非常注重效率 。**它支持内核Poll模型，能经受高负载的考验,">
+<meta name="twitter:description" content="主要学习几个概念：Nginx，正向代理、反向代理、负载均衡、动静分离。 Nginx相关概念什么是Nginx​        Nginx (engine x) 是一个高性能的HTTP和反向代理web服务器，同时也提供了IMAP/POP3/SMTP服务。  特点是占有内存少，并发能力强，事实上nginx的并发能力在同类型的网页服务器中表现较好 。 **Nginx专为性能优化而开发，性能是其最重要的考量">
 <meta name="twitter:image" content="http://ligangit.com/images/Nginx/agency.png">
   
   
@@ -151,7 +151,8 @@
     <div class="article-entry post-content" itemprop="articleBody">
       
             
-            <h1 id="Nginx相关概念"><a href="#Nginx相关概念" class="headerlink" title="Nginx相关概念"></a>Nginx相关概念</h1><h2 id="什么是Nginx"><a href="#什么是Nginx" class="headerlink" title="什么是Nginx"></a>什么是Nginx</h2><p>​        <strong><em>Nginx</em> (engine x) 是一个高性能的HTTP和反向代理web服务器</strong>，同时也提供了IMAP/POP3/SMTP服务。  特点是占有内存少，并发能力强，事实上nginx的并发能力在同类型的网页服务器中表现较好 。</p>
+            <p>主要学习几个概念：Nginx，正向代理、反向代理、负载均衡、动静分离。</p>
+<h1 id="Nginx相关概念"><a href="#Nginx相关概念" class="headerlink" title="Nginx相关概念"></a>Nginx相关概念</h1><h2 id="什么是Nginx"><a href="#什么是Nginx" class="headerlink" title="什么是Nginx"></a>什么是Nginx</h2><p>​        <strong><em>Nginx</em> (engine x) 是一个高性能的HTTP和反向代理web服务器</strong>，同时也提供了IMAP/POP3/SMTP服务。  特点是占有内存少，并发能力强，事实上nginx的并发能力在同类型的网页服务器中表现较好 。</p>
 <pre><code>**Nginx专为性能优化而开发，性能是其最重要的考量,实现上非常注重效率 。**它支持内核Poll模型，能经受高负载的考验,有报告表明能支持高达 50,000个并发连接数。 </code></pre><p><a href="https://lnmp.org/nginx.html" target="_blank" rel="noopener">https://lnmp.org/nginx.html</a></p>
 <h2 id="正向代理"><a href="#正向代理" class="headerlink" title="正向代理"></a>正向代理</h2><p>​        <strong>如果把局域网外的Internet想象成一个巨大的资源库，则局域网中的客户端要访问Internet，则需要通过代理服务器来访问，这种代理服务器就称为正向代理。</strong></p>
 <pre><code>正向代理，意思是一个位于客户端和原始服务器(origin server)之间的服务器，为了从原始服务器取得内容，客户端向代理发送一个请求并指定目标(原始服务器)，然后代理向原始服务器转交请求并将获得的内容返回给客户端。 </code></pre><p><img src="/images/Nginx/agency.png" alt="正向、反向代理"></p>
@@ -165,7 +166,7 @@
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2020年06月01日 10:46</p>
+        <p>最后更新： 2020年06月02日 09:27</p>
         <p>原始链接： <a class="post-url" href="/2020/05/29/Nginx学习-相关概念/" title="Nginx学习-相关概念">http://ligangit.com/2020/05/29/Nginx学习-相关概念/</a></p>
         <footer>
             <a href="http://ligangit.com">
@@ -369,7 +370,7 @@
             <a class="category-link" href="/categories/SpringBoot/">SpringBoot</a><a class="category-link" href="/categories/java/">java</a><a class="category-link" href="/categories/sql/">sql</a><a class="category-link" href="/categories/前端/">前端</a><a class="category-link" href="/categories/博客/">博客</a><a class="category-link" href="/categories/服务器软件/">服务器软件</a>
         </div>
         <div id="sidebar-menu-box-tags">
-            <a href="/tags/JS/" style="font-size: 10px;">JS</a> <a href="/tags/SpringBoot/" style="font-size: 17.5px;">SpringBoot</a> <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/Util/" style="font-size: 10px;">Util</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/idea/" style="font-size: 12.5px;">idea</a> <a href="/tags/java/" style="font-size: 17.5px;">java</a> <a href="/tags/markdown/" style="font-size: 12.5px;">markdown</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/oracle/" style="font-size: 12.5px;">oracle</a> <a href="/tags/sql/" style="font-size: 20px;">sql</a> <a href="/tags/web/" style="font-size: 12.5px;">web</a> <a href="/tags/前端/" style="font-size: 10px;">前端</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/服务器软件/" style="font-size: 10px;">服务器软件</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a> <a href="/tags/自动配置/" style="font-size: 10px;">自动配置</a>
+            <a href="/tags/Echarts/" style="font-size: 10px;">Echarts</a> <a href="/tags/JS/" style="font-size: 12.5px;">JS</a> <a href="/tags/SpringBoot/" style="font-size: 17.5px;">SpringBoot</a> <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/Util/" style="font-size: 10px;">Util</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/idea/" style="font-size: 12.5px;">idea</a> <a href="/tags/java/" style="font-size: 17.5px;">java</a> <a href="/tags/markdown/" style="font-size: 12.5px;">markdown</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/oracle/" style="font-size: 12.5px;">oracle</a> <a href="/tags/sql/" style="font-size: 20px;">sql</a> <a href="/tags/web/" style="font-size: 12.5px;">web</a> <a href="/tags/前端/" style="font-size: 12.5px;">前端</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/服务器软件/" style="font-size: 10px;">服务器软件</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a> <a href="/tags/自动配置/" style="font-size: 10px;">自动配置</a>
         </div>
     </div>
     <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
@@ -402,7 +403,7 @@
     <div class="mobile-header-tag-container">
         <span class="title">Tags</span>
         <div id="mobile-header-container-tags">
-            <a href="/tags/JS/" style="font-size: 10px;">JS</a> <a href="/tags/SpringBoot/" style="font-size: 17.5px;">SpringBoot</a> <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/Util/" style="font-size: 10px;">Util</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/idea/" style="font-size: 12.5px;">idea</a> <a href="/tags/java/" style="font-size: 17.5px;">java</a> <a href="/tags/markdown/" style="font-size: 12.5px;">markdown</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/oracle/" style="font-size: 12.5px;">oracle</a> <a href="/tags/sql/" style="font-size: 20px;">sql</a> <a href="/tags/web/" style="font-size: 12.5px;">web</a> <a href="/tags/前端/" style="font-size: 10px;">前端</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/服务器软件/" style="font-size: 10px;">服务器软件</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a> <a href="/tags/自动配置/" style="font-size: 10px;">自动配置</a>
+            <a href="/tags/Echarts/" style="font-size: 10px;">Echarts</a> <a href="/tags/JS/" style="font-size: 12.5px;">JS</a> <a href="/tags/SpringBoot/" style="font-size: 17.5px;">SpringBoot</a> <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/Util/" style="font-size: 10px;">Util</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/idea/" style="font-size: 12.5px;">idea</a> <a href="/tags/java/" style="font-size: 17.5px;">java</a> <a href="/tags/markdown/" style="font-size: 12.5px;">markdown</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/oracle/" style="font-size: 12.5px;">oracle</a> <a href="/tags/sql/" style="font-size: 20px;">sql</a> <a href="/tags/web/" style="font-size: 12.5px;">web</a> <a href="/tags/前端/" style="font-size: 12.5px;">前端</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/服务器软件/" style="font-size: 10px;">服务器软件</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a> <a href="/tags/自动配置/" style="font-size: 10px;">自动配置</a>
         </div>
     </div>
 </div>
