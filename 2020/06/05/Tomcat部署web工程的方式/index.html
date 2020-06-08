@@ -22,7 +22,7 @@
 <meta property="og:image" content="http://ligangit.com/images/Tomcat/way2.png">
 <meta property="og:image" content="http://ligangit.com/images/Tomcat/path2.png">
 <meta property="og:image" content="http://ligangit.com/images/Tomcat/result2.png">
-<meta property="og:updated_time" content="2020-06-08T01:16:33.745Z">
+<meta property="og:updated_time" content="2020-06-08T01:53:03.616Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Tomcat部署web工程的方式">
 <meta name="twitter:description" content="Tomcat部署web工程的方式第一种只需要把web工程的目录拷贝到Tomcat的webapps目录下即可。 helloworld文件夹就是web项目  访问路径： http://localhost:8080/helloworld/hello.html  第二种进入Tomcat安装目录的conf\Catalina\localhost文件夹 创建一个xml配置文件（一个xml配置文件对应一个web工">
@@ -169,15 +169,19 @@
 <p><strong>注意：</strong></p>
 <p>​    Context 表示一个工程上下文<br>​    path 表示工程访问路径<br>​    docBase 表示web工程路径</p>
 <p>​    <strong>path中的内容必须和xml文件名称相同</strong>，不然访问不到，如上例中的abc.xml， path=”/abc”</p>
-<p>项目存放地址：</p>
+<p>项目存放地址：D:\test</p>
 <p><img src="/images/Tomcat/path2.png" alt="创建文件"></p>
 <p>访问路径：</p>
 <p><a href="http://localhost:8080/abc/hello.html" target="_blank" rel="noopener">http://localhost:8080/abc/hello.html</a></p>
 <p><img src="/images/Tomcat/result2.png" alt="结果二"></p>
+<h2 id="默认访问"><a href="#默认访问" class="headerlink" title="默认访问"></a>默认访问</h2><p>当我们在浏览器地址中输入访问地址如下：</p>
+<p><a href="http://ip:port/" target="_blank" rel="noopener">http://ip:port/</a>     如 <a href="http://localhost:8080/" target="_blank" rel="noopener">http://localhost:8080/</a>    <strong>没有工程名的时候，默认访问的是ROOT工程</strong>。</p>
+<p>当我们在浏览器地址栏中输入的访问地址如下：</p>
+<p><a href="http://ip:port/工程名/" target="_blank" rel="noopener">http://ip:port/工程名/</a>    如 <a href="http://localhost:8080/abc/" target="_blank" rel="noopener">http://localhost:8080/abc/</a>  <strong>没有资源名，默认访问index.html页面</strong>。</p>
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2020年06月08日 09:16</p>
+        <p>最后更新： 2020年06月08日 09:53</p>
         <p>原始链接： <a class="post-url" href="/2020/06/05/Tomcat部署web工程的方式/" title="Tomcat部署web工程的方式">http://ligangit.com/2020/06/05/Tomcat部署web工程的方式/</a></p>
         <footer>
             <a href="http://ligangit.com">
@@ -299,7 +303,7 @@
 
     <aside class="post-toc-pos post-toc-top" id="post-toc">
         <nav class="post-toc-wrap">
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Tomcat部署web工程的方式"><span class="post-toc-text">Tomcat部署web工程的方式</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#第一种"><span class="post-toc-text">第一种</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#第二种"><span class="post-toc-text">第二种</span></a></li></ol></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Tomcat部署web工程的方式"><span class="post-toc-text">Tomcat部署web工程的方式</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#第一种"><span class="post-toc-text">第一种</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#第二种"><span class="post-toc-text">第二种</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#默认访问"><span class="post-toc-text">默认访问</span></a></li></ol></li></ol>
         </nav>
     </aside>
     
