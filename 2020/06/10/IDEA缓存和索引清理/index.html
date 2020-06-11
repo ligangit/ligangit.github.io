@@ -3,32 +3,26 @@
 <head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
   
-  <title>idea对web项目打war包 | ligangit</title>
+  <title>IDEA缓存和索引清理 | ligangit</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
     <meta name="keywords" content="LiGang,Li Gang,ligangit">
   
-  <meta name="description" content="​    很多时候，完成项目需要打成war包，然后部署在服务器里面，对于小白来说，一开始会不知道怎么打包，我就是经历过，所以将这个打包的过程写下来。 ​    下面有两种打包方式，一种是传统的web项目，一种是maven项目。 传统web项目打war包1、File –&amp;gt;Project Structure，如下图：  2、点击”Artifacts“，然后在右边的界面中点击”十“号，选择”Web">
-<meta name="keywords" content="java,idea,web">
+  <meta name="description" content="IDEA缓存和索引IntelliJ IDEA首次加载项目的时候。都会创建索引，而创建索引的时间根项目的文件多少成正比。 IntelliJ IDEA的缓存和索引主要是用来加快文件查询，从而加快各种查找、代码提示等操作的速度。 某些特殊情况下，IntelliJ IDEA的缓存和索引文件也是会损坏的，比如：断电、蓝屏引起的强制关机，当重新打开IDEA，很可能IDEA会报各种莫名其妙的错误，甚至项目打不开">
+<meta name="keywords" content="java,idea">
 <meta property="og:type" content="article">
-<meta property="og:title" content="idea对web项目打war包">
-<meta property="og:url" content="http://ligangit.com/2019/11/04/idea对web项目打war包/index.html">
+<meta property="og:title" content="IDEA缓存和索引清理">
+<meta property="og:url" content="http://ligangit.com/2020/06/10/IDEA缓存和索引清理/index.html">
 <meta property="og:site_name" content="ligangit">
-<meta property="og:description" content="​    很多时候，完成项目需要打成war包，然后部署在服务器里面，对于小白来说，一开始会不知道怎么打包，我就是经历过，所以将这个打包的过程写下来。 ​    下面有两种打包方式，一种是传统的web项目，一种是maven项目。 传统web项目打war包1、File –&amp;gt;Project Structure，如下图：  2、点击”Artifacts“，然后在右边的界面中点击”十“号，选择”Web">
+<meta property="og:description" content="IDEA缓存和索引IntelliJ IDEA首次加载项目的时候。都会创建索引，而创建索引的时间根项目的文件多少成正比。 IntelliJ IDEA的缓存和索引主要是用来加快文件查询，从而加快各种查找、代码提示等操作的速度。 某些特殊情况下，IntelliJ IDEA的缓存和索引文件也是会损坏的，比如：断电、蓝屏引起的强制关机，当重新打开IDEA，很可能IDEA会报各种莫名其妙的错误，甚至项目打不开">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://ligangit.com/images/idea_package/add_model.png">
-<meta property="og:image" content="http://ligangit.com/images/idea_package/add_war2.png">
-<meta property="og:image" content="http://ligangit.com/images/idea_package/bulid_war1.png">
-<meta property="og:image" content="http://ligangit.com/images/idea_package/clean.png">
-<meta property="og:image" content="http://ligangit.com/images/idea_package/bulid.png">
-<meta property="og:image" content="http://ligangit.com/images/idea_package/old_war.png">
-<meta property="og:image" content="http://ligangit.com/images/idea_package/maven.png">
-<meta property="og:image" content="http://ligangit.com/images/idea_package/maven_war.png">
-<meta property="og:updated_time" content="2019-11-13T10:12:53.737Z">
+<meta property="og:image" content="http://ligangit.com/images/idea_clean/step1.png">
+<meta property="og:image" content="http://ligangit.com/images/idea_clean/clean.png">
+<meta property="og:updated_time" content="2020-06-10T08:54:35.785Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="idea对web项目打war包">
-<meta name="twitter:description" content="​    很多时候，完成项目需要打成war包，然后部署在服务器里面，对于小白来说，一开始会不知道怎么打包，我就是经历过，所以将这个打包的过程写下来。 ​    下面有两种打包方式，一种是传统的web项目，一种是maven项目。 传统web项目打war包1、File –&amp;gt;Project Structure，如下图：  2、点击”Artifacts“，然后在右边的界面中点击”十“号，选择”Web">
-<meta name="twitter:image" content="http://ligangit.com/images/idea_package/add_model.png">
+<meta name="twitter:title" content="IDEA缓存和索引清理">
+<meta name="twitter:description" content="IDEA缓存和索引IntelliJ IDEA首次加载项目的时候。都会创建索引，而创建索引的时间根项目的文件多少成正比。 IntelliJ IDEA的缓存和索引主要是用来加快文件查询，从而加快各种查找、代码提示等操作的速度。 某些特殊情况下，IntelliJ IDEA的缓存和索引文件也是会损坏的，比如：断电、蓝屏引起的强制关机，当重新打开IDEA，很可能IDEA会报各种莫名其妙的错误，甚至项目打不开">
+<meta name="twitter:image" content="http://ligangit.com/images/idea_clean/step1.png">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -119,14 +113,14 @@
     </div>
 </header>
       <div class="outer">
-        <section id="main" class="body-wrap"><article id="post-idea对web项目打war包" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main" class="body-wrap"><article id="post-IDEA缓存和索引清理" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="post-title" itemprop="name">
-      idea对web项目打war包
+      IDEA缓存和索引清理
     </h1>
     <div class="post-title-bar">
       <ul>
@@ -139,7 +133,7 @@
               </li>
           
         <li>
-          <i class="fa fa-calendar"></i>  2019-11-04
+          <i class="fa fa-calendar"></i>  2020-06-10
         </li>
         <li>
           <i class="fa fa-eye"></i>
@@ -155,31 +149,18 @@
     <div class="article-entry post-content" itemprop="articleBody">
       
             
-            <p>​    很多时候，完成项目需要打成war包，然后部署在服务器里面，对于小白来说，一开始会不知道怎么打包，我就是经历过，所以将这个打包的过程写下来。</p>
-<p>​    下面有两种打包方式，一种是传统的web项目，一种是maven项目。</p>
-<h2 id="传统web项目打war包"><a href="#传统web项目打war包" class="headerlink" title="传统web项目打war包"></a>传统web项目打war包</h2><p>1、File –&gt;Project Structure，如下图：</p>
-<p><img src="/images/idea_package/add_model.png" alt="打开结构目录"></p>
-<p>2、点击”Artifacts“，然后在右边的界面中点击”十“号，选择”Web Application:Archive“，选择打包项，选择后就可以点击”Apply“按钮了，操作如下图：</p>
-<p><img src="/images/idea_package/add_war2.png" alt="打开结构目录"></p>
-<p>3、执行打包过程，点击”Build”，选择“Build Artifacts”，选择war包，然后先点击“Clean”,清空下，清空之后，在此点击”Build”，选择“Build Artifacts”，选择war包，然后先点击“Bulid”,清空下，操作如下图：</p>
-<p><img src="/images/idea_package/bulid_war1.png" alt="打开结构目录"></p>
-<p><img src="/images/idea_package/clean.png" alt="打开结构目录"></p>
-<p><img src="/images/idea_package/bulid.png" alt="打开结构目录"></p>
-<p>4、打包好的War包在classes  –&gt; artifacts ,如下图</p>
-<p><img src="/images/idea_package/old_war.png" alt="打开结构目录"></p>
-<h2 id="Maven项目打war包"><a href="#Maven项目打war包" class="headerlink" title="Maven项目打war包"></a>Maven项目打war包</h2><p>1、点击窗口右边的”Maven”，弹出窗口；</p>
-<p>2、点击“Clean”，先清空项目；</p>
-<p>3、点击“Insatll”，打jar包；</p>
-<p>4、点击“Pagkage”，打War包。</p>
-<p>具体操作如下图：</p>
-<p><img src="/images/idea_package/maven.png" alt="打开结构目录"></p>
-<p>5、打包好的War包在target文件夹下 ,如下图</p>
-<p><img src="/images/idea_package/maven_war.png" alt="打开结构目录"></p>
+            <h1 id="IDEA缓存和索引"><a href="#IDEA缓存和索引" class="headerlink" title="IDEA缓存和索引"></a>IDEA缓存和索引</h1><p><strong>IntelliJ IDEA首次加载项目的时候。都会创建索引</strong>，而创建索引的时间根项目的文件多少成正比。</p>
+<p><strong>IntelliJ IDEA的缓存和索引主要是用来加快文件查询，从而加快各种查找、代码提示等操作的速度</strong>。</p>
+<p>某些特殊情况下，IntelliJ IDEA的缓存和索引文件也是会损坏的，比如：断电、蓝屏引起的强制关机，当重新打开IDEA，很可能IDEA会报各种莫名其妙的错误，甚至项目打不开，IDEA主题还原成默认状态。</p>
+<h2 id="清理缓存和索引"><a href="#清理缓存和索引" class="headerlink" title="清理缓存和索引"></a>清理缓存和索引</h2><p>步骤：</p>
+<p><img src="/images/idea_clean/step1.png" alt="step"></p>
+<p><img src="/images/idea_clean/clean.png" alt="clean"></p>
+<p><strong>执行完成后会重启IDEA，IDEA启动后会自动重新创建缓存文件和索引</strong>。</p>
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2019年11月13日 18:12</p>
-        <p>原始链接： <a class="post-url" href="/2019/11/04/idea对web项目打war包/" title="idea对web项目打war包">http://ligangit.com/2019/11/04/idea对web项目打war包/</a></p>
+        <p>最后更新： 2020年06月10日 16:54</p>
+        <p>原始链接： <a class="post-url" href="/2020/06/10/IDEA缓存和索引清理/" title="IDEA缓存和索引清理">http://ligangit.com/2020/06/10/IDEA缓存和索引清理/</a></p>
         <footer>
             <a href="http://ligangit.com">
                 <img src="/images/logo.png" alt="Li Gang">
@@ -236,7 +217,7 @@
     <div class="post-share-list" id="share-list">
         <ul class="share-icons">
           <li>
-            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://ligangit.com/2019/11/04/idea对web项目打war包/&title=《idea对web项目打war包》 — ligangit&pic=images/idea.png" data-title="微博">
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://ligangit.com/2020/06/10/IDEA缓存和索引清理/&title=《IDEA缓存和索引清理》 — ligangit&pic=images/idea.png" data-title="微博">
               <i class="fa fa-weibo"></i>
             </a>
           </li>
@@ -246,22 +227,22 @@
             </a>
           </li>
           <li>
-            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://ligangit.com/2019/11/04/idea对web项目打war包/&title=《idea对web项目打war包》 — ligangit&source=在码农的世界里面默默的挣扎着" data-title="QQ">
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://ligangit.com/2020/06/10/IDEA缓存和索引清理/&title=《IDEA缓存和索引清理》 — ligangit&source=在码农的世界里面默默的挣扎着" data-title="QQ">
               <i class="fa fa-qq"></i>
             </a>
           </li>
           <li>
-            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://ligangit.com/2019/11/04/idea对web项目打war包/" data-title="Facebook">
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://ligangit.com/2020/06/10/IDEA缓存和索引清理/" data-title="Facebook">
               <i class="fa fa-facebook"></i>
             </a>
           </li>
           <li>
-            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《idea对web项目打war包》 — ligangit&url=http://ligangit.com/2019/11/04/idea对web项目打war包/&via=http://ligangit.com" data-title="Twitter">
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《IDEA缓存和索引清理》 — ligangit&url=http://ligangit.com/2020/06/10/IDEA缓存和索引清理/&via=http://ligangit.com" data-title="Twitter">
               <i class="fa fa-twitter"></i>
             </a>
           </li>
           <li>
-            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://ligangit.com/2019/11/04/idea对web项目打war包/" data-title="Google+">
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://ligangit.com/2020/06/10/IDEA缓存和索引清理/" data-title="Google+">
               <i class="fa fa-google-plus"></i>
             </a>
           </li>
@@ -271,7 +252,7 @@
 <div class="post-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;" id="wxShare-close">×</a>
     <p>扫一扫，分享到微信</p>
-    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://ligangit.com/2019/11/04/idea对web项目打war包/" alt="微信分享二维码">
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://ligangit.com/2020/06/10/IDEA缓存和索引清理/" alt="微信分享二维码">
 </div>
 
 <div class="mask"></div>
@@ -287,8 +268,6 @@
       
     <a href="/tags/idea/" class="color5">idea</a>
       
-    <a href="/tags/web/" class="color4">web</a>
-      
   </li>
 
         </ul>
@@ -300,26 +279,26 @@
 
     <aside class="post-toc-pos post-toc-top" id="post-toc">
         <nav class="post-toc-wrap">
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#传统web项目打war包"><span class="post-toc-text">传统web项目打war包</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Maven项目打war包"><span class="post-toc-text">Maven项目打war包</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#IDEA缓存和索引"><span class="post-toc-text">IDEA缓存和索引</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#清理缓存和索引"><span class="post-toc-text">清理缓存和索引</span></a></li></ol></li></ol>
         </nav>
     </aside>
     
 
 <nav id="article-nav">
   
-    <a href="/2019/11/06/idea打开新Web项目并运行/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2020/06/10/IDEA快捷键/" id="article-nav-newer" class="article-nav-link-wrap">
 
       <span class="article-nav-title">
         <i class="fa fa-hand-o-left" aria-hidden="true"></i>
         
-          idea打开新Web项目并运行
+          IDEA快捷键
         
       </span>
     </a>
   
   
-    <a href="/2019/10/25/博客加载图片/" id="article-nav-older" class="article-nav-link-wrap">
-      <span class="article-nav-title">博客加载图片</span>
+    <a href="/2020/06/09/IDEA部分模板/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">IDEA部分模板</span>
       <i class="fa fa-hand-o-right" aria-hidden="true"></i>
     </a>
   
