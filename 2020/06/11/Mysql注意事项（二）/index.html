@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>Mysql注意事项（二） | ligangit</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="LiGang,Li Gang,ligangit">
+  
+  <meta name="description" content="最近回顾了一下MySQL，发现了一些MySQL需要注意的事项，同时也作为学习笔记，记录下来。 Mysql注意事项（二）9、分组数据GROUP BY规定：  GROUP BY子句可以包含任意数目的列 如果在GROUP BY子句中嵌套了分组，数据将在最后规定的分组上进行汇总 GROUP BY 子句中列出的每个列都必须是检索列或有效的表达式（但不能是聚集函数）。如果在SELECT中使用表达式，则必须在G">
+<meta name="keywords" content="mysql,sql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mysql注意事项（二）">
+<meta property="og:url" content="http://ligangit.com/2020/06/11/Mysql注意事项（二）/index.html">
+<meta property="og:site_name" content="ligangit">
+<meta property="og:description" content="最近回顾了一下MySQL，发现了一些MySQL需要注意的事项，同时也作为学习笔记，记录下来。 Mysql注意事项（二）9、分组数据GROUP BY规定：  GROUP BY子句可以包含任意数目的列 如果在GROUP BY子句中嵌套了分组，数据将在最后规定的分组上进行汇总 GROUP BY 子句中列出的每个列都必须是检索列或有效的表达式（但不能是聚集函数）。如果在SELECT中使用表达式，则必须在G">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://ligangit.com/images/MysqlNotice/pollup2.png">
+<meta property="og:image" content="http://ligangit.com/images/MysqlNotice/pollup.png">
+<meta property="og:image" content="http://ligangit.com/images/MysqlNotice/left_join.png">
+<meta property="og:image" content="http://ligangit.com/images/MysqlNotice/right_join.png">
+<meta property="og:image" content="http://ligangit.com/images/MysqlNotice/left_join_count.png">
+<meta property="og:image" content="http://ligangit.com/images/MysqlNotice/union.png">
+<meta property="og:image" content="http://ligangit.com/images/MysqlNotice/union_order_by.png">
+<meta property="og:image" content="http://ligangit.com/images/MysqlNotice/match_against.png">
+<meta property="og:updated_time" content="2020-06-11T15:44:13.842Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mysql注意事项（二）">
+<meta name="twitter:description" content="最近回顾了一下MySQL，发现了一些MySQL需要注意的事项，同时也作为学习笔记，记录下来。 Mysql注意事项（二）9、分组数据GROUP BY规定：  GROUP BY子句可以包含任意数目的列 如果在GROUP BY子句中嵌套了分组，数据将在最后规定的分组上进行汇总 GROUP BY 子句中列出的每个列都必须是检索列或有效的表达式（但不能是聚集函数）。如果在SELECT中使用表达式，则必须在G">
+<meta name="twitter:image" content="http://ligangit.com/images/MysqlNotice/pollup2.png">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">Li Gang&#39;s blog</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="/">
+                        <i class="fa fa-home"></i>
+                        <span>主页</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>归档</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>关于</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/logo.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        Li Gang&#39;s blog
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        在码农的世界里挣扎的人
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="Li Gang" target="_blank" href="//ligangit.com">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/ligangit">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="联系QQ"  href="/">
+                            <i class="fa fa-qq fa-2x"></i></a>
+                    
+                        <a title="微信"  href="/">
+                            <i class="fa fa-weixin fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-Mysql注意事项（二）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      Mysql注意事项（二）
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/sql/">sql</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2020-06-11
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <p>最近回顾了一下MySQL，发现了一些MySQL需要注意的事项，同时也作为学习笔记，记录下来。</p>
+<h1 id="Mysql注意事项（二）"><a href="#Mysql注意事项（二）" class="headerlink" title="Mysql注意事项（二）"></a>Mysql注意事项（二）</h1><h2 id="9、分组数据"><a href="#9、分组数据" class="headerlink" title="9、分组数据"></a>9、分组数据</h2><h3 id="GROUP-BY"><a href="#GROUP-BY" class="headerlink" title="GROUP BY"></a>GROUP BY</h3><p>规定：</p>
+<ul>
+<li>GROUP BY子句可以包含任意数目的列</li>
+<li>如果在GROUP BY子句中嵌套了分组，数据将在最后规定的分组上进行汇总</li>
+<li>GROUP BY 子句中列出的每个列都必须是检索列或有效的表达式（但不能是聚集函数）。如果在SELECT中使用表达式，则必须在GROUP BY子句中指定相同的表达式。<strong>不能使用别名</strong></li>
+<li>除聚集函数外，<strong>SELECT语句中的每个列都必须在GROUP BY子句中给出</strong></li>
+<li><strong>如果分组中具有NULL值，则NULL将作为一个分组返回。如果有多行NULL值，它们将分为一组</strong></li>
+<li><strong>GROUP BY 子句必须出现在WHERE子句之后，ORDER BY子句之前</strong></li>
+</ul>
+<p>使用ROLLUP</p>
+<p>​    使用WITH ROLLUP关键字，可以得到每个分组以及每个分组汇总级别的值，即聚合函数结果的总数。</p>
+<p>​    示例1：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select vend_id,sum(prod_price) as num_prods</span><br><span class="line">from products</span><br><span class="line">group by vend_id WITH ROLLUP;</span><br></pre></td></tr></table></figure>
+
+<p>​    结果1：</p>
+<p><img src="/images/MysqlNotice/pollup2.png" alt="使用ROLLUP"></p>
+<p>​    示例2：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select vend_id,count(*) as num_prods</span><br><span class="line">from products</span><br><span class="line">group by vend_id WITH ROLLUP;</span><br></pre></td></tr></table></figure>
+
+<p>​    结果2：</p>
+<p><img src="/images/MysqlNotice/pollup.png" alt="使用ROLLUP"></p>
+<h3 id="HAVING（过滤分组）"><a href="#HAVING（过滤分组）" class="headerlink" title="HAVING（过滤分组）"></a>HAVING（过滤分组）</h3><p>​    HAVING基于完整的分组进行过滤，WHERE过滤指定的是行而不是分组。</p>
+<p>​    WHERE在数据分组前进行过滤，HAVING在数据分组后进行过滤</p>
+<h3 id="分组和排序"><a href="#分组和排序" class="headerlink" title="分组和排序"></a>分组和排序</h3><table>
+<thead>
+<tr>
+<th>ORDER BY</th>
+<th>GROUP BY</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>排序产生的输出</td>
+<td>分组行。但输出可能不是分组的顺序</td>
+</tr>
+<tr>
+<td>任意列都可以使用（甚至非选择的列也可以使用）</td>
+<td>只可能使用选择列或表达式列，而且必须使用每个选择表达式</td>
+</tr>
+<tr>
+<td>不一定需要</td>
+<td>如果与聚集函数一起使用（或表达式），则必须使用</td>
+</tr>
+</tbody></table>
+<p>​    <strong>不要忘记ORDER BY</strong></p>
+<p>​    一般在使用GROUP BY子句时，应该也给出ORDER BY子句。这是保证数据正确排序的唯一方法。千万不要仅依赖GROUP BY排序数据。</p>
+<h2 id="10、SELECT子句及其顺序（非常重要）"><a href="#10、SELECT子句及其顺序（非常重要）" class="headerlink" title="10、SELECT子句及其顺序（非常重要）"></a>10、SELECT子句及其顺序（非常重要）</h2><p><strong>从上到下，依次执行</strong></p>
+<table>
+<thead>
+<tr>
+<th>子句</th>
+<th>说明</th>
+<th>是否必须使用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SELECT</td>
+<td>要返回的列或表达式</td>
+<td>是</td>
+</tr>
+<tr>
+<td>FROM</td>
+<td>从中检索数据的表</td>
+<td>仅在从表选择数据时使用</td>
+</tr>
+<tr>
+<td>WHERE</td>
+<td>行级过滤</td>
+<td>否</td>
+</tr>
+<tr>
+<td>GROUP BY</td>
+<td>分组说明</td>
+<td>仅在按组计算聚集时使用</td>
+</tr>
+<tr>
+<td>HAVING</td>
+<td>组级过滤</td>
+<td>否</td>
+</tr>
+<tr>
+<td>ORDER BY</td>
+<td>输出排序顺序</td>
+<td>否</td>
+</tr>
+<tr>
+<td>LIMIT</td>
+<td>要检索的行数</td>
+<td>否</td>
+</tr>
+</tbody></table>
+<h2 id="11、子查询"><a href="#11、子查询" class="headerlink" title="11、子查询"></a>11、子查询</h2><p>​    子查询：嵌套在其他查询中的查询。</p>
+<ol>
+<li><p><strong>子查询总是从内向外查询。</strong></p>
+</li>
+<li><p><strong>列必须匹配</strong></p>
+<p>在WHERE子句中使用子查询，应该保证SELECT语句具有与WHERE子句中相同数目的列。通常，子查询将返回单个列并且与单个列匹配，但如果需要也可以使用多个列。</p>
+</li>
+<li><p>子查询和性能</p>
+<p>使用子查询并不总是执行这种类型的数据检索的最有效的方法。</p>
+</li>
+</ol>
+<h2 id="12、JOIN（联结）"><a href="#12、JOIN（联结）" class="headerlink" title="12、JOIN（联结）"></a>12、JOIN（联结）</h2><p>​    联结是一种机制，用来在一条SELECT语句中关联表，因此称之为联结。</p>
+<p>​    <strong>维护引用完整性</strong>        指示MySQL只允许在products表的供应商ID列中出现合法值（即出现在vendors表中的供应商）。这就是维护引用完整性。<strong>通过在表的定义中指定主键和外键来实现</strong>。</p>
+<p>​    <strong>完全限定列名</strong>        在引用的列可能出现二义性时，必须使用完全限定列名（用一个点分隔的表名和列名）。</p>
+<p>​    <strong>不要忘了WHERE子句</strong>     应该保证所有联结都有WHERE子句，否则MySQL将返回比想象的数据多得多的数据。</p>
+<p>​    <strong>性能考虑</strong>        MySQL运行在运行时关联指定的每个表以处理联结。这种处理可能是非常耗费资源的，因此应该仔细，不要联结不必要的表，联结的表越多，性能下降越厉害。</p>
+<h3 id="INNER-JOIN（内部联结）"><a href="#INNER-JOIN（内部联结）" class="headerlink" title="INNER JOIN（内部联结）"></a>INNER JOIN（内部联结）</h3><p>​    基于两个表中间的相等测试的联结，称为等值联结，也称为内部联结。</p>
+<p>示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT vend_name,prod_name,prod_price</span><br><span class="line">FROM vendors INNER JOIN products</span><br><span class="line">ON vendors.vend_id = products.vend_id;</span><br></pre></td></tr></table></figure>
+
+<h3 id="自联结"><a href="#自联结" class="headerlink" title="自联结"></a>自联结</h3><p>​    示例：</p>
+<p>​    使用子查询：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SELECT prod_id,prod_name</span><br><span class="line">FROM products</span><br><span class="line">WHERE vend_id = (SELECT vend_id</span><br><span class="line">                FROM products</span><br><span class="line">                WHERE prod_id = &apos;DTNTR&apos;)</span><br></pre></td></tr></table></figure>
+
+<p>​    使用自联结：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT p1.prod_id,p1.prod_name</span><br><span class="line">FROM products AS p1,products AS p2</span><br><span class="line">WHERE p1.vend_id = p2.vend_id</span><br><span class="line">AND p2.prod_id = &apos;DTNTR&apos;;</span><br></pre></td></tr></table></figure>
+
+<p>​    <strong>用自联结而不用子查询</strong></p>
+<p>​    自联结通常作为外部语句用来替代从相同表中检索数据时使用的子查询语句。虽然最终的结果是相同的。但有时候处理联结远比处理子查询快得多。应该试一下两种方法，以确定哪一种的性更好。</p>
+<h3 id="外部联结（OUTER-JOIN）"><a href="#外部联结（OUTER-JOIN）" class="headerlink" title="外部联结（OUTER JOIN）"></a>外部联结（OUTER JOIN）</h3><p>​    联结包含了那些在相关表中没有关联行的行，这种类型的联结称为外部联结。</p>
+<p>​    <strong>使用OUTER JOIN语法时，必须使用RIGHT或LEFT关键字指定包括其所有行的表</strong>，RIGHT指出的是OUTER JOIN右边的表，二LEFT指出的是OUTER JOIN左边的表。</p>
+<p>​    示例：LEFT OUTER JOIN（左联结）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT customers.cust_id,orders.order_num</span><br><span class="line">FROM customers LEFT OUTER JOIN orders</span><br><span class="line">ON customers.cust_id = orders.cust_id;</span><br></pre></td></tr></table></figure>
+
+<p>​    结果：</p>
+<p><img src="/images/MysqlNotice/left_join.png" alt="LEFT_JOIN"></p>
+<p>​    示例：RIGHT OUTER JOIN（右联结）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT customers.cust_id,orders.order_num</span><br><span class="line">FROM customers RIGHT OUTER JOIN orders</span><br><span class="line">ON customers.cust_id = orders.cust_id;</span><br></pre></td></tr></table></figure>
+
+<p>​    结果：</p>
+<p><img src="/images/MysqlNotice/right_join.png" alt="RIGHT_JOIN"></p>
+<h3 id="使用带聚集函数的联结"><a href="#使用带聚集函数的联结" class="headerlink" title="使用带聚集函数的联结"></a>使用带聚集函数的联结</h3><p>示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">SELECT customers.cust_name,</span><br><span class="line">customers.cust_id,</span><br><span class="line">COUNT(orders.order_num) AS num_ord</span><br><span class="line">FROM customers LEFT OUTER JOIN orders</span><br><span class="line">ON customers.cust_id = orders.cust_id</span><br><span class="line">GROUP BY customers.cust_id;</span><br></pre></td></tr></table></figure>
+
+<p>结果：</p>
+<p><img src="/images/MysqlNotice/left_join_count.png" alt="LEFT_JOIN_COUNT"></p>
+<h2 id="13、UNOIN（组合查询）"><a href="#13、UNOIN（组合查询）" class="headerlink" title="13、UNOIN（组合查询）"></a>13、UNOIN（组合查询）</h2><p>​        执行多个查询（多条SELECT语句），并将结果作为单个查询结果集返回，这些组合查询通常称为并（union）或复合查询（compound query）。</p>
+<p>​        示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">SELECT vend_id,prod_id,prod_price</span><br><span class="line">FROM products</span><br><span class="line">WHERE prod_price &lt;= 5</span><br><span class="line">UNION</span><br><span class="line">SELECT vend_id,prod_id, prod_price</span><br><span class="line">FROM products</span><br><span class="line">WHERE vend_id IN (1001,1002);</span><br></pre></td></tr></table></figure>
+
+<p>​        结果：</p>
+<p><img src="/images/MysqlNotice/union.png" alt="UNION"></p>
+<p>​    <strong>UNION规则</strong></p>
+<ul>
+<li>UNOIN必须由两条或两条以上的SELECT语句组成，语句之间用关键字UNION分隔。</li>
+<li>UNION中的每个查询必须包含相同的列、表达式或聚集函数</li>
+<li>列数据类型必须兼容：类型不必完全相同，但必须是DBMS可以隐含地转换的类型。</li>
+</ul>
+<p>​    </p>
+<p>​    <strong>包含或取消重复的行</strong></p>
+<p>​    UNION从查询结果集中自动去除了重复的行。</p>
+<p>​    如果想返回所有的行（不去除重复的行），可以使用<strong>UNION ALL</strong>而不是UNION</p>
+<p>​    <strong>对组合查询结果排序</strong></p>
+<p>​    在使用UNION组合查询时，<strong>只能使用一条ORDER BY子句，它必须出现在最后一条SELECT语句之后</strong>。</p>
+<p>​    示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">SELECT vend_id,prod_id,prod_price</span><br><span class="line">FROM products</span><br><span class="line">WHERE prod_price &lt;= 5</span><br><span class="line">UNION</span><br><span class="line">SELECT vend_id,prod_id, prod_price</span><br><span class="line">FROM products</span><br><span class="line">WHERE vend_id IN (1001,1002)</span><br><span class="line">ORDER BY vend_id,prod_price;</span><br></pre></td></tr></table></figure>
+
+<p>​    结果：</p>
+<p><img src="/images/MysqlNotice/union_order_by.png" alt="UNION_ORDER_BY"></p>
+<h2 id="14、全文本搜索"><a href="#14、全文本搜索" class="headerlink" title="14、全文本搜索"></a>14、全文本搜索</h2><p>​        并非所有引擎都支持全文本搜索。</p>
+<p>​        为进行全文本搜索，必须索引被搜索的列。</p>
+<p>​        在索引之后，SELECT可与Match()和Against()一起使用以实际执行搜索。</p>
+<p>​        示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT note_text</span><br><span class="line">FROM productnotes</span><br><span class="line">WHERE Match(note_text) Against(&apos;rabbit&apos;);</span><br></pre></td></tr></table></figure>
+
+<p>​        结果：</p>
+<p><img src="/images/MysqlNotice/match_against.png" alt="Match_Against"></p>
+<p>​        <strong>注意：productnotes表中的note_text必须添加索引。</strong></p>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2020年06月11日 23:44</p>
+        <p>原始链接： <a class="post-url" href="/2020/06/11/Mysql注意事项（二）/" title="Mysql注意事项（二）">http://ligangit.com/2020/06/11/Mysql注意事项（二）/</a></p>
+        <footer>
+            <a href="http://ligangit.com">
+                <img src="/images/logo.png" alt="Li Gang">
+                Li Gang
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://ligangit.com/2020/06/11/Mysql注意事项（二）/&title=《Mysql注意事项（二）》 — ligangit&pic=images/mysql.png" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://ligangit.com/2020/06/11/Mysql注意事项（二）/&title=《Mysql注意事项（二）》 — ligangit&source=在码农的世界里面默默的挣扎着" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://ligangit.com/2020/06/11/Mysql注意事项（二）/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Mysql注意事项（二）》 — ligangit&url=http://ligangit.com/2020/06/11/Mysql注意事项（二）/&via=http://ligangit.com" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://ligangit.com/2020/06/11/Mysql注意事项（二）/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://ligangit.com/2020/06/11/Mysql注意事项（二）/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/mysql/" class="color1">mysql</a>
+      
+    <a href="/tags/sql/" class="color4">sql</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Mysql注意事项（二）"><span class="post-toc-text">Mysql注意事项（二）</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#9、分组数据"><span class="post-toc-text">9、分组数据</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#GROUP-BY"><span class="post-toc-text">GROUP BY</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#HAVING（过滤分组）"><span class="post-toc-text">HAVING（过滤分组）</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#分组和排序"><span class="post-toc-text">分组和排序</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#10、SELECT子句及其顺序（非常重要）"><span class="post-toc-text">10、SELECT子句及其顺序（非常重要）</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#11、子查询"><span class="post-toc-text">11、子查询</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#12、JOIN（联结）"><span class="post-toc-text">12、JOIN（联结）</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#INNER-JOIN（内部联结）"><span class="post-toc-text">INNER JOIN（内部联结）</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#自联结"><span class="post-toc-text">自联结</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#外部联结（OUTER-JOIN）"><span class="post-toc-text">外部联结（OUTER JOIN）</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#使用带聚集函数的联结"><span class="post-toc-text">使用带聚集函数的联结</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#13、UNOIN（组合查询）"><span class="post-toc-text">13、UNOIN（组合查询）</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#14、全文本搜索"><span class="post-toc-text">14、全文本搜索</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+    <a href="/2020/06/11/Mysql之全文本检索/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          Mysql之全文本检索
+        
+      </span>
+    </a>
+  
+  
+    <a href="/2020/06/11/Gradle学习/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">Gradle学习</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2020 Li Gang<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "http://ligangit.com",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/SpringBoot/">SpringBoot</a><a class="category-link" href="/categories/java/">java</a><a class="category-link" href="/categories/sql/">sql</a><a class="category-link" href="/categories/前端/">前端</a><a class="category-link" href="/categories/博客/">博客</a><a class="category-link" href="/categories/服务器软件/">服务器软件</a><a class="category-link" href="/categories/研发工具/">研发工具</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/Echarts/" style="font-size: 10px;">Echarts</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/JS/" style="font-size: 11.67px;">JS</a> <a href="/tags/SpringBoot/" style="font-size: 15px;">SpringBoot</a> <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/Util/" style="font-size: 10px;">Util</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/idea/" style="font-size: 15px;">idea</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/markdown/" style="font-size: 11.67px;">markdown</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/oracle/" style="font-size: 11.67px;">oracle</a> <a href="/tags/sql/" style="font-size: 18.33px;">sql</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/web/" style="font-size: 13.33px;">web</a> <a href="/tags/前端/" style="font-size: 11.67px;">前端</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/服务器软件/" style="font-size: 11.67px;">服务器软件</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a> <a href="/tags/研发工具/" style="font-size: 16.67px;">研发工具</a> <a href="/tags/自动配置/" style="font-size: 10px;">自动配置</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="/">
+                    <i class="fa fa-home"></i><span>主页</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>归档</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>关于</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/Echarts/" style="font-size: 10px;">Echarts</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/JS/" style="font-size: 11.67px;">JS</a> <a href="/tags/SpringBoot/" style="font-size: 15px;">SpringBoot</a> <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/Util/" style="font-size: 10px;">Util</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/idea/" style="font-size: 15px;">idea</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/markdown/" style="font-size: 11.67px;">markdown</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/oracle/" style="font-size: 11.67px;">oracle</a> <a href="/tags/sql/" style="font-size: 18.33px;">sql</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/web/" style="font-size: 13.33px;">web</a> <a href="/tags/前端/" style="font-size: 11.67px;">前端</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/服务器软件/" style="font-size: 11.67px;">服务器软件</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a> <a href="/tags/研发工具/" style="font-size: 16.67px;">研发工具</a> <a href="/tags/自动配置/" style="font-size: 10px;">自动配置</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>
