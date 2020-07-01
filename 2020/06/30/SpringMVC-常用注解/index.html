@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>SpringMVC-常用注解 | ligangit</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="LiGang,Li Gang,ligangit">
+  
+  <meta name="description" content="SpringMVC-常用注解RequestParam使用说明 作用： 把请求中指定名称的参数给控制器中的形参赋值。  属性：  value：请求参数中的名称； name：请求参数中的名称；和value一样； required：请求参数中是否必须提供此参数。默认值：true。表示必须提供，如果不提供将报错。    使用示例jsp页面代码： 12&amp;lt;%--常用注解RequestParam--%&amp;g">
+<meta name="keywords" content="Spring,SpringMVC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringMVC-常用注解">
+<meta property="og:url" content="http://ligangit.com/2020/06/30/SpringMVC-常用注解/index.html">
+<meta property="og:site_name" content="ligangit">
+<meta property="og:description" content="SpringMVC-常用注解RequestParam使用说明 作用： 把请求中指定名称的参数给控制器中的形参赋值。  属性：  value：请求参数中的名称； name：请求参数中的名称；和value一样； required：请求参数中是否必须提供此参数。默认值：true。表示必须提供，如果不提供将报错。    使用示例jsp页面代码： 12&amp;lt;%--常用注解RequestParam--%&amp;g">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://ligangit.com/images/SpringFramework/mvc_result4.png">
+<meta property="og:image" content="http://ligangit.com/images/SpringFramework/mvc_result3.png">
+<meta property="og:image" content="http://ligangit.com/images/SpringFramework/mvc_restful.png">
+<meta property="og:image" content="http://ligangit.com/images/SpringFramework/mvc_result5.png">
+<meta property="og:image" content="http://ligangit.com/images/SpringFramework/mvc_result6.png">
+<meta property="og:image" content="http://ligangit.com/images/SpringFramework/mvc_result7.png">
+<meta property="og:updated_time" content="2020-07-01T15:51:21.311Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SpringMVC-常用注解">
+<meta name="twitter:description" content="SpringMVC-常用注解RequestParam使用说明 作用： 把请求中指定名称的参数给控制器中的形参赋值。  属性：  value：请求参数中的名称； name：请求参数中的名称；和value一样； required：请求参数中是否必须提供此参数。默认值：true。表示必须提供，如果不提供将报错。    使用示例jsp页面代码： 12&amp;lt;%--常用注解RequestParam--%&amp;g">
+<meta name="twitter:image" content="http://ligangit.com/images/SpringFramework/mvc_result4.png">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">Li Gang&#39;s blog</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="/">
+                        <i class="fa fa-home"></i>
+                        <span>主页</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>归档</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>关于</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/logo.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        Li Gang&#39;s blog
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        在码农的世界里挣扎的人
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="Li Gang" target="_blank" href="//ligangit.com">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/ligangit">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="联系QQ"  href="/">
+                            <i class="fa fa-qq fa-2x"></i></a>
+                    
+                        <a title="微信"  href="/">
+                            <i class="fa fa-weixin fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-SpringMVC-常用注解" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      SpringMVC-常用注解
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/Spring/">Spring</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2020-06-30
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <h1 id="SpringMVC-常用注解"><a href="#SpringMVC-常用注解" class="headerlink" title="SpringMVC-常用注解"></a>SpringMVC-常用注解</h1><h2 id="RequestParam"><a href="#RequestParam" class="headerlink" title="RequestParam"></a>RequestParam</h2><h3 id="使用说明"><a href="#使用说明" class="headerlink" title="使用说明"></a>使用说明</h3><ol>
+<li><p>作用：</p>
+<p>把请求中指定名称的参数给控制器中的形参赋值。</p>
+</li>
+<li><p>属性：</p>
+<ul>
+<li>value：请求参数中的名称；</li>
+<li>name：请求参数中的名称；和value一样；</li>
+<li>required：请求参数中是否必须提供此参数。默认值：true。表示必须提供，如果不提供将报错。</li>
+</ul>
+</li>
+</ol>
+<h3 id="使用示例"><a href="#使用示例" class="headerlink" title="使用示例"></a>使用示例</h3><p>jsp页面代码：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">%--常用注解RequestParam--%</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"anno/testRequestParam?name=你好"</span>&gt;</span>RequestParam<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>控制器代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//    RequestParam注解示例</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/testRequestParam"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">testRequestParam</span><span class="params">(@RequestParam(value = <span class="string">"name"</span>)</span> String username)</span>&#123;</span><br><span class="line">    System.out.println(<span class="string">"执行了。。。。。"</span>);</span><br><span class="line">    System.out.println(username);</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"success"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="RequestBody"><a href="#RequestBody" class="headerlink" title="RequestBody"></a>RequestBody</h2><h3 id="使用说明-1"><a href="#使用说明-1" class="headerlink" title="使用说明"></a>使用说明</h3><ol>
+<li><p>作用：</p>
+<p>用于获取请求体内容。直接使用得到的是 key=value&amp;key=value…结构的数据。get请求方式不适用。</p>
+</li>
+<li><p>属性：</p>
+<ul>
+<li>required：是否必须有请求体。默认值是：true。当值为true时，get请求方式会报错。如果取值为false，get请求得到的是null。</li>
+</ul>
+</li>
+</ol>
+<h3 id="使用示例-1"><a href="#使用示例-1" class="headerlink" title="使用示例"></a>使用示例</h3><p>jsp页面代码：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">%--常用注解RequestBody--%</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"anno/testRequestBody"</span> <span class="attr">method</span>=<span class="string">"post"</span>&gt;</span></span><br><span class="line">    用户姓名：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"username"</span> /&gt;</span><span class="tag">&lt;/<span class="name">br</span>&gt;</span></span><br><span class="line">    用户年龄：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"age"</span> /&gt;</span><span class="tag">&lt;/<span class="name">br</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"提交"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>控制器代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//    RequestBody注解示例</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/testRequestBody"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">testRequestBody</span><span class="params">(@RequestBody String body)</span></span>&#123;</span><br><span class="line">    System.out.println(<span class="string">"执行了。。。。。"</span>);</span><br><span class="line">    System.out.println(body);</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"success"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果：</p>
+<p>​    <img src="/images/SpringFramework/mvc_result4.png" alt="RequestBody结果"></p>
+<h2 id="PathVariable"><a href="#PathVariable" class="headerlink" title="PathVariable"></a>PathVariable</h2><h3 id="使用说明-2"><a href="#使用说明-2" class="headerlink" title="使用说明"></a>使用说明</h3><ol>
+<li><p>作用：</p>
+<p>用于绑定url中的占位符。例如：请求url中 /delete/<strong>{id}</strong>，这个<strong>{id}</strong>就是占位符。url支持占位符是Spring3.0之后加入的，是SpringMVC支持Rest风格URL的一个重要标志。</p>
+</li>
+<li><p>属性：</p>
+<ul>
+<li>value：用于指定url中占位符名称；</li>
+<li>required：是否必须提供占位符。</li>
+</ul>
+</li>
+</ol>
+<h3 id="使用示例-2"><a href="#使用示例-2" class="headerlink" title="使用示例"></a>使用示例</h3><p>jsp页面代码：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">%--常用注解PathVariable--%</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"anno/testPathVariable/10"</span>&gt;</span>PathVariable<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>控制器代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//    PathVariable注解示例</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/testPathVariable/&#123;sid&#125;"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">testPathVariable</span><span class="params">(@PathVariable(name = <span class="string">"sid"</span>)</span> String id)</span>&#123;</span><br><span class="line">    System.out.println(<span class="string">"执行了。。。。。"</span>);</span><br><span class="line">    System.out.println(id);</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"success"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果：</p>
+<p>​    <img src="/images/SpringFramework/mvc_result3.png" alt="PathVariable结果"></p>
+<h3 id="Restful风格"><a href="#Restful风格" class="headerlink" title="Restful风格"></a>Restful风格</h3><p><img src="/images/SpringFramework/mvc_restful.png" alt="restful风格"></p>
+<p><strong>优点：</strong>结构清晰、符合标准、易于理解、扩展方便，所以挣得越来越多网站采用。</p>
+<h2 id="RequestHeader"><a href="#RequestHeader" class="headerlink" title="RequestHeader"></a>RequestHeader</h2><h3 id="使用说明-3"><a href="#使用说明-3" class="headerlink" title="使用说明"></a>使用说明</h3><ol>
+<li><p>作用：</p>
+<p>用于获取请求消息头。</p>
+</li>
+<li><p>属性：</p>
+<ul>
+<li>value：提供消息头名称；</li>
+<li>required：是否必须有此消息头。</li>
+</ul>
+</li>
+<li><p>备注：在实际开发中一般不怎么用。</p>
+</li>
+</ol>
+<h3 id="使用示例-3"><a href="#使用示例-3" class="headerlink" title="使用示例"></a>使用示例</h3><p>jsp页面代码：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">%--常用注解RequestHeader--%</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"anno/testRequestHeader"</span>&gt;</span>RequestHeader<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>控制器代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//    PathVariable注解示例 获取</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/testRequestHeader"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">testRequestHeader</span><span class="params">(@RequestHeader(value = <span class="string">"Accept"</span>)</span> String header)</span>&#123;</span><br><span class="line">    System.out.println(<span class="string">"执行了。。。。。"</span>);</span><br><span class="line">    System.out.println(header);</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"success"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="CookieValue"><a href="#CookieValue" class="headerlink" title="CookieValue"></a>CookieValue</h2><h3 id="使用说明-4"><a href="#使用说明-4" class="headerlink" title="使用说明"></a>使用说明</h3><ol>
+<li><p>作用：</p>
+<p>用于把指定cookie名称的值传入控制器方法参数。</p>
+</li>
+<li><p>属性：</p>
+<ul>
+<li>value：指定cookie名称；</li>
+<li>required：是否必须有此cookie。</li>
+</ul>
+</li>
+</ol>
+<h3 id="使用示例-4"><a href="#使用示例-4" class="headerlink" title="使用示例"></a>使用示例</h3><p>jsp页面代码：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">%--常用注解CookieValue--%</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"anno/testCookieValue"</span>&gt;</span>CookieValue<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>控制器代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//    CookieValue注解示例 获取cookie的值</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/testCookieValue"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">testCookieValue</span><span class="params">(@CookieValue(value = <span class="string">"JSESSIONID"</span>)</span> String cookieValue)</span>&#123;</span><br><span class="line">    System.out.println(<span class="string">"执行了。。。。。"</span>);</span><br><span class="line">    System.out.println(cookieValue);</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"success"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="ModelAttribute"><a href="#ModelAttribute" class="headerlink" title="ModelAttribute"></a>ModelAttribute</h2><h3 id="使用说明-5"><a href="#使用说明-5" class="headerlink" title="使用说明"></a>使用说明</h3><ol>
+<li><p>作用：</p>
+<p>该注解是SpringMVC4.3版本以后新加入的。它可以修饰方法和参数。</p>
+<ul>
+<li><p>出现在方法上，表示当前方法会在控制器的方法执行之前，先执行。它可以修饰没有返回值的方法，也可以修饰有返回值的方法。</p>
+</li>
+<li><p>出现在参数上，获取指定的数据给参数赋值。</p>
+</li>
+</ul>
+</li>
+<li><p>属性：</p>
+<ul>
+<li>value：用于获取数据的key。key可以是POJO的属性名称，也可以是map结构的key。</li>
+</ul>
+</li>
+<li><p>应用场景：</p>
+<p>当表单提交数据不是完整的实体类数据时，保证没有提交数据的字段使用数据库对象原来的数据。</p>
+</li>
+</ol>
+<h3 id="使用示例-5"><a href="#使用示例-5" class="headerlink" title="使用示例"></a>使用示例</h3><h4 id="出现在方法上"><a href="#出现在方法上" class="headerlink" title="出现在方法上"></a>出现在方法上</h4><p>jsp页面代码：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">%--常用注解ModelAttribute--%</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"anno/testModelAttribute"</span> <span class="attr">method</span>=<span class="string">"post"</span>&gt;</span></span><br><span class="line">    用户姓名：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"uname"</span> /&gt;</span><span class="tag">&lt;/<span class="name">br</span>&gt;</span></span><br><span class="line">    用户年龄：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"age"</span> /&gt;</span><span class="tag">&lt;/<span class="name">br</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"提交"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>控制器代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * ModelAttribute注解示例</span></span><br><span class="line"><span class="comment"> * 如果参数user记为parUser中有部分数据没有提交，如date，正常会输出date属性值为null</span></span><br><span class="line"><span class="comment"> * 但是showUser()方法使用了<span class="doctag">@ModelAttribute</span>注解，返回了user对象记为backUser</span></span><br><span class="line"><span class="comment"> * 这时，parUser中的date值会使用backUser中的date值，</span></span><br><span class="line"><span class="comment"> * 即将backUser有的属性但是parUser没有的属性添加到parUser</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/testModelAttribute"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">testModelAttribute</span><span class="params">(User user)</span></span>&#123;</span><br><span class="line">    System.out.println(<span class="string">"testModelAttribute执行了。。。。。"</span>);</span><br><span class="line">    System.out.println(user);</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"success"</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//此方法会先执行 作用在方法上（有返回值）</span></span><br><span class="line"><span class="meta">@ModelAttribute</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> User <span class="title">showUser</span><span class="params">(String uname)</span></span>&#123;</span><br><span class="line">System.out.println(<span class="string">"showUser方法执行了。。。"</span>);</span><br><span class="line"><span class="comment">// 通过用户查询数据库（模拟）</span></span><br><span class="line">User user = <span class="keyword">new</span> User();</span><br><span class="line">user.setUname(uname);</span><br><span class="line">user.setAge(<span class="number">19</span>);</span><br><span class="line">user.setDate(<span class="keyword">new</span> Date());</span><br><span class="line"><span class="keyword">return</span> user;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>说明：</strong></p>
+<ol>
+<li>如果参数user记为parUser中有部分数据没有提交，如date，正常会输出date属性值为null；</li>
+<li>但是showUser()方法使用了@ModelAttribute注解，返回了user对象记为backUser；</li>
+<li>这时，parUser中的date值会使用backUser中的date值；</li>
+<li>即将backUser有的属性但是parUser没有的属性添加到parUser。</li>
+</ol>
+<p>结果：</p>
+<p>​    提交表单anno/testModelAttribute，得到结果showUser先执行：</p>
+<p><img src="/images/SpringFramework/mvc_result5.png" alt="ModelAttribute结果"></p>
+<h4 id="出现在参数上"><a href="#出现在参数上" class="headerlink" title="出现在参数上"></a>出现在参数上</h4><p>控制器代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * ModelAttribute注解示例</span></span><br><span class="line"><span class="comment"> * 如果参数user记为parUser中有部分数据没有提交，如date，正常会输出date属性值为null</span></span><br><span class="line"><span class="comment"> * 但是showUser()方法使用了<span class="doctag">@ModelAttribute</span>注解，并且将user对象保存在key为"hello"的map对象中</span></span><br><span class="line"><span class="comment"> * 在此方法的参数前加了<span class="doctag">@ModelAttribute</span>注解，将key为"hello"的map对象取出来，得到showUser()方法中保存的user对象记为backUser</span></span><br><span class="line"><span class="comment"> * 这时，parUser中的date值会使用backUser中的date值，</span></span><br><span class="line"><span class="comment"> * 即将backUser有的属性但是parUser没有的属性添加到parUser</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/testModelAttribute"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">testModelAttribute</span><span class="params">(@ModelAttribute(value = <span class="string">"hello"</span>)</span> User user)</span>&#123;</span><br><span class="line">    System.out.println(<span class="string">"testModelAttribute执行了。。。。。"</span>);</span><br><span class="line">    System.out.println(user);</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"success"</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//此方法会先执行 作用在方法上（没有返回值）</span></span><br><span class="line"><span class="meta">@ModelAttribute</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">showUser</span><span class="params">(String uname, Map&lt;String,User&gt; map)</span></span>&#123;</span><br><span class="line">    System.out.println(<span class="string">"showUser方法执行了。。。"</span>);</span><br><span class="line">    <span class="comment">// 通过用户查询数据库（模拟）</span></span><br><span class="line">    User user = <span class="keyword">new</span> User();</span><br><span class="line">    user.setUname(uname);</span><br><span class="line">    user.setAge(<span class="number">19</span>);</span><br><span class="line">    user.setDate(<span class="keyword">new</span> Date());</span><br><span class="line">    map.put(<span class="string">"hello"</span>, user);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>说明：</strong></p>
+<ol>
+<li>如果参数user记为parUser中有部分数据没有提交，如date，正常会输出date属性值为null；</li>
+<li>但是showUser()方法使用了@ModelAttribute注解，并且将user对象保存在key为”hello”的map对象中；</li>
+<li>在此方法的参数前加了@ModelAttribute注解，将key为”hello”的map对象取出来，得到showUser()方法中保存的user对象记为backUser；</li>
+<li>这时，parUser中的date值会使用backUser中的date值，</li>
+<li>即将backUser有的属性但是parUser没有的属性添加到parUser。</li>
+</ol>
+<p>结果：</p>
+<p>​    提交表单anno/testModelAttribute，得到结果showUser先执行：</p>
+<p><img src="/images/SpringFramework/mvc_result6.png" alt="ModelAttribute结果"></p>
+<h2 id="SessionAttributes"><a href="#SessionAttributes" class="headerlink" title="SessionAttributes"></a>SessionAttributes</h2><h3 id="使用说明-6"><a href="#使用说明-6" class="headerlink" title="使用说明"></a>使用说明</h3><ol>
+<li><p>作用：</p>
+<p>用于多次执行控制器方法间的参数共享。</p>
+</li>
+<li><p>属性：</p>
+<ul>
+<li>value：用于指定存入的属性名称；</li>
+<li>type：用于指定存入的属性类型。</li>
+</ul>
+</li>
+</ol>
+<h3 id="使用示例-6"><a href="#使用示例-6" class="headerlink" title="使用示例"></a>使用示例</h3><p>jsp页面代码：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">%--常用注解SessionAttributes--%</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"anno/testSessionAttributes"</span>&gt;</span>数据存入SessionAttributes<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"anno/getSessionAttributes"</span>&gt;</span>使用Model从SessionAttributes取出数据<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"anno/getSessionAttributes2"</span>&gt;</span>使用ModelMap从SessionAttributes取出数据<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"anno/delSessionAttributes"</span>&gt;</span>清除SessionAttributes数据<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>控制器代码：<strong>@SessionAttributes作用在类上面</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/anno"</span>)</span><br><span class="line"><span class="meta">@SessionAttributes</span>(value = &#123;<span class="string">"msg"</span>&#125;) <span class="comment">//把msg=美美存入到session域中</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AnnoController</span> </span>&#123;</span><br><span class="line">        <span class="comment">//    SessionAttributes注解示例 存入数据</span></span><br><span class="line">    <span class="meta">@RequestMapping</span>(value = <span class="string">"/testSessionAttributes"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">testSessionAttributes</span><span class="params">(Model model)</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"testSessionAttributes执行了。。。。。"</span>);</span><br><span class="line">        <span class="comment">//底层会存储到request域对象中</span></span><br><span class="line">        model.addAttribute(<span class="string">"msg"</span>,<span class="string">"美美"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"success"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//使用Model从SessionAttributes中取出数据</span></span><br><span class="line">    <span class="meta">@RequestMapping</span>(value = <span class="string">"/getSessionAttributes"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getSessionAttributes</span><span class="params">(Model model)</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"getSessionAttributes执行了。。。。。"</span>);</span><br><span class="line">        <span class="comment">//底层会存储到request域对象中</span></span><br><span class="line">        String msg = (String) model.getAttribute(<span class="string">"msg"</span>);</span><br><span class="line">        System.out.println(msg);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"success"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//使用ModelMap从SessionAttributes中取出数据</span></span><br><span class="line">    <span class="meta">@RequestMapping</span>(value = <span class="string">"/getSessionAttributes2"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getSessionAttributes2</span><span class="params">(ModelMap modelMap)</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"getSessionAttributes执行了。。。。。"</span>);</span><br><span class="line">        <span class="comment">//底层会存储到request域对象中</span></span><br><span class="line">        String msg = (String) modelMap.getAttribute(<span class="string">"msg"</span>);</span><br><span class="line">        System.out.println(msg);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"success"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//清除SessionAttributes中的数据</span></span><br><span class="line">    <span class="meta">@RequestMapping</span>(value = <span class="string">"/delSessionAttributes"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">delSessionAttributes</span><span class="params">(SessionStatus status)</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"delSessionAttributes执行了。。。。。"</span>);</span><br><span class="line">        status.setComplete();</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"success"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>结果：</p>
+<p>​    先执行”anno/testSessionAttributes”；</p>
+<p>​    然后执行”anno/getSessionAttributes”；</p>
+<p>​    然后执行”anno/getSessionAttributes2”；</p>
+<p>​    然后执行”anno/delSessionAttributes”；</p>
+<p>​    最后执行”anno/getSessionAttributes”。</p>
+<p><img src="/images/SpringFramework/mvc_result7.png" alt="SessionAttributes结果"></p>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2020年07月01日 23:51</p>
+        <p>原始链接： <a class="post-url" href="/2020/06/30/SpringMVC-常用注解/" title="SpringMVC-常用注解">http://ligangit.com/2020/06/30/SpringMVC-常用注解/</a></p>
+        <footer>
+            <a href="http://ligangit.com">
+                <img src="/images/logo.png" alt="Li Gang">
+                Li Gang
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://ligangit.com/2020/06/30/SpringMVC-常用注解/&title=《SpringMVC-常用注解》 — ligangit&pic=images/spring.png" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://ligangit.com/2020/06/30/SpringMVC-常用注解/&title=《SpringMVC-常用注解》 — ligangit&source=在码农的世界里面默默的挣扎着" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://ligangit.com/2020/06/30/SpringMVC-常用注解/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《SpringMVC-常用注解》 — ligangit&url=http://ligangit.com/2020/06/30/SpringMVC-常用注解/&via=http://ligangit.com" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://ligangit.com/2020/06/30/SpringMVC-常用注解/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://ligangit.com/2020/06/30/SpringMVC-常用注解/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/Spring/" class="color2">Spring</a>
+      
+    <a href="/tags/SpringMVC/" class="color5">SpringMVC</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#SpringMVC-常用注解"><span class="post-toc-text">SpringMVC-常用注解</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#RequestParam"><span class="post-toc-text">RequestParam</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#使用说明"><span class="post-toc-text">使用说明</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#使用示例"><span class="post-toc-text">使用示例</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#RequestBody"><span class="post-toc-text">RequestBody</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#使用说明-1"><span class="post-toc-text">使用说明</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#使用示例-1"><span class="post-toc-text">使用示例</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#PathVariable"><span class="post-toc-text">PathVariable</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#使用说明-2"><span class="post-toc-text">使用说明</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#使用示例-2"><span class="post-toc-text">使用示例</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#Restful风格"><span class="post-toc-text">Restful风格</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#RequestHeader"><span class="post-toc-text">RequestHeader</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#使用说明-3"><span class="post-toc-text">使用说明</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#使用示例-3"><span class="post-toc-text">使用示例</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#CookieValue"><span class="post-toc-text">CookieValue</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#使用说明-4"><span class="post-toc-text">使用说明</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#使用示例-4"><span class="post-toc-text">使用示例</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ModelAttribute"><span class="post-toc-text">ModelAttribute</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#使用说明-5"><span class="post-toc-text">使用说明</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#使用示例-5"><span class="post-toc-text">使用示例</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#出现在方法上"><span class="post-toc-text">出现在方法上</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#出现在参数上"><span class="post-toc-text">出现在参数上</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#SessionAttributes"><span class="post-toc-text">SessionAttributes</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#使用说明-6"><span class="post-toc-text">使用说明</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#使用示例-6"><span class="post-toc-text">使用示例</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+    <a href="/2020/07/01/SpringMVC-响应数据和结果视图/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          SpringMVC-响应数据和结果视图
+        
+      </span>
+    </a>
+  
+  
+    <a href="/2020/06/29/SpringMVC-请求参数的绑定/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">SpringMVC-请求参数的绑定</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2020 Li Gang<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "http://ligangit.com",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/Spring/">Spring</a><a class="category-link" href="/categories/SpringBoot/">SpringBoot</a><a class="category-link" href="/categories/java/">java</a><a class="category-link" href="/categories/sql/">sql</a><a class="category-link" href="/categories/前端/">前端</a><a class="category-link" href="/categories/博客/">博客</a><a class="category-link" href="/categories/服务器软件/">服务器软件</a><a class="category-link" href="/categories/研发工具/">研发工具</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/Echarts/" style="font-size: 10px;">Echarts</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/JS/" style="font-size: 11.25px;">JS</a> <a href="/tags/Spring/" style="font-size: 18.75px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 15px;">SpringBoot</a> <a href="/tags/SpringMVC/" style="font-size: 13.75px;">SpringMVC</a> <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/Util/" style="font-size: 10px;">Util</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/idea/" style="font-size: 15px;">idea</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/markdown/" style="font-size: 11.25px;">markdown</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/oracle/" style="font-size: 12.5px;">oracle</a> <a href="/tags/sql/" style="font-size: 17.5px;">sql</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/web/" style="font-size: 12.5px;">web</a> <a href="/tags/前端/" style="font-size: 11.25px;">前端</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/服务器软件/" style="font-size: 11.25px;">服务器软件</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a> <a href="/tags/研发工具/" style="font-size: 16.25px;">研发工具</a> <a href="/tags/自动配置/" style="font-size: 10px;">自动配置</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="/">
+                    <i class="fa fa-home"></i><span>主页</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>归档</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>关于</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/Echarts/" style="font-size: 10px;">Echarts</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/JS/" style="font-size: 11.25px;">JS</a> <a href="/tags/Spring/" style="font-size: 18.75px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 15px;">SpringBoot</a> <a href="/tags/SpringMVC/" style="font-size: 13.75px;">SpringMVC</a> <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/Util/" style="font-size: 10px;">Util</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/idea/" style="font-size: 15px;">idea</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/markdown/" style="font-size: 11.25px;">markdown</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/oracle/" style="font-size: 12.5px;">oracle</a> <a href="/tags/sql/" style="font-size: 17.5px;">sql</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/web/" style="font-size: 12.5px;">web</a> <a href="/tags/前端/" style="font-size: 11.25px;">前端</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/服务器软件/" style="font-size: 11.25px;">服务器软件</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a> <a href="/tags/研发工具/" style="font-size: 16.25px;">研发工具</a> <a href="/tags/自动配置/" style="font-size: 10px;">自动配置</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>
