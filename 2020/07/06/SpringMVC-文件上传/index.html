@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>SpringMVC-文件上传 | ligangit</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="LiGang,Li Gang,ligangit">
+  
+  <meta name="description" content="SpringMVC-文件上传传统方式上传必要前提 form表单的enctype取值必须是multipart/form-data； enctype：是表单请求正文类型； 默认值是application/x-www-form-urlencoded。   method属性取值必须是post 提供一个文件选择域&amp;lt;input type=”file” /&amp;gt;  原理当form表单的enctype取值">
+<meta name="keywords" content="Spring,SpringMVC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringMVC-文件上传">
+<meta property="og:url" content="http://ligangit.com/2020/07/06/SpringMVC-文件上传/index.html">
+<meta property="og:site_name" content="ligangit">
+<meta property="og:description" content="SpringMVC-文件上传传统方式上传必要前提 form表单的enctype取值必须是multipart/form-data； enctype：是表单请求正文类型； 默认值是application/x-www-form-urlencoded。   method属性取值必须是post 提供一个文件选择域&amp;lt;input type=”file” /&amp;gt;  原理当form表单的enctype取值">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://ligangit.com/images/SpringFramework/mvc_result9.png">
+<meta property="og:updated_time" content="2020-07-09T16:00:52.300Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SpringMVC-文件上传">
+<meta name="twitter:description" content="SpringMVC-文件上传传统方式上传必要前提 form表单的enctype取值必须是multipart/form-data； enctype：是表单请求正文类型； 默认值是application/x-www-form-urlencoded。   method属性取值必须是post 提供一个文件选择域&amp;lt;input type=”file” /&amp;gt;  原理当form表单的enctype取值">
+<meta name="twitter:image" content="http://ligangit.com/images/SpringFramework/mvc_result9.png">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">Li Gang&#39;s blog</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="/">
+                        <i class="fa fa-home"></i>
+                        <span>主页</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>归档</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>关于</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/logo.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        Li Gang&#39;s blog
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        在码农的世界里挣扎的人
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="Li Gang" target="_blank" href="//ligangit.com">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/ligangit">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="联系QQ"  href="/">
+                            <i class="fa fa-qq fa-2x"></i></a>
+                    
+                        <a title="微信"  href="/">
+                            <i class="fa fa-weixin fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-SpringMVC-文件上传" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      SpringMVC-文件上传
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/Spring/">Spring</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2020-07-06
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <h1 id="SpringMVC-文件上传"><a href="#SpringMVC-文件上传" class="headerlink" title="SpringMVC-文件上传"></a>SpringMVC-文件上传</h1><h2 id="传统方式上传"><a href="#传统方式上传" class="headerlink" title="传统方式上传"></a>传统方式上传</h2><h3 id="必要前提"><a href="#必要前提" class="headerlink" title="必要前提"></a>必要前提</h3><ol>
+<li>form表单的<strong>enctype</strong>取值必须是<strong>multipart/form-data</strong>；<ul>
+<li>enctype：是表单请求正文类型；</li>
+<li>默认值是application/x-www-form-urlencoded。</li>
+</ul>
+</li>
+<li>method属性取值必须是<strong>post</strong></li>
+<li>提供一个文件选择域&lt;input type=”file” /&gt;</li>
+</ol>
+<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>当form表单的enctype取值不是默认值后，<strong>request.getParameter()将失效</strong>。</p>
+<p>enctype=”application/x-www-form-urlencoded”时，form表单的正文内容是：</p>
+<p>​                key=value&amp;key=value&amp;key=value</p>
+<p>enctype=”multipart/form-data”时，请求正文内容就变成：</p>
+<p>每一部分都是MIME类型描述的正文</p>
+<h3 id="借助第三方组件实现文件上传"><a href="#借助第三方组件实现文件上传" class="headerlink" title="借助第三方组件实现文件上传"></a>借助第三方组件实现文件上传</h3><p>使用Commons-fileupload组件实现文件上传，需要导入该组件的jar包：commons-fileupload和commons-io。commons-io不属于文件上传组件的开发jar文件，但commons-fileupload组件从1.1版本开始，它工作时需要commons-io包的支持。</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><p>jsp页面代码：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">%--传统方式文件上传--%</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"user/fileupload1"</span> <span class="attr">method</span>=<span class="string">"post"</span> <span class="attr">enctype</span>=<span class="string">"multipart/form-data"</span>&gt;</span></span><br><span class="line"> 选择文件：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">name</span>=<span class="string">"upload"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"上传"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>控制器代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 文件上传</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"fileupload1"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">fileupload1</span><span class="params">(HttpServletRequest request)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    System.out.println(<span class="string">"文件上传。。。"</span>);</span><br><span class="line"><span class="comment">// 使用fileupload组件完成文件上传</span></span><br><span class="line"><span class="comment">// 上传位置</span></span><br><span class="line">    String realPath = request.getSession().getServletContext().getRealPath(<span class="string">"/uploads"</span>);</span><br><span class="line"><span class="comment">// 判断，该路径是否存在</span></span><br><span class="line">File file = <span class="keyword">new</span> File(realPath);</span><br><span class="line"><span class="keyword">if</span> (!file.exists())&#123;</span><br><span class="line">  <span class="comment">// 创建文件夹</span></span><br><span class="line">  file.mkdirs();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 解析request对象，获取文件上传项</span></span><br><span class="line">DiskFileItemFactory factory= <span class="keyword">new</span> DiskFileItemFactory();</span><br><span class="line">ServletFileUpload upload = <span class="keyword">new</span> ServletFileUpload(factory);</span><br><span class="line"><span class="comment">// 解析request</span></span><br><span class="line">    List&lt;FileItem&gt; fileItems = upload.parseRequest(request);</span><br><span class="line"><span class="comment">// 遍历</span></span><br><span class="line"><span class="keyword">for</span> (FileItem item : fileItems) &#123;</span><br><span class="line">    <span class="comment">//进行判断，当前item想是否是上传文件项</span></span><br><span class="line">    <span class="keyword">if</span>(item.isFormField())&#123;</span><br><span class="line">        <span class="comment">//说明普通表单项</span></span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="comment">// 说明上传文件项</span></span><br><span class="line">    <span class="comment">// 获取上传文件的名称</span></span><br><span class="line">        String filename = item.getName();</span><br><span class="line">        <span class="comment">//完成文件上传</span></span><br><span class="line">        item.write(<span class="keyword">new</span> File(realPath,filename));</span><br><span class="line">        <span class="comment">//删除临时文件</span></span><br><span class="line">        item.delete();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"success"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上传结果</p>
+<p><img src="/images/SpringFramework/mvc_result9.png" alt="上传结果"></p>
+<h2 id="SpringMVC方式上传"><a href="#SpringMVC方式上传" class="headerlink" title="SpringMVC方式上传"></a>SpringMVC方式上传</h2><p>SpringMVC提供了MultipartFile对象，该对象表示上传的文件，<strong>要求变量名必须和表单file标签的name属性名称相同</strong>。</p>
+<p>需要配置文件解析器</p>
+<p>配置文件解析器</p>
+<p>springmvc.xml配置：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--配置文件解析器 id值必须是multipartResolver  --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"multipartResolver"</span> <span class="attr">class</span>=<span class="string">"org.springframework.web.multipart.commons.CommonsMultipartResolver"</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--设置上传文件最大10M，即10*1024*1024=10485760--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"maxUploadSize"</span> <span class="attr">value</span>=<span class="string">"10485760"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>jsp页面代码：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h3</span>&gt;</span>SpringMVC方式文件上传<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">%--SpringMVC方式文件上传--%</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"user/fileupload2"</span> <span class="attr">method</span>=<span class="string">"post"</span> <span class="attr">enctype</span>=<span class="string">"multipart/form-data"</span>&gt;</span></span><br><span class="line">    选择文件：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">name</span>=<span class="string">"upload"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"上传"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>控制器代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * SpringMVC方式文件上传</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"fileupload2"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">fileupload2</span><span class="params">(HttpServletRequest request, MultipartFile upload)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    System.out.println(<span class="string">"SpringMVC方式文件上传。。。"</span>);</span><br><span class="line">    <span class="comment">// 上传位置</span></span><br><span class="line">    String realPath = request.getSession().getServletContext().getRealPath(<span class="string">"/uploads"</span>);</span><br><span class="line">    <span class="comment">// 判断，该路径是否存在</span></span><br><span class="line">    File file = <span class="keyword">new</span> File(realPath);</span><br><span class="line">    <span class="keyword">if</span> (!file.exists())&#123;</span><br><span class="line">        <span class="comment">// 创建文件夹</span></span><br><span class="line">        file.mkdirs();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 获取上传文件的名称</span></span><br><span class="line">    String filename =upload.getOriginalFilename();</span><br><span class="line">    String uuid = UUID.randomUUID().toString().replace(<span class="string">"-"</span>, <span class="string">""</span>);</span><br><span class="line">    filename=uuid+<span class="string">"_"</span>+filename;</span><br><span class="line">    <span class="comment">//完成文件上传</span></span><br><span class="line">    upload.transferTo(<span class="keyword">new</span> File(realPath,filename));</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"success"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="SpringMVC跨服务器方式上传"><a href="#SpringMVC跨服务器方式上传" class="headerlink" title="SpringMVC跨服务器方式上传"></a>SpringMVC跨服务器方式上传</h2><p>搭建图片服务器：</p>
+<p>​    创建一个新的javaweb工程，使用tomcat启动就可以。</p>
+<p>导入开发需要的jar包：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.sun.jersey<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jersey-core<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.18.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.sun.jersey<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jersey-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.18.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>jsp页眉代码：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h3</span>&gt;</span>SpringMVC跨服务器方式文件上传<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">%--SpringMVC跨服务器方式文件上传--%</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"user/fileupload3"</span> <span class="attr">method</span>=<span class="string">"post"</span> <span class="attr">enctype</span>=<span class="string">"multipart/form-data"</span>&gt;</span></span><br><span class="line">    选择文件：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">name</span>=<span class="string">"upload"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"上传"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>控制器代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * SpringMVC跨服务器方式文件上传</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"fileupload3"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">fileupload3</span><span class="params">(MultipartFile upload)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    System.out.println(<span class="string">"SpringMVC跨服务器方式文件上传。。。"</span>);</span><br><span class="line">    <span class="comment">// 定义上传文件服务器路径</span></span><br><span class="line">    String realPath = <span class="string">"http://localhost:9090/fileupload_demo_war_exploded/uploads/"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取上传文件的名称</span></span><br><span class="line">    String filename =upload.getOriginalFilename();</span><br><span class="line">    String uuid = UUID.randomUUID().toString().replace(<span class="string">"-"</span>, <span class="string">""</span>);</span><br><span class="line">    filename=uuid+<span class="string">"_"</span>+filename;</span><br><span class="line">    <span class="comment">//完成文件上传 跨服务器上传</span></span><br><span class="line">    <span class="comment">//创建客户端对象</span></span><br><span class="line">    Client client = Client.create();</span><br><span class="line"><span class="comment">// 和图片服务器进行连接</span></span><br><span class="line">    WebResource webResource = client.resource(realPath + filename);</span><br><span class="line">    <span class="comment">//上传文件</span></span><br><span class="line">    webResource.put(upload.getBytes());</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"success"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可能出现的问题：</p>
+<p> 关于跨服务器上传报500错误的，并且出现ClientHandlerException等等异常的。</p>
+<p>1、先在tomcat文件下conf下的web.xml中添加</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">param-name</span>&gt;</span>readonly<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">param-value</span>&gt;</span>false<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>修改前：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>default<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>org.apache.catalina.servlets.DefaultServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>debug<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>0<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>listings<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>false<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">load-on-startup</span>&gt;</span>1<span class="tag">&lt;/<span class="name">load-on-startup</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>修改后：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">  <span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>default<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>org.apache.catalina.servlets.DefaultServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>debug<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>0<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>listings<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>false<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">init-param</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">param-name</span>&gt;</span>readonly<span class="tag">&lt;/<span class="name">param-name</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">param-value</span>&gt;</span>false<span class="tag">&lt;/<span class="name">param-value</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;/<span class="name">init-param</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">load-on-startup</span>&gt;</span>1<span class="tag">&lt;/<span class="name">load-on-startup</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>2.在fileupload Module（图片服务器）中，Target的uploads文件夹不能在idea中直接创建，需要打开存储目录下创建uploads文件夹 </p>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2020年07月10日 00:00</p>
+        <p>原始链接： <a class="post-url" href="/2020/07/06/SpringMVC-文件上传/" title="SpringMVC-文件上传">http://ligangit.com/2020/07/06/SpringMVC-文件上传/</a></p>
+        <footer>
+            <a href="http://ligangit.com">
+                <img src="/images/logo.png" alt="Li Gang">
+                Li Gang
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://ligangit.com/2020/07/06/SpringMVC-文件上传/&title=《SpringMVC-文件上传》 — ligangit&pic=images/spring.png" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://ligangit.com/2020/07/06/SpringMVC-文件上传/&title=《SpringMVC-文件上传》 — ligangit&source=在码农的世界里面默默的挣扎着" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://ligangit.com/2020/07/06/SpringMVC-文件上传/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《SpringMVC-文件上传》 — ligangit&url=http://ligangit.com/2020/07/06/SpringMVC-文件上传/&via=http://ligangit.com" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://ligangit.com/2020/07/06/SpringMVC-文件上传/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://ligangit.com/2020/07/06/SpringMVC-文件上传/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/Spring/" class="color2">Spring</a>
+      
+    <a href="/tags/SpringMVC/" class="color5">SpringMVC</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#SpringMVC-文件上传"><span class="post-toc-text">SpringMVC-文件上传</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#传统方式上传"><span class="post-toc-text">传统方式上传</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#必要前提"><span class="post-toc-text">必要前提</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#原理"><span class="post-toc-text">原理</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#借助第三方组件实现文件上传"><span class="post-toc-text">借助第三方组件实现文件上传</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#代码"><span class="post-toc-text">代码</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#SpringMVC方式上传"><span class="post-toc-text">SpringMVC方式上传</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#SpringMVC跨服务器方式上传"><span class="post-toc-text">SpringMVC跨服务器方式上传</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+  
+    <a href="/2020/07/01/SpringMVC-响应数据和结果视图/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">SpringMVC-响应数据和结果视图</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2020 Li Gang<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "http://ligangit.com",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/Spring/">Spring</a><a class="category-link" href="/categories/SpringBoot/">SpringBoot</a><a class="category-link" href="/categories/java/">java</a><a class="category-link" href="/categories/sql/">sql</a><a class="category-link" href="/categories/前端/">前端</a><a class="category-link" href="/categories/博客/">博客</a><a class="category-link" href="/categories/服务器软件/">服务器软件</a><a class="category-link" href="/categories/研发工具/">研发工具</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/Echarts/" style="font-size: 10px;">Echarts</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/JS/" style="font-size: 11.67px;">JS</a> <a href="/tags/Spring/" style="font-size: 20px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 15px;">SpringBoot</a> <a href="/tags/SpringMVC/" style="font-size: 15px;">SpringMVC</a> <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/Util/" style="font-size: 10px;">Util</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/idea/" style="font-size: 15px;">idea</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/markdown/" style="font-size: 11.67px;">markdown</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/oracle/" style="font-size: 13.33px;">oracle</a> <a href="/tags/sql/" style="font-size: 18.33px;">sql</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/web/" style="font-size: 13.33px;">web</a> <a href="/tags/前端/" style="font-size: 11.67px;">前端</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/服务器软件/" style="font-size: 11.67px;">服务器软件</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a> <a href="/tags/研发工具/" style="font-size: 16.67px;">研发工具</a> <a href="/tags/自动配置/" style="font-size: 10px;">自动配置</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="/">
+                    <i class="fa fa-home"></i><span>主页</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>归档</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>关于</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/Echarts/" style="font-size: 10px;">Echarts</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/JS/" style="font-size: 11.67px;">JS</a> <a href="/tags/Spring/" style="font-size: 20px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 15px;">SpringBoot</a> <a href="/tags/SpringMVC/" style="font-size: 15px;">SpringMVC</a> <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/Util/" style="font-size: 10px;">Util</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/idea/" style="font-size: 15px;">idea</a> <a href="/tags/java/" style="font-size: 20px;">java</a> <a href="/tags/markdown/" style="font-size: 11.67px;">markdown</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mysql/" style="font-size: 15px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/oracle/" style="font-size: 13.33px;">oracle</a> <a href="/tags/sql/" style="font-size: 18.33px;">sql</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/web/" style="font-size: 13.33px;">web</a> <a href="/tags/前端/" style="font-size: 11.67px;">前端</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/服务器软件/" style="font-size: 11.67px;">服务器软件</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a> <a href="/tags/研发工具/" style="font-size: 16.67px;">研发工具</a> <a href="/tags/自动配置/" style="font-size: 10px;">自动配置</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>
