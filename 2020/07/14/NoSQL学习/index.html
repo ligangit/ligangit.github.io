@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>NoSQL学习 | ligangit</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="LiGang,Li Gang,ligangit">
+  
+  <meta name="description" content="NoSQL学习为什么用NoSQL如今我们可以通过第三方平台可以很容易的访问和抓取数据。用户个人信息，社交网站，地理位置，用户生成的数据和用户操作日志已经成倍的增加，我们如果要对这些用户数据进行挖掘，那SQL数据库已经不适合这些应用了，NoSQL数据库的发展却能很好的处理这些大的数据。在云计算、大数据分析、数据量级的飞速暴增，传统的SQL数据库难以支撑目前的业务，所以需要使用NoSQL数据库。 是什">
+<meta name="keywords" content="sql,NoSQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NoSQL学习">
+<meta property="og:url" content="http://ligangit.com/2020/07/14/NoSQL学习/index.html">
+<meta property="og:site_name" content="ligangit">
+<meta property="og:description" content="NoSQL学习为什么用NoSQL如今我们可以通过第三方平台可以很容易的访问和抓取数据。用户个人信息，社交网站，地理位置，用户生成的数据和用户操作日志已经成倍的增加，我们如果要对这些用户数据进行挖掘，那SQL数据库已经不适合这些应用了，NoSQL数据库的发展却能很好的处理这些大的数据。在云计算、大数据分析、数据量级的飞速暴增，传统的SQL数据库难以支撑目前的业务，所以需要使用NoSQL数据库。 是什">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-07-14T06:55:56.065Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NoSQL学习">
+<meta name="twitter:description" content="NoSQL学习为什么用NoSQL如今我们可以通过第三方平台可以很容易的访问和抓取数据。用户个人信息，社交网站，地理位置，用户生成的数据和用户操作日志已经成倍的增加，我们如果要对这些用户数据进行挖掘，那SQL数据库已经不适合这些应用了，NoSQL数据库的发展却能很好的处理这些大的数据。在云计算、大数据分析、数据量级的飞速暴增，传统的SQL数据库难以支撑目前的业务，所以需要使用NoSQL数据库。 是什">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">Li Gang&#39;s blog</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="/">
+                        <i class="fa fa-home"></i>
+                        <span>主页</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>归档</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>关于</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/logo.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        Li Gang&#39;s blog
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        在码农的世界里挣扎的人
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="Li Gang" target="_blank" href="//ligangit.com">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/ligangit">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="联系QQ"  href="/">
+                            <i class="fa fa-qq fa-2x"></i></a>
+                    
+                        <a title="微信"  href="/">
+                            <i class="fa fa-weixin fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-NoSQL学习" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      NoSQL学习
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/sql/">sql</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2020-07-14
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <h1 id="NoSQL学习"><a href="#NoSQL学习" class="headerlink" title="NoSQL学习"></a>NoSQL学习</h1><h2 id="为什么用NoSQL"><a href="#为什么用NoSQL" class="headerlink" title="为什么用NoSQL"></a>为什么用NoSQL</h2><p>如今我们可以通过第三方平台可以很容易的访问和抓取数据。用户个人信息，社交网站，地理位置，用户生成的数据和用户操作日志已经成倍的增加，<strong>我们如果要对这些用户数据进行挖掘，那SQL数据库已经不适合这些应用了</strong>，NoSQL数据库的发展却能很好的处理这些大的数据。在云计算、大数据分析、数据量级的飞速暴增，传统的SQL数据库难以支撑目前的业务，所以需要使用NoSQL数据库。</p>
+<h2 id="是什么"><a href="#是什么" class="headerlink" title="是什么"></a>是什么</h2><p>NoSQL(NoSQL=Not Only SQL)，即”不仅仅是SQL“，<strong>泛指非关系型数据库</strong>，例如谷歌或Facebook每天为他们的用户收集万亿比特的数据，<strong>这些类型的数据存储不需要固定的模式，无需多余操作就可以横向扩展</strong>。</p>
+<h2 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h2><h3 id="易扩展"><a href="#易扩展" class="headerlink" title="易扩展"></a>易扩展</h3><p>NoSQL数据库种类繁多，但是有一个共同的特点都是去掉关系型数据库的关系型特性。</p>
+<p>数据之间无关系，这样就非常容易扩展，也无形之间，在架构的层面上带来了可扩展的能力。</p>
+<h3 id="大数据量高性能"><a href="#大数据量高性能" class="headerlink" title="大数据量高性能"></a>大数据量高性能</h3><p>NoSQL数据库都具有非常高的读写性能，尤其在大数据量下，同样表现优秀。</p>
+<p>这得益于它的无关系性，数据库的结构简单。</p>
+<h3 id="多样灵活的数据模型"><a href="#多样灵活的数据模型" class="headerlink" title="多样灵活的数据模型"></a>多样灵活的数据模型</h3><p>NoSQL无需事先为要存储的数据建立字段，随时可以存储自定义的数据格式。而在关系型数据库里，增删字段是一件非常麻烦的事情。如果是非常大数据量的表，增加字段简直是一个噩梦。</p>
+<h2 id="传统RDBMS-VS-NoSQL"><a href="#传统RDBMS-VS-NoSQL" class="headerlink" title="传统RDBMS VS NoSQL"></a>传统RDBMS VS NoSQL</h2><h3 id="RDBMS"><a href="#RDBMS" class="headerlink" title="RDBMS"></a>RDBMS</h3><ul>
+<li>高度组织化结构化数据</li>
+<li>结构化查询语句（SQL）</li>
+<li>数据和关系都存储在单独的表中</li>
+<li>数据操纵语言，数据定义语言</li>
+<li>严格的一致性</li>
+<li>基础事务</li>
+</ul>
+<h3 id="NoSQL"><a href="#NoSQL" class="headerlink" title="NoSQL"></a>NoSQL</h3><ul>
+<li>代表着不仅仅是SQL</li>
+<li>没有声明性查询语言</li>
+<li>没有预定义的模式</li>
+<li>键 - 值对存储，列存储，文档存储，图形数据库</li>
+<li><strong>最终一致性，而非ACID属性</strong></li>
+<li>非结构化和不可预知的数据</li>
+<li>CAP定理</li>
+<li>高性能，高可用性和可伸缩性</li>
+</ul>
+<h2 id="3V-3高"><a href="#3V-3高" class="headerlink" title="3V+3高"></a>3V+3高</h2><ol>
+<li>大数据时代的3V<ul>
+<li>海量Volume</li>
+<li>多样Variety</li>
+<li>实时Velocity</li>
+</ul>
+</li>
+<li>互联网需求的3高<ul>
+<li>高并发</li>
+<li>高可用</li>
+<li>高性能</li>
+</ul>
+</li>
+</ol>
+<h2 id="NoSQL数据模型"><a href="#NoSQL数据模型" class="headerlink" title="NoSQL数据模型"></a>NoSQL数据模型</h2><ol>
+<li><p>传统关系型数据库：</p>
+<p>ER图（1:1/1:N/N:M，主外键等）</p>
+</li>
+<li><p>NoSQL：聚合模型</p>
+<ul>
+<li>KV键值对</li>
+<li>Bson</li>
+<li>列族</li>
+<li>图形</li>
+</ul>
+</li>
+</ol>
+<p>BSON是一种类json的一种二进制形式的存储格式，简称Binary JSON,它和JSON一样，支持内嵌的文档对象和数组对象</p>
+<h2 id="NoSQL数据库的四大分类"><a href="#NoSQL数据库的四大分类" class="headerlink" title="NoSQL数据库的四大分类"></a>NoSQL数据库的四大分类</h2><ol>
+<li>KV键值：redis</li>
+<li>文档型数据库（bson格式比较多）：MongoDB</li>
+<li>列存储数据库：HBase、Cassandra、分布式文件系统</li>
+<li>图关系数据库：Neo4J、InfoGrid</li>
+</ol>
+<h2 id="分布式数据库中CAP原理-BASE"><a href="#分布式数据库中CAP原理-BASE" class="headerlink" title="分布式数据库中CAP原理+BASE"></a>分布式数据库中CAP原理+BASE</h2><ol>
+<li><p>CAP</p>
+<ul>
+<li>C：Consistency（强一致性）</li>
+<li>A：Availability（可用性）</li>
+<li>P：Partition tolerance（分区容错性）</li>
+</ul>
+</li>
+<li><p>CAP的3进2</p>
+<p>一个分布式系统不可能同时很好的满足一致性，可用性和分区容错性这三个需求，<strong>最多只能同时较好的满足两个</strong>。</p>
+<p>在分布式存储系统中，<strong>分区容忍性是我们必须需要实现的</strong>，所以我们只能在<strong>一致性</strong>和<strong>可用性</strong>之间进行权衡，<strong>没有NoSQL系统能同时保证这三点</strong></p>
+</li>
+<li><p>BASE</p>
+<ul>
+<li>基本可用（Basically Available）</li>
+<li>软状态（Soft state）</li>
+<li>最终一致（Eventually consistent）</li>
+</ul>
+</li>
+</ol>
+<h2 id="常用NoSQL数据库"><a href="#常用NoSQL数据库" class="headerlink" title="常用NoSQL数据库"></a>常用NoSQL数据库</h2><ol>
+<li>Memcache</li>
+<li>Redis</li>
+<li>Mongdb</li>
+</ol>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2020年07月14日 14:55</p>
+        <p>原始链接： <a class="post-url" href="/2020/07/14/NoSQL学习/" title="NoSQL学习">http://ligangit.com/2020/07/14/NoSQL学习/</a></p>
+        <footer>
+            <a href="http://ligangit.com">
+                <img src="/images/logo.png" alt="Li Gang">
+                Li Gang
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://ligangit.com/2020/07/14/NoSQL学习/&title=《NoSQL学习》 — ligangit&pic=images/NoSQL.png" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://ligangit.com/2020/07/14/NoSQL学习/&title=《NoSQL学习》 — ligangit&source=在码农的世界里面默默的挣扎着" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://ligangit.com/2020/07/14/NoSQL学习/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《NoSQL学习》 — ligangit&url=http://ligangit.com/2020/07/14/NoSQL学习/&via=http://ligangit.com" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://ligangit.com/2020/07/14/NoSQL学习/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://ligangit.com/2020/07/14/NoSQL学习/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/sql/" class="color4">sql</a>
+      
+    <a href="/tags/NoSQL/" class="color1">NoSQL</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#NoSQL学习"><span class="post-toc-text">NoSQL学习</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#为什么用NoSQL"><span class="post-toc-text">为什么用NoSQL</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#是什么"><span class="post-toc-text">是什么</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#特性"><span class="post-toc-text">特性</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#易扩展"><span class="post-toc-text">易扩展</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#大数据量高性能"><span class="post-toc-text">大数据量高性能</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#多样灵活的数据模型"><span class="post-toc-text">多样灵活的数据模型</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#传统RDBMS-VS-NoSQL"><span class="post-toc-text">传统RDBMS VS NoSQL</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#RDBMS"><span class="post-toc-text">RDBMS</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#NoSQL"><span class="post-toc-text">NoSQL</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3V-3高"><span class="post-toc-text">3V+3高</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#NoSQL数据模型"><span class="post-toc-text">NoSQL数据模型</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#NoSQL数据库的四大分类"><span class="post-toc-text">NoSQL数据库的四大分类</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#分布式数据库中CAP原理-BASE"><span class="post-toc-text">分布式数据库中CAP原理+BASE</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#常用NoSQL数据库"><span class="post-toc-text">常用NoSQL数据库</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+    <a href="/2020/07/14/Redis学习/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          Redis学习
+        
+      </span>
+    </a>
+  
+  
+    <a href="/2020/07/12/SSM三大框架整合/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">SSM三大框架整合</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2020 Li Gang<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "http://ligangit.com",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/Redis/">Redis</a><a class="category-link" href="/categories/Spring/">Spring</a><a class="category-link" href="/categories/SpringBoot/">SpringBoot</a><a class="category-link" href="/categories/java/">java</a><a class="category-link" href="/categories/sql/">sql</a><a class="category-link" href="/categories/前端/">前端</a><a class="category-link" href="/categories/博客/">博客</a><a class="category-link" href="/categories/服务器软件/">服务器软件</a><a class="category-link" href="/categories/研发工具/">研发工具</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/Echarts/" style="font-size: 10px;">Echarts</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/JS/" style="font-size: 11.11px;">JS</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/NoSQL/" style="font-size: 14.44px;">NoSQL</a> <a href="/tags/Redis/" style="font-size: 13.33px;">Redis</a> <a href="/tags/Spring/" style="font-size: 20px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 14.44px;">SpringBoot</a> <a href="/tags/SpringMVC/" style="font-size: 16.67px;">SpringMVC</a> <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/Util/" style="font-size: 10px;">Util</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/idea/" style="font-size: 14.44px;">idea</a> <a href="/tags/java/" style="font-size: 18.89px;">java</a> <a href="/tags/markdown/" style="font-size: 11.11px;">markdown</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mysql/" style="font-size: 14.44px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/oracle/" style="font-size: 12.22px;">oracle</a> <a href="/tags/sql/" style="font-size: 17.78px;">sql</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/web/" style="font-size: 12.22px;">web</a> <a href="/tags/前端/" style="font-size: 11.11px;">前端</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/服务器软件/" style="font-size: 11.11px;">服务器软件</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a> <a href="/tags/研发工具/" style="font-size: 15.56px;">研发工具</a> <a href="/tags/缓存/" style="font-size: 13.33px;">缓存</a> <a href="/tags/自动配置/" style="font-size: 10px;">自动配置</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="/">
+                    <i class="fa fa-home"></i><span>主页</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>归档</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>关于</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/Echarts/" style="font-size: 10px;">Echarts</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/JS/" style="font-size: 11.11px;">JS</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/NoSQL/" style="font-size: 14.44px;">NoSQL</a> <a href="/tags/Redis/" style="font-size: 13.33px;">Redis</a> <a href="/tags/Spring/" style="font-size: 20px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 14.44px;">SpringBoot</a> <a href="/tags/SpringMVC/" style="font-size: 16.67px;">SpringMVC</a> <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/Util/" style="font-size: 10px;">Util</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/idea/" style="font-size: 14.44px;">idea</a> <a href="/tags/java/" style="font-size: 18.89px;">java</a> <a href="/tags/markdown/" style="font-size: 11.11px;">markdown</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mysql/" style="font-size: 14.44px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/oracle/" style="font-size: 12.22px;">oracle</a> <a href="/tags/sql/" style="font-size: 17.78px;">sql</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/web/" style="font-size: 12.22px;">web</a> <a href="/tags/前端/" style="font-size: 11.11px;">前端</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/服务器软件/" style="font-size: 11.11px;">服务器软件</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a> <a href="/tags/研发工具/" style="font-size: 15.56px;">研发工具</a> <a href="/tags/缓存/" style="font-size: 13.33px;">缓存</a> <a href="/tags/自动配置/" style="font-size: 10px;">自动配置</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>
