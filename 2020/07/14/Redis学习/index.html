@@ -16,10 +16,13 @@
 <meta property="og:site_name" content="ligangit">
 <meta property="og:description" content="Redis学习笔记什么是RedisREmote DIctionary Server（远程字典服务器） 是一个高性能的（key/value）分布式内存数据库，基于内存运行并支持持久化的NoSQL数据库。 特点：  支持数据的持久化 支持key-value、list、set、zset、hash等数据结构的存储 支持数据备份，即master-salve模式的数据备份  能干什么 内存存储和持久化：red">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-07-14T13:13:18.433Z">
+<meta property="og:image" content="http://ligangit.com/images/Redis/redis_result4.png">
+<meta property="og:image" content="http://ligangit.com/images/Redis/redis_result5.png">
+<meta property="og:updated_time" content="2020-07-17T15:39:10.565Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redis学习">
 <meta name="twitter:description" content="Redis学习笔记什么是RedisREmote DIctionary Server（远程字典服务器） 是一个高性能的（key/value）分布式内存数据库，基于内存运行并支持持久化的NoSQL数据库。 特点：  支持数据的持久化 支持key-value、list、set、zset、hash等数据结构的存储 支持数据备份，即master-salve模式的数据备份  能干什么 内存存储和持久化：red">
+<meta name="twitter:image" content="http://ligangit.com/images/Redis/redis_result4.png">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -202,10 +205,105 @@
 </li>
 </ol>
 <h2 id="Redis常见数据类型操作命令"><a href="#Redis常见数据类型操作命令" class="headerlink" title="Redis常见数据类型操作命令"></a>Redis常见数据类型操作命令</h2><p> <a href="http://redisdoc.com/" target="_blank" rel="noopener">http://redisdoc.com/</a> </p>
+<h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><ol>
+<li>配合关系型数据库做高速缓存<ul>
+<li>高频次，热门访问的数据，降低数据库IO</li>
+<li>分布式架构，做session共享</li>
+</ul>
+</li>
+<li>由于其拥有持久化能力，利用其多样的数据结构存储特定的数据<ul>
+<li>最新N个数据（通过List实现按自然时间排序的数据）</li>
+<li>排行榜，Top N（利用zset（有序集合））</li>
+<li>时效性的数据，比如手机验证码（Expire 过期）</li>
+<li>计数器、秒杀（原子性，自增方法incr、decr）</li>
+<li>去除大量数据中的重复数据（利用set集合）</li>
+<li>构建队列（利用list列表）</li>
+<li>发布订阅消息系统（pub/sub模式）</li>
+</ul>
+</li>
+</ol>
+<h2 id="windows使用cmd启动Redis"><a href="#windows使用cmd启动Redis" class="headerlink" title="windows使用cmd启动Redis"></a>windows使用cmd启动Redis</h2><p><strong>widows启动</strong></p>
+<ol>
+<li>打开cmd，进入redis目录，其中配置文件为 redis.windows.conf ，执行如下命令<ul>
+<li>redis-server  redis.windows.conf </li>
+</ul>
+</li>
+<li>如果配置文件在其他目录下，配置文件所在路径：D:/reidsmy/redis6379.conf，执行如下命令<ul>
+<li>redis-server D:/reidsmy/redis6379.conf</li>
+</ul>
+</li>
+</ol>
+<p><strong>进入redis命令行</strong></p>
+<ol>
+<li>再打开一个cmd，进入redis目录，执行如下命令<ul>
+<li>redis-cli.exe -h 127.0.0.1 -p 6379 </li>
+<li>或执行 redis-cli -p 6379 </li>
+</ul>
+</li>
+</ol>
+<h2 id="Linux启动Redis"><a href="#Linux启动Redis" class="headerlink" title="Linux启动Redis"></a>Linux启动Redis</h2><h3 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h3><ol>
+<li>备份redis.conf：拷贝一份redis.conf到其他目录，如移动到 /myredis/redis.conf</li>
+<li>修改redis.conf文件，将里面的daemonize no 改成 yes，让服务在后台启动</li>
+<li>启动命令：执行 redis-server /myredis/redis.conf</li>
+<li><strong>打开客户端：redis-cli</strong><ul>
+<li>多个端口可以： redis-cli -p 6379</li>
+<li>单个端口还可以：redis-cli  或 redis-cli -p 6379</li>
+<li>*<em>显示中文：redis-cli –raw 或 redis-cli -p 6379 –raw *</em></li>
+</ul>
+</li>
+<li>测试验证：ping</li>
+</ol>
+<h3 id="关闭服务器"><a href="#关闭服务器" class="headerlink" title="关闭服务器"></a>关闭服务器</h3><ol>
+<li><p>单实例关闭：</p>
+<ul>
+<li>redis-cli shutdown</li>
+<li>也可以进入终端后关闭</li>
+</ul>
+<p><img src="/images/Redis/redis_result4.png" alt="关闭"></p>
+</li>
+<li><p>多实例关闭：</p>
+<ul>
+<li>指定端口关闭：redis-cli -p 6379 shutdown</li>
+</ul>
+</li>
+</ol>
+<h3 id="只关闭客户端和客户端"><a href="#只关闭客户端和客户端" class="headerlink" title="只关闭客户端和客户端"></a>只关闭客户端和客户端</h3><ol>
+<li><p>直接在客户端输入exit</p>
+<p><img src="/images/Redis/redis_result5.png" alt="关闭"></p>
+</li>
+<li><p>使用Ctrl+C快捷键</p>
+</li>
+</ol>
+<h2 id="Redis目录结构"><a href="#Redis目录结构" class="headerlink" title="Redis目录结构"></a>Redis目录结构</h2><ol>
+<li>redis-benchmark<ul>
+<li>性能测试工具（服务启动起来后执行）</li>
+</ul>
+</li>
+<li>redis-check-aof<ul>
+<li>修复有问题的aof文件</li>
+</ul>
+</li>
+<li>redis-check-dump<ul>
+<li>修复有问题的dump.rdb文件</li>
+</ul>
+</li>
+<li>redis-sentinel<ul>
+<li>redis集群使用（哨兵）</li>
+</ul>
+</li>
+<li>redis-server<ul>
+<li>redis服务器启动命令</li>
+</ul>
+</li>
+<li>redis-cli<ul>
+<li>redis客户端，操作入口</li>
+</ul>
+</li>
+</ol>
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2020年07月14日 21:13</p>
+        <p>最后更新： 2020年07月17日 23:39</p>
         <p>原始链接： <a class="post-url" href="/2020/07/14/Redis学习/" title="Redis学习">http://ligangit.com/2020/07/14/Redis学习/</a></p>
         <footer>
             <a href="http://ligangit.com">
@@ -327,7 +425,7 @@
 
     <aside class="post-toc-pos post-toc-top" id="post-toc">
         <nav class="post-toc-wrap">
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Redis学习笔记"><span class="post-toc-text">Redis学习笔记</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#什么是Redis"><span class="post-toc-text">什么是Redis</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#能干什么"><span class="post-toc-text">能干什么</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#其他"><span class="post-toc-text">其他</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#常用五大数据类型"><span class="post-toc-text">常用五大数据类型</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Redis常见数据类型操作命令"><span class="post-toc-text">Redis常见数据类型操作命令</span></a></li></ol></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Redis学习笔记"><span class="post-toc-text">Redis学习笔记</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#什么是Redis"><span class="post-toc-text">什么是Redis</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#能干什么"><span class="post-toc-text">能干什么</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#其他"><span class="post-toc-text">其他</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#常用五大数据类型"><span class="post-toc-text">常用五大数据类型</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Redis常见数据类型操作命令"><span class="post-toc-text">Redis常见数据类型操作命令</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#应用场景"><span class="post-toc-text">应用场景</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#windows使用cmd启动Redis"><span class="post-toc-text">windows使用cmd启动Redis</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Linux启动Redis"><span class="post-toc-text">Linux启动Redis</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#启动"><span class="post-toc-text">启动</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#关闭服务器"><span class="post-toc-text">关闭服务器</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#只关闭客户端和客户端"><span class="post-toc-text">只关闭客户端和客户端</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Redis目录结构"><span class="post-toc-text">Redis目录结构</span></a></li></ol></li></ol>
         </nav>
     </aside>
     
@@ -411,7 +509,7 @@
             <a class="category-link" href="/categories/Redis/">Redis</a><a class="category-link" href="/categories/Spring/">Spring</a><a class="category-link" href="/categories/SpringBoot/">SpringBoot</a><a class="category-link" href="/categories/java/">java</a><a class="category-link" href="/categories/sql/">sql</a><a class="category-link" href="/categories/前端/">前端</a><a class="category-link" href="/categories/博客/">博客</a><a class="category-link" href="/categories/服务器软件/">服务器软件</a><a class="category-link" href="/categories/研发工具/">研发工具</a>
         </div>
         <div id="sidebar-menu-box-tags">
-            <a href="/tags/Echarts/" style="font-size: 10px;">Echarts</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/JS/" style="font-size: 11.11px;">JS</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/NoSQL/" style="font-size: 14.44px;">NoSQL</a> <a href="/tags/Redis/" style="font-size: 13.33px;">Redis</a> <a href="/tags/Spring/" style="font-size: 20px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 14.44px;">SpringBoot</a> <a href="/tags/SpringMVC/" style="font-size: 16.67px;">SpringMVC</a> <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/Util/" style="font-size: 10px;">Util</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/idea/" style="font-size: 14.44px;">idea</a> <a href="/tags/java/" style="font-size: 18.89px;">java</a> <a href="/tags/markdown/" style="font-size: 11.11px;">markdown</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mysql/" style="font-size: 14.44px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/oracle/" style="font-size: 12.22px;">oracle</a> <a href="/tags/sql/" style="font-size: 17.78px;">sql</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/web/" style="font-size: 12.22px;">web</a> <a href="/tags/前端/" style="font-size: 11.11px;">前端</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/服务器软件/" style="font-size: 11.11px;">服务器软件</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a> <a href="/tags/研发工具/" style="font-size: 15.56px;">研发工具</a> <a href="/tags/缓存/" style="font-size: 13.33px;">缓存</a> <a href="/tags/自动配置/" style="font-size: 10px;">自动配置</a>
+            <a href="/tags/Echarts/" style="font-size: 10px;">Echarts</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/JS/" style="font-size: 11.25px;">JS</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/NoSQL/" style="font-size: 18.75px;">NoSQL</a> <a href="/tags/Redis/" style="font-size: 17.5px;">Redis</a> <a href="/tags/Spring/" style="font-size: 20px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 13.75px;">SpringBoot</a> <a href="/tags/SpringMVC/" style="font-size: 16.25px;">SpringMVC</a> <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/Util/" style="font-size: 10px;">Util</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/idea/" style="font-size: 13.75px;">idea</a> <a href="/tags/java/" style="font-size: 18.75px;">java</a> <a href="/tags/markdown/" style="font-size: 11.25px;">markdown</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mysql/" style="font-size: 13.75px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/oracle/" style="font-size: 12.5px;">oracle</a> <a href="/tags/sql/" style="font-size: 17.5px;">sql</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/web/" style="font-size: 12.5px;">web</a> <a href="/tags/前端/" style="font-size: 11.25px;">前端</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/服务器软件/" style="font-size: 11.25px;">服务器软件</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a> <a href="/tags/研发工具/" style="font-size: 15px;">研发工具</a> <a href="/tags/缓存/" style="font-size: 17.5px;">缓存</a> <a href="/tags/自动配置/" style="font-size: 10px;">自动配置</a>
         </div>
     </div>
     <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
@@ -444,7 +542,7 @@
     <div class="mobile-header-tag-container">
         <span class="title">Tags</span>
         <div id="mobile-header-container-tags">
-            <a href="/tags/Echarts/" style="font-size: 10px;">Echarts</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/JS/" style="font-size: 11.11px;">JS</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/NoSQL/" style="font-size: 14.44px;">NoSQL</a> <a href="/tags/Redis/" style="font-size: 13.33px;">Redis</a> <a href="/tags/Spring/" style="font-size: 20px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 14.44px;">SpringBoot</a> <a href="/tags/SpringMVC/" style="font-size: 16.67px;">SpringMVC</a> <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/Util/" style="font-size: 10px;">Util</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/idea/" style="font-size: 14.44px;">idea</a> <a href="/tags/java/" style="font-size: 18.89px;">java</a> <a href="/tags/markdown/" style="font-size: 11.11px;">markdown</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mysql/" style="font-size: 14.44px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/oracle/" style="font-size: 12.22px;">oracle</a> <a href="/tags/sql/" style="font-size: 17.78px;">sql</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/web/" style="font-size: 12.22px;">web</a> <a href="/tags/前端/" style="font-size: 11.11px;">前端</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/服务器软件/" style="font-size: 11.11px;">服务器软件</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a> <a href="/tags/研发工具/" style="font-size: 15.56px;">研发工具</a> <a href="/tags/缓存/" style="font-size: 13.33px;">缓存</a> <a href="/tags/自动配置/" style="font-size: 10px;">自动配置</a>
+            <a href="/tags/Echarts/" style="font-size: 10px;">Echarts</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/JS/" style="font-size: 11.25px;">JS</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/NoSQL/" style="font-size: 18.75px;">NoSQL</a> <a href="/tags/Redis/" style="font-size: 17.5px;">Redis</a> <a href="/tags/Spring/" style="font-size: 20px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 13.75px;">SpringBoot</a> <a href="/tags/SpringMVC/" style="font-size: 16.25px;">SpringMVC</a> <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/Util/" style="font-size: 10px;">Util</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/idea/" style="font-size: 13.75px;">idea</a> <a href="/tags/java/" style="font-size: 18.75px;">java</a> <a href="/tags/markdown/" style="font-size: 11.25px;">markdown</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mysql/" style="font-size: 13.75px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/oracle/" style="font-size: 12.5px;">oracle</a> <a href="/tags/sql/" style="font-size: 17.5px;">sql</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/web/" style="font-size: 12.5px;">web</a> <a href="/tags/前端/" style="font-size: 11.25px;">前端</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/服务器软件/" style="font-size: 11.25px;">服务器软件</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a> <a href="/tags/研发工具/" style="font-size: 15px;">研发工具</a> <a href="/tags/缓存/" style="font-size: 17.5px;">缓存</a> <a href="/tags/自动配置/" style="font-size: 10px;">自动配置</a>
         </div>
     </div>
 </div>

@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>Redis-五大数据类型 | ligangit</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="LiGang,Li Gang,ligangit">
+  
+  <meta name="description" content="Redis的五大数据类型Redis数据类型 key（键） keys * 查询当前库的所有键   exists &amp;lt;key&amp;gt;  判断某个键是否存在   type &amp;lt;key&amp;gt; 查看键的类型   del &amp;lt;key&amp;gt; 删除某个键   expire &amp;lt;key&amp;gt; &amp;lt;seconds&amp;gt; 为键值设置过期时间，单位秒   ttl &amp;lt;key&amp;gt; 查看还">
+<meta name="keywords" content="NoSQL,Redis,缓存">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis-五大数据类型">
+<meta property="og:url" content="http://ligangit.com/2020/07/17/Redis-五大数据类型/index.html">
+<meta property="og:site_name" content="ligangit">
+<meta property="og:description" content="Redis的五大数据类型Redis数据类型 key（键） keys * 查询当前库的所有键   exists &amp;lt;key&amp;gt;  判断某个键是否存在   type &amp;lt;key&amp;gt; 查看键的类型   del &amp;lt;key&amp;gt; 删除某个键   expire &amp;lt;key&amp;gt; &amp;lt;seconds&amp;gt; 为键值设置过期时间，单位秒   ttl &amp;lt;key&amp;gt; 查看还">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://ligangit.com/images/Redis/redis_keys.png">
+<meta property="og:image" content="http://ligangit.com/images/Redis/redis_result6.png">
+<meta property="og:image" content="http://ligangit.com/images/Redis/redis_result7.png">
+<meta property="og:image" content="http://ligangit.com/images/Redis/redis_result8.png">
+<meta property="og:image" content="http://ligangit.com/images/Redis/redis_result10.png">
+<meta property="og:image" content="http://ligangit.com/images/Redis/redis_result9.png">
+<meta property="og:updated_time" content="2020-07-18T01:48:38.115Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Redis-五大数据类型">
+<meta name="twitter:description" content="Redis的五大数据类型Redis数据类型 key（键） keys * 查询当前库的所有键   exists &amp;lt;key&amp;gt;  判断某个键是否存在   type &amp;lt;key&amp;gt; 查看键的类型   del &amp;lt;key&amp;gt; 删除某个键   expire &amp;lt;key&amp;gt; &amp;lt;seconds&amp;gt; 为键值设置过期时间，单位秒   ttl &amp;lt;key&amp;gt; 查看还">
+<meta name="twitter:image" content="http://ligangit.com/images/Redis/redis_keys.png">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">Li Gang&#39;s blog</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="/">
+                        <i class="fa fa-home"></i>
+                        <span>主页</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>归档</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>关于</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/logo.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        Li Gang&#39;s blog
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        在码农的世界里挣扎的人
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="Li Gang" target="_blank" href="//ligangit.com">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/ligangit">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="联系QQ"  href="/">
+                            <i class="fa fa-qq fa-2x"></i></a>
+                    
+                        <a title="微信"  href="/">
+                            <i class="fa fa-weixin fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-Redis-五大数据类型" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      Redis-五大数据类型
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/Redis/">Redis</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2020-07-17
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <h1 id="Redis的五大数据类型"><a href="#Redis的五大数据类型" class="headerlink" title="Redis的五大数据类型"></a>Redis的五大数据类型</h1><h2 id="Redis数据类型"><a href="#Redis数据类型" class="headerlink" title="Redis数据类型"></a>Redis数据类型</h2><p><img src="/images/Redis/redis_keys.png" alt="数据类型"></p>
+<h2 id="key（键）"><a href="#key（键）" class="headerlink" title="key（键）"></a>key（键）</h2><ol>
+<li>keys *<ul>
+<li>查询当前库的所有键</li>
+</ul>
+</li>
+<li>exists &lt;key&gt; <ul>
+<li>判断某个键是否存在</li>
+</ul>
+</li>
+<li>type &lt;key&gt;<ul>
+<li>查看键的类型</li>
+</ul>
+</li>
+<li>del &lt;key&gt;<ul>
+<li>删除某个键</li>
+</ul>
+</li>
+<li>expire &lt;key&gt; &lt;seconds&gt;<ul>
+<li>为键值设置过期时间，单位秒</li>
+</ul>
+</li>
+<li>ttl &lt;key&gt;<ul>
+<li>查看还有多少秒过期，-1表示永不过期，-2表示已过期</li>
+</ul>
+</li>
+<li>dbsize<ul>
+<li>查看当前数据库的key的数量</li>
+</ul>
+</li>
+<li>flushdb<ul>
+<li>清空当前库</li>
+</ul>
+</li>
+<li>flushall<ul>
+<li>通杀全部库</li>
+</ul>
+</li>
+</ol>
+<h2 id="String（字符串）"><a href="#String（字符串）" class="headerlink" title="String（字符串）"></a>String（字符串）</h2><ul>
+<li>是Redis最基本的类型，一个key对应一个value；</li>
+<li>是二进制安全的，即Redis的String可以包含任何数据，比如jpg图片或者序列化对象；</li>
+<li>是Redis最基本的数据类型，一个Redis中字符串value最多可以是512M。</li>
+</ul>
+<ol>
+<li>get &lt;key&gt;<ul>
+<li>查询对应键值对</li>
+</ul>
+</li>
+<li>set &lt;key&gt; &lt;value&gt;<ul>
+<li>添加键值对</li>
+</ul>
+</li>
+<li>append &lt;key&gt; &lt;value&gt;<ul>
+<li>将给定的value追加到原值的末尾</li>
+</ul>
+</li>
+<li>strlen &lt;key&gt;<ul>
+<li>获取值的长度</li>
+</ul>
+</li>
+<li>setnx &lt;key&gt; &lt;value&gt;<ul>
+<li>只有在key不存在时设置key的值</li>
+</ul>
+</li>
+<li>incr &lt;key&gt;<ul>
+<li>将key中储存的数字值加1；</li>
+<li>只能对数字值操作，如果为空，新增值为1</li>
+</ul>
+</li>
+<li>decr &lt;key&gt;<ul>
+<li>将key中储存的数字值减1；</li>
+<li>只能对数字值操作，如果为空，新增值为-1</li>
+</ul>
+</li>
+<li>incrby/decrby &lt;key&gt; &lt;步长&gt;<ul>
+<li>将key中储存的数字值增减。自定义步长</li>
+</ul>
+</li>
+<li>mset &lt;key1&gt; &lt;value1&gt; &lt;key2&gt; &lt;value2&gt; …<ul>
+<li>同时设置一个或多个key-value对</li>
+</ul>
+</li>
+<li>mget &lt;key1&gt; &lt;value1&gt; &lt;key2&gt; &lt;value2&gt; …<ul>
+<li>同时获取一个或多个value</li>
+</ul>
+</li>
+<li>msetnx &lt;key1&gt; &lt;value1&gt; &lt;key2&gt; &lt;value2&gt; …<ul>
+<li>同时设置一个或多个key-value对，<strong>当且仅当所有给定key都不存在，才会执行成功</strong></li>
+</ul>
+</li>
+<li>getrange &lt;key&gt; &lt;起始位置&gt; &lt;结束位置&gt;<ul>
+<li>获取值的范围，类似java中的substring</li>
+</ul>
+</li>
+<li>setrange &lt;key&gt; &lt;起始位置&gt; &lt;value&gt;<ul>
+<li>用value覆写key所储存的字符串的值，从&lt;起始位置&gt;开始</li>
+<li><img src="/images/Redis/redis_result6.png" alt="setrange"></li>
+</ul>
+</li>
+<li>setex &lt;key&gt; &lt;过期时间&gt; &lt;value&gt;<ul>
+<li>设置键值的同时，设置过期时间，单位秒</li>
+</ul>
+</li>
+<li>getset &lt;key&gt; &lt;value&gt;<ul>
+<li>以新换旧，设置了新值同时获取旧值</li>
+<li><img src="/images/Redis/redis_result7.png" alt="getset"></li>
+</ul>
+</li>
+</ol>
+<h2 id="List（列表）"><a href="#List（列表）" class="headerlink" title="List（列表）"></a>List（列表）</h2><ul>
+<li>单键多值</li>
+<li>Redis列表是简单的字符串列表，按照插入顺序排序，你可以添加一个元素到列表的头部（左边）或尾部（右边）</li>
+<li>它的底层实际是个<strong>双向链表，对两端的操作性能很高，通过索引下标的操作中间的节点性能会较差</strong></li>
+</ul>
+<ol>
+<li>lpush/rpush &lt;key&gt; &lt;value1&gt; &lt;value2&gt; …<ul>
+<li>从 列表头部（左边）/ 列表尾部（右边）插入一个或多个值</li>
+</ul>
+</li>
+<li>lpop/rpop &lt;key&gt;<ul>
+<li>从 列表头部（左边）/ 列表尾部（右边）弹出一个值</li>
+<li>如果弹出值后，列表中没有值了，那么键会自动删除</li>
+</ul>
+</li>
+<li>rpoplpush &lt;key1&gt; &lt;key2&gt;<ul>
+<li>从key1列表尾部（右边）弹出一个值， 并将该值添加到另一个key2列表并返回 </li>
+<li><img src="/images/Redis/redis_result8.png" alt="rpoplpush"></li>
+</ul>
+</li>
+<li>lrange &lt;key&gt; &lt;start&gt; &lt;stop&gt;<ul>
+<li>按照索引下标获得元素（从列表头部（左边）向列表尾部（右边））</li>
+</ul>
+</li>
+<li>lindex &lt;key&gt; &lt;index&gt;<ul>
+<li>按照索引下标获的元素（从列表头部（左边）向列表尾部（右边））</li>
+</ul>
+</li>
+<li>llen &lt;key&gt;<ul>
+<li>获取列表长度</li>
+</ul>
+</li>
+<li>linsert &lt;key&gt; before/after &lt;value&gt; <strong>&lt;newvalue&gt;</strong><ul>
+<li>在value的前面或后面插入newvalue</li>
+<li><img src="/images/Redis/redis_result10.png" alt="linsert"></li>
+</ul>
+</li>
+<li>lrem &lt;key&gt; &lt;count &gt; &lt;value&gt;<ul>
+<li>从列表头部（左边）删除count 个&lt;value&gt; （从列表头部（左边）向列表尾部（右边））<ul>
+<li>count &gt; 0 : 从表头开始向表尾搜索，移除与 VALUE 相等的元素，数量为 COUNT 。</li>
+<li>count &lt; 0 : 从表尾开始向表头搜索，移除与 VALUE 相等的元素，数量为 COUNT 的绝对值。</li>
+<li>count = 0 : 移除表中所有与 VALUE 相等的值。</li>
+</ul>
+</li>
+<li>返回值为被移除元素的数量。 列表不存在时返回 0 。 </li>
+<li><img src="/images/Redis/redis_result9.png" alt="lrem"></li>
+</ul>
+</li>
+</ol>
+<h2 id="set（集合）"><a href="#set（集合）" class="headerlink" title="set（集合）"></a>set（集合）</h2><ul>
+<li>set对外提供的功能与list类似，是一个列表的功能，特殊之处在于<strong>set可以自动去重</strong>，当需要存储一个列表数据，又不希望出现重复数据时，set是一个很好的选择，并且<strong>set提供了判断某个成员是否在一个set集合内的重要接口</strong>，这个也是list所不能提供的；</li>
+<li>set是String类型的无序、无重复集合，通过HashTable实现的，它的底层是一个value为null的hash表，所以添加、删除、查找的复杂度都是O(1)。</li>
+</ul>
+<ol>
+<li>sadd &lt;key&gt; &lt;value1&gt; &lt;value2&gt; …<ul>
+<li>将一个或多个成员加入到集合key当中，已经存在于集合的成员将被忽略</li>
+</ul>
+</li>
+<li>smembers &lt;key&gt;<ul>
+<li>取出该集合的所有成员值</li>
+</ul>
+</li>
+<li>sismember &lt;key&gt; &lt;value&gt;<ul>
+<li>判断集合key是否存在value值，有则返回1，没有则返回0</li>
+</ul>
+</li>
+<li>scard &lt;key&gt;<ul>
+<li>获取该集合的成员个数</li>
+</ul>
+</li>
+<li>srem &lt;key&gt; &lt;value1&gt; &lt;value2&gt; …<ul>
+<li>删除集合中的一个或多个成员</li>
+</ul>
+</li>
+<li>spop &lt;key&gt; [count]<ul>
+<li>随机移除key 的一个或多个元素，移除后会返回移除的元素 </li>
+</ul>
+</li>
+<li>srandmember &lt;key&gt; &lt;count&gt;<ul>
+<li>返回集合中一个或多个随机数 <ul>
+<li>如果 count 为正数，且小于集合基数，那么命令返回一个包含 count 个元素的数组，数组中的元素各不相同。如果 count 大于等于集合基数，那么返回整个集合。</li>
+<li>如果 count 为负数，那么命令返回一个数组，数组中的元素可能会重复出现多次，而数组的长度为 count 的绝对值。</li>
+</ul>
+</li>
+<li>不会删除元素</li>
+</ul>
+</li>
+<li>smove &lt;key1&gt; &lt;key2&gt; &lt;value&gt;<ul>
+<li>将value元素从key1集合移动到key2集合 </li>
+<li>value元素会从key1集合中删除</li>
+</ul>
+</li>
+<li>sinter &lt;key1&gt; &lt;key2&gt; …<ul>
+<li>返回给定所有集合的交集 </li>
+</ul>
+</li>
+<li>sunion &lt;key1&gt; &lt;key2&gt; …<ul>
+<li>返回给定所有集合的并集</li>
+</ul>
+</li>
+<li>sdiff &lt;key1&gt; &lt;key2&gt; …<ul>
+<li>返回给定所有集合的差集</li>
+</ul>
+</li>
+</ol>
+<h2 id="hash（哈希）"><a href="#hash（哈希）" class="headerlink" title="hash（哈希）"></a>hash（哈希）</h2><ul>
+<li>是一个键值对集合</li>
+<li>是一个String类型的field和value的映射表，Hash特别适合用于存储对象</li>
+<li>类似Java里面的Map&lt;String,Object&gt;</li>
+</ul>
+<ol>
+<li>hset &lt;key&gt; &lt;field&gt; &lt;value&gt;<ul>
+<li>设置哈希表key中域filed的值为value</li>
+</ul>
+</li>
+<li>hget &lt;key&gt; &lt;field&gt;<ul>
+<li>获取哈希表 key中域filed的值</li>
+</ul>
+</li>
+<li>hmset &lt;key&gt; &lt;field1&gt; &lt;value1&gt; &lt;field2&gt; &lt;value2&gt; …<ul>
+<li>同时将多个 field-value (域-值)对设置到哈希表key中</li>
+</ul>
+</li>
+<li>hexists &lt;key&gt; &lt;filed&gt;<ul>
+<li>查看哈希表key中，域filed是否存在</li>
+</ul>
+</li>
+<li>hkeys &lt;key&gt;<ul>
+<li>列出该哈希表key所有的域filed</li>
+</ul>
+</li>
+<li>hvals &lt;key&gt;<ul>
+<li>列出该哈希表key所有的value值</li>
+</ul>
+</li>
+<li>hincrby &lt;key&gt; &lt;filed&gt; &lt;increment&gt;<ul>
+<li>为哈希表 key 中的指定字段的<strong>整数值</strong>加上增量increment</li>
+</ul>
+</li>
+<li>hsetnx &lt;key&gt; &lt;field&gt; &lt;value&gt;<ul>
+<li>将哈希表key中的域field的值设置为value，当且仅当域field不存在</li>
+</ul>
+</li>
+</ol>
+<h2 id="zset（sorted-set：有序集合）"><a href="#zset（sorted-set：有序集合）" class="headerlink" title="zset（sorted set：有序集合）"></a>zset（sorted set：有序集合）</h2><ul>
+<li>和set一样也是String类型元素的集合，且不允许重复的成员</li>
+<li><strong>不同的是每个元素都会关联一个double类型的分数</strong></li>
+<li>Redis通过分数来为集合中的成员进行从小到大的排序。<strong>zset的成员是唯一的，但分数（score）却可以重复</strong></li>
+</ul>
+<ol>
+<li>zadd &lt;key&gt; &lt;score1&gt; &lt;member1&gt; &lt;score2&gt; &lt;member2&gt; …<ul>
+<li>向有序集合key添加一个或多个成员，或者更新已存在成员的分数 </li>
+</ul>
+</li>
+<li>zrange &lt;key&gt; &lt;start&gt; &lt;stop&gt; [WITHSCORES]<ul>
+<li>获取有序集合key中，下标在start、stop之间的元素</li>
+<li>带WITHSCORES，可以让分数score一起和值返回到结果集</li>
+</ul>
+</li>
+<li>zrangebyscore &lt;key&gt; &lt;min&gt; &lt;max&gt; [WITHSCORES]  [limit ofseet count]<ul>
+<li>获取有序集合key中，所有score值介于min和max之间（包括等于min或max）的成员。有序集合成员按score值递增（从小到大）依次排序</li>
+</ul>
+</li>
+<li>zrevrangebyscore &lt;key&gt; &lt;max&gt; &lt;min&gt; [WITHSCORES]  [limit ofseet count]<ul>
+<li>同zrangebyscore，但是排序方式是从大到小</li>
+</ul>
+</li>
+<li>zincrby &lt;key&gt; &lt;increment&gt; &lt;member&gt;<ul>
+<li>有序集合key中对指定成员member的分数score加上增量 increment </li>
+</ul>
+</li>
+<li>zrem &lt;key&gt; &lt;member1&gt; &lt;member2&gt; …<ul>
+<li>移除有序集合中的一个或多个成员 </li>
+</ul>
+</li>
+<li>zcount &lt;key&gt; &lt;min&gt; &lt;max&gt; <ul>
+<li>计算在有序集合key中指定区间分数min-max的成员数</li>
+</ul>
+</li>
+<li>zrank &lt;key&gt; &lt;member&gt;<ul>
+<li>返回有序集合key中指定成员member的索引 (排名)，从0开始</li>
+</ul>
+</li>
+</ol>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2020年07月18日 09:48</p>
+        <p>原始链接： <a class="post-url" href="/2020/07/17/Redis-五大数据类型/" title="Redis-五大数据类型">http://ligangit.com/2020/07/17/Redis-五大数据类型/</a></p>
+        <footer>
+            <a href="http://ligangit.com">
+                <img src="/images/logo.png" alt="Li Gang">
+                Li Gang
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://ligangit.com/2020/07/17/Redis-五大数据类型/&title=《Redis-五大数据类型》 — ligangit&pic=images/redis.jpg" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://ligangit.com/2020/07/17/Redis-五大数据类型/&title=《Redis-五大数据类型》 — ligangit&source=在码农的世界里面默默的挣扎着" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://ligangit.com/2020/07/17/Redis-五大数据类型/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Redis-五大数据类型》 — ligangit&url=http://ligangit.com/2020/07/17/Redis-五大数据类型/&via=http://ligangit.com" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://ligangit.com/2020/07/17/Redis-五大数据类型/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://ligangit.com/2020/07/17/Redis-五大数据类型/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/NoSQL/" class="color1">NoSQL</a>
+      
+    <a href="/tags/Redis/" class="color1">Redis</a>
+      
+    <a href="/tags/缓存/" class="color3">缓存</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Redis的五大数据类型"><span class="post-toc-text">Redis的五大数据类型</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Redis数据类型"><span class="post-toc-text">Redis数据类型</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#key（键）"><span class="post-toc-text">key（键）</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#String（字符串）"><span class="post-toc-text">String（字符串）</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#List（列表）"><span class="post-toc-text">List（列表）</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#set（集合）"><span class="post-toc-text">set（集合）</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#hash（哈希）"><span class="post-toc-text">hash（哈希）</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#zset（sorted-set：有序集合）"><span class="post-toc-text">zset（sorted set：有序集合）</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+  
+    <a href="/2020/07/17/Redis-单线程-多路IO复用/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">Redis-单线程+多路IO复用</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2020 Li Gang<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "http://ligangit.com",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/Redis/">Redis</a><a class="category-link" href="/categories/Spring/">Spring</a><a class="category-link" href="/categories/SpringBoot/">SpringBoot</a><a class="category-link" href="/categories/java/">java</a><a class="category-link" href="/categories/sql/">sql</a><a class="category-link" href="/categories/前端/">前端</a><a class="category-link" href="/categories/博客/">博客</a><a class="category-link" href="/categories/服务器软件/">服务器软件</a><a class="category-link" href="/categories/研发工具/">研发工具</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/Echarts/" style="font-size: 10px;">Echarts</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/JS/" style="font-size: 11.25px;">JS</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/NoSQL/" style="font-size: 18.75px;">NoSQL</a> <a href="/tags/Redis/" style="font-size: 17.5px;">Redis</a> <a href="/tags/Spring/" style="font-size: 20px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 13.75px;">SpringBoot</a> <a href="/tags/SpringMVC/" style="font-size: 16.25px;">SpringMVC</a> <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/Util/" style="font-size: 10px;">Util</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/idea/" style="font-size: 13.75px;">idea</a> <a href="/tags/java/" style="font-size: 18.75px;">java</a> <a href="/tags/markdown/" style="font-size: 11.25px;">markdown</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mysql/" style="font-size: 13.75px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/oracle/" style="font-size: 12.5px;">oracle</a> <a href="/tags/sql/" style="font-size: 17.5px;">sql</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/web/" style="font-size: 12.5px;">web</a> <a href="/tags/前端/" style="font-size: 11.25px;">前端</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/服务器软件/" style="font-size: 11.25px;">服务器软件</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a> <a href="/tags/研发工具/" style="font-size: 15px;">研发工具</a> <a href="/tags/缓存/" style="font-size: 17.5px;">缓存</a> <a href="/tags/自动配置/" style="font-size: 10px;">自动配置</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="/">
+                    <i class="fa fa-home"></i><span>主页</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>归档</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>关于</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/Echarts/" style="font-size: 10px;">Echarts</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/JS/" style="font-size: 11.25px;">JS</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/NoSQL/" style="font-size: 18.75px;">NoSQL</a> <a href="/tags/Redis/" style="font-size: 17.5px;">Redis</a> <a href="/tags/Spring/" style="font-size: 20px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 13.75px;">SpringBoot</a> <a href="/tags/SpringMVC/" style="font-size: 16.25px;">SpringMVC</a> <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/Util/" style="font-size: 10px;">Util</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/idea/" style="font-size: 13.75px;">idea</a> <a href="/tags/java/" style="font-size: 18.75px;">java</a> <a href="/tags/markdown/" style="font-size: 11.25px;">markdown</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mysql/" style="font-size: 13.75px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/oracle/" style="font-size: 12.5px;">oracle</a> <a href="/tags/sql/" style="font-size: 17.5px;">sql</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/web/" style="font-size: 12.5px;">web</a> <a href="/tags/前端/" style="font-size: 11.25px;">前端</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/服务器软件/" style="font-size: 11.25px;">服务器软件</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a> <a href="/tags/研发工具/" style="font-size: 15px;">研发工具</a> <a href="/tags/缓存/" style="font-size: 17.5px;">缓存</a> <a href="/tags/自动配置/" style="font-size: 10px;">自动配置</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>

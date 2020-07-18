@@ -17,7 +17,7 @@
 <meta property="og:description" content="Redis-持久化之RDB（Redis DataBase）是什么RDB（Redis DataBase） 在指定的时间间隔内将内存中的数据集快照写入磁盘，也就是行话讲的Snapshot快照，它恢复时是将快照文件直接读到内存里。 Redis会单独创建（fork）一个子进程来进行持久化，会先将数据写入到一个临时文件中，待持久化过程都结束了，再用这个临时文件替换上次持久化好的文件。 整个过程中，主进程是不">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://ligangit.com/images/Redis/redis_conf.png">
-<meta property="og:updated_time" content="2020-07-16T08:10:28.560Z">
+<meta property="og:updated_time" content="2020-07-18T15:36:49.140Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redis-持久化之RDB">
 <meta name="twitter:description" content="Redis-持久化之RDB（Redis DataBase）是什么RDB（Redis DataBase） 在指定的时间间隔内将内存中的数据集快照写入磁盘，也就是行话讲的Snapshot快照，它恢复时是将快照文件直接读到内存里。 Redis会单独创建（fork）一个子进程来进行持久化，会先将数据写入到一个临时文件中，待持久化过程都结束了，再用这个临时文件替换上次持久化好的文件。 整个过程中，主进程是不">
@@ -154,8 +154,19 @@
 <p>整个过程中，主进程是不进行任何IO操作的，这就确保了极高的性能。</p>
 <p>如果需要进行大规模数据的恢复，且对数据恢复的完整性不是很敏感，那么RDB方式要比AOF方式更加的高效。RDB的缺点是最后一次持久化后的数据可能丢失。</p>
 <h2 id="Fork"><a href="#Fork" class="headerlink" title="Fork"></a>Fork</h2><p>fork的作用是复制一个与当前进程一样的进程。新进程的所有数据（变量、环境变量、程序计数器等）数值都和原进程一致，但是是一个全新的进程，并作为原进程的子进程。</p>
-<h2 id="备份文件信息"><a href="#备份文件信息" class="headerlink" title="备份文件信息"></a>备份文件信息</h2><p>Rdb保存的是dump.rdb文件</p>
-<p>保存路径：在redis的安装目录下</p>
+<h2 id="备份文件信息"><a href="#备份文件信息" class="headerlink" title="备份文件信息"></a>备份文件信息</h2><ol>
+<li>Rdb默认保存的是dump.rdb文件</li>
+<li>保存路径：<ul>
+<li>默认在redis的安装目录下</li>
+<li>config get dir 获取rdb文件保存目录</li>
+</ul>
+</li>
+<li>获取备份文件：<ul>
+<li>先通过config get dir  查询rdb文件目录</li>
+<li>将*.rdb的文件拷贝到别的地方</li>
+</ul>
+</li>
+</ol>
 <h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>配置位置：SNAPSHOTTING</p>
 <p><img src="/images/Redis/redis_conf.png" alt="SNAPSHOTTING"></p>
 <ol>
@@ -197,36 +208,52 @@
 </li>
 <li><p>dir</p>
 <ul>
-<li>目录</li>
+<li>目录（默认是执行redis启动命令时所在的目录），也是rdb文件保存目录</li>
 <li>config get dir 获取目录</li>
 </ul>
 </li>
 </ol>
-<h2 id="如何触发RDB快照"><a href="#如何触发RDB快照" class="headerlink" title="如何触发RDB快照"></a>如何触发RDB快照</h2><ol>
-<li>配置文件中默认的快照配置<ul>
-<li>冷拷贝后重新使用，可以cp dump.rdb dump_new.rdb</li>
+<h2 id="如何触发RDB快照（备份）"><a href="#如何触发RDB快照（备份）" class="headerlink" title="如何触发RDB快照（备份）"></a>如何触发RDB快照（备份）</h2><h3 id="触发RDB快照的方式"><a href="#触发RDB快照的方式" class="headerlink" title="触发RDB快照的方式"></a>触发RDB快照的方式</h3><ol>
+<li><p>触发配置文件中默认的快照配置，自动保存</p>
+<ul>
+<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">save 900 1</span><br><span class="line">save 300 10</span><br><span class="line">save 60 10000</span><br></pre></td></tr></table></figure>
+
+
+</li>
 </ul>
 </li>
-<li>命令save或者是bgsave<ul>
+</ol>
+<ol start="2">
+<li><p>手动保存快照：命令save或者是bgsave</p>
+<ul>
 <li>Save：save时只管保存，其他不管，全部阻塞。</li>
 <li>BGSAVE：Redis会在后台异步进行快照操作，快照同时还可以响应客户端请求。</li>
 <li>可以通过lastsave命令获取最后一次成功执行快照的时间。</li>
 </ul>
 </li>
-<li>执行flushall命令，也会产生dump.rdb文件，但里面是空的，无意义。</li>
+<li><p>执行flushall命令，也会产生dump.rdb文件，但里面是空的，无意义。</p>
+</li>
+<li><p>执行shutdown命令（正常关闭redis），也会产生dump.rdb文件，里面有数据。</p>
+</li>
 </ol>
-<h2 id="备份：save"><a href="#备份：save" class="headerlink" title="备份：save"></a>备份：save</h2><ul>
-<li><p>方式一：save 秒钟 写操作次数</p>
-<p>是1分钟内改了1万次  save 60 10000</p>
-<p>或5分钟内改了10次 save 300 10</p>
-<p>或15分钟内改了1次 save 900 1</p>
-</li>
-<li><p>方式二：禁用自动备份（立即备份）</p>
-<p>如果想禁用RDB持久化的策略，只要不设置任何save指令，或者给save传入一个空字符串参数也可以。</p>
-</li>
+<h3 id="备份（保存）策略（save）"><a href="#备份（保存）策略（save）" class="headerlink" title="备份（保存）策略（save）"></a>备份（保存）策略（save）</h3><ol>
+<li>方式一：save 秒钟 写操作次数<ul>
+<li>是1分钟内改了1万次  save 60 10000</li>
+<li>或5分钟内改了10次 save 300 10</li>
+<li>或15分钟内改了1次 save 900 1</li>
 </ul>
+</li>
+<li>方式二：禁用自动备份（立即备份）<ul>
+<li>如果想禁用RDB持久化的策略，只要不设置任何save指令，或者给save传入一个空字符串参数也可以。</li>
+</ul>
+</li>
+</ol>
+<h2 id="停止备份"><a href="#停止备份" class="headerlink" title="停止备份"></a>停止备份</h2><p>动态所有停止RDB保存规则的方法：redis-cli config set save “”</p>
 <h2 id="如何恢复"><a href="#如何恢复" class="headerlink" title="如何恢复"></a>如何恢复</h2><h3 id="正常恢复"><a href="#正常恢复" class="headerlink" title="正常恢复"></a>正常恢复</h3><ol>
-<li>将备份文件（dump.rdb）移动到redis安装目录并启动服务即可</li>
+<li>将备份文件（dump.rdb）移动到redis安装目录并启动服务即可<ul>
+<li>冷拷贝后重新使用，可以cp dump.rdb dump_new.rdb</li>
+</ul>
+</li>
 <li>config get dir获取目录</li>
 </ol>
 <h3 id="异常恢复"><a href="#异常恢复" class="headerlink" title="异常恢复"></a>异常恢复</h3><ol>
@@ -235,15 +262,21 @@
 <li>修复：redis-check-dump –fix进行恢复</li>
 <li>恢复：重启redis然后重新加载</li>
 </ol>
-<h2 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h2><ol>
+<h2 id="RDB优缺点"><a href="#RDB优缺点" class="headerlink" title="RDB优缺点"></a>RDB优缺点</h2><h3 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h3><ol>
 <li>适合大规模的数据恢复</li>
 <li>对数据完整性和一致性要求不高</li>
 </ol>
-<h2 id="劣势"><a href="#劣势" class="headerlink" title="劣势"></a>劣势</h2><ol>
+<h3 id="劣势"><a href="#劣势" class="headerlink" title="劣势"></a>劣势</h3><ol>
 <li>在一定间隔时间做一次备份，所以如果redis意外down掉的话，就会丢失最后一次快照后的所有修改；</li>
 <li>Fork的时候，内存中的数据被克隆了一份，大致2倍的膨胀性需要考虑。</li>
 </ol>
-<h2 id="如何停止"><a href="#如何停止" class="headerlink" title="如何停止"></a>如何停止</h2><p>动态所有停止RDB保存规则的方法：redis-cli config set save “”</p>
+<h2 id="同时开启两种持久化方式"><a href="#同时开启两种持久化方式" class="headerlink" title="同时开启两种持久化方式"></a>同时开启两种持久化方式</h2><p>在这种情况下，<strong>当redis重启的时候会优先载入AOF文件来恢复原始的数据</strong>。</p>
+<p>因为在通常情况下AOF文件保存的数据集要不RDB文件保存的数据集要完整。</p>
+<p>RDB的数据不实时，同时使用两者时服务器重启也只会找AOF文件。</p>
+<p><strong>那要不要只使用AOF呢？</strong></p>
+<p><strong>作者建议不要</strong>，</p>
+<p>因为RDB更适合用于备份数据库（AOF在不断变化不好备份），</p>
+<p>快速重启，而且不会有AOF可能潜在的BUG，留一个作为万一的手段。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>RDB持久化方式能够在指定的时间间隔能对你的数据进行快照存储。</p>
 <ul>
 <li>RDB是一个非常紧凑的文件；</li>
@@ -252,17 +285,10 @@
 <li>数据丢失风险大</li>
 <li>RDB需要经常fork子进程来保存数据集到硬盘上，当数据集比较大的时候，fork的过程是非常耗时的，可能会导致redis在一些毫秒级不能响应客户端请求。</li>
 </ul>
-<h2 id="同时开启两种持久化方式"><a href="#同时开启两种持久化方式" class="headerlink" title="同时开启两种持久化方式"></a>同时开启两种持久化方式</h2><p>在这种情况下，<strong>当redis重启的时候会优先载入AOF文件来恢复原始的数据</strong>。</p>
-<p>因为在通常情况下AOF文件保存的数据集要不RDB文件保存的数据集要完整。</p>
-<p>RDB的数据不实时，同时使用两者时服务器重启也只会找AOF文件。</p>
-<p><strong>那要不要只使用AOF呢？</strong></p>
-<p><strong>作者建议不要</strong>，</p>
-<p>因为RDB更适合用于备份数据库（AOF在不断变化不好备份），</p>
-<p>快速重启，而且不会有AOF可能潜在的BUG，留一个作为万一的手段。</p>
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2020年07月16日 16:10</p>
+        <p>最后更新： 2020年07月18日 23:36</p>
         <p>原始链接： <a class="post-url" href="/2020/07/15/Redis-持久化之RDB/" title="Redis-持久化之RDB">http://ligangit.com/2020/07/15/Redis-持久化之RDB/</a></p>
         <footer>
             <a href="http://ligangit.com">
@@ -384,7 +410,7 @@
 
     <aside class="post-toc-pos post-toc-top" id="post-toc">
         <nav class="post-toc-wrap">
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Redis-持久化之RDB（Redis-DataBase）"><span class="post-toc-text">Redis-持久化之RDB（Redis DataBase）</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#是什么"><span class="post-toc-text">是什么</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Fork"><span class="post-toc-text">Fork</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#备份文件信息"><span class="post-toc-text">备份文件信息</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#配置"><span class="post-toc-text">配置</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#如何触发RDB快照"><span class="post-toc-text">如何触发RDB快照</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#备份：save"><span class="post-toc-text">备份：save</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#如何恢复"><span class="post-toc-text">如何恢复</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#正常恢复"><span class="post-toc-text">正常恢复</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#异常恢复"><span class="post-toc-text">异常恢复</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#优势"><span class="post-toc-text">优势</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#劣势"><span class="post-toc-text">劣势</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#如何停止"><span class="post-toc-text">如何停止</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-text">总结</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#同时开启两种持久化方式"><span class="post-toc-text">同时开启两种持久化方式</span></a></li></ol></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Redis-持久化之RDB（Redis-DataBase）"><span class="post-toc-text">Redis-持久化之RDB（Redis DataBase）</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#是什么"><span class="post-toc-text">是什么</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#Fork"><span class="post-toc-text">Fork</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#备份文件信息"><span class="post-toc-text">备份文件信息</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#配置"><span class="post-toc-text">配置</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#如何触发RDB快照（备份）"><span class="post-toc-text">如何触发RDB快照（备份）</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#触发RDB快照的方式"><span class="post-toc-text">触发RDB快照的方式</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#备份（保存）策略（save）"><span class="post-toc-text">备份（保存）策略（save）</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#停止备份"><span class="post-toc-text">停止备份</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#如何恢复"><span class="post-toc-text">如何恢复</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#正常恢复"><span class="post-toc-text">正常恢复</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#异常恢复"><span class="post-toc-text">异常恢复</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#RDB优缺点"><span class="post-toc-text">RDB优缺点</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#优势"><span class="post-toc-text">优势</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#劣势"><span class="post-toc-text">劣势</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#同时开启两种持久化方式"><span class="post-toc-text">同时开启两种持久化方式</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#总结"><span class="post-toc-text">总结</span></a></li></ol></li></ol>
         </nav>
     </aside>
     
@@ -468,7 +494,7 @@
             <a class="category-link" href="/categories/Redis/">Redis</a><a class="category-link" href="/categories/Spring/">Spring</a><a class="category-link" href="/categories/SpringBoot/">SpringBoot</a><a class="category-link" href="/categories/java/">java</a><a class="category-link" href="/categories/sql/">sql</a><a class="category-link" href="/categories/前端/">前端</a><a class="category-link" href="/categories/博客/">博客</a><a class="category-link" href="/categories/服务器软件/">服务器软件</a><a class="category-link" href="/categories/研发工具/">研发工具</a>
         </div>
         <div id="sidebar-menu-box-tags">
-            <a href="/tags/Echarts/" style="font-size: 10px;">Echarts</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/JS/" style="font-size: 11.11px;">JS</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/NoSQL/" style="font-size: 14.44px;">NoSQL</a> <a href="/tags/Redis/" style="font-size: 13.33px;">Redis</a> <a href="/tags/Spring/" style="font-size: 20px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 14.44px;">SpringBoot</a> <a href="/tags/SpringMVC/" style="font-size: 16.67px;">SpringMVC</a> <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/Util/" style="font-size: 10px;">Util</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/idea/" style="font-size: 14.44px;">idea</a> <a href="/tags/java/" style="font-size: 18.89px;">java</a> <a href="/tags/markdown/" style="font-size: 11.11px;">markdown</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mysql/" style="font-size: 14.44px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/oracle/" style="font-size: 12.22px;">oracle</a> <a href="/tags/sql/" style="font-size: 17.78px;">sql</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/web/" style="font-size: 12.22px;">web</a> <a href="/tags/前端/" style="font-size: 11.11px;">前端</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/服务器软件/" style="font-size: 11.11px;">服务器软件</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a> <a href="/tags/研发工具/" style="font-size: 15.56px;">研发工具</a> <a href="/tags/缓存/" style="font-size: 13.33px;">缓存</a> <a href="/tags/自动配置/" style="font-size: 10px;">自动配置</a>
+            <a href="/tags/Echarts/" style="font-size: 10px;">Echarts</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/JS/" style="font-size: 11.25px;">JS</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/NoSQL/" style="font-size: 18.75px;">NoSQL</a> <a href="/tags/Redis/" style="font-size: 17.5px;">Redis</a> <a href="/tags/Spring/" style="font-size: 20px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 13.75px;">SpringBoot</a> <a href="/tags/SpringMVC/" style="font-size: 16.25px;">SpringMVC</a> <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/Util/" style="font-size: 10px;">Util</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/idea/" style="font-size: 13.75px;">idea</a> <a href="/tags/java/" style="font-size: 18.75px;">java</a> <a href="/tags/markdown/" style="font-size: 11.25px;">markdown</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mysql/" style="font-size: 13.75px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/oracle/" style="font-size: 12.5px;">oracle</a> <a href="/tags/sql/" style="font-size: 17.5px;">sql</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/web/" style="font-size: 12.5px;">web</a> <a href="/tags/前端/" style="font-size: 11.25px;">前端</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/服务器软件/" style="font-size: 11.25px;">服务器软件</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a> <a href="/tags/研发工具/" style="font-size: 15px;">研发工具</a> <a href="/tags/缓存/" style="font-size: 17.5px;">缓存</a> <a href="/tags/自动配置/" style="font-size: 10px;">自动配置</a>
         </div>
     </div>
     <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
@@ -501,7 +527,7 @@
     <div class="mobile-header-tag-container">
         <span class="title">Tags</span>
         <div id="mobile-header-container-tags">
-            <a href="/tags/Echarts/" style="font-size: 10px;">Echarts</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/JS/" style="font-size: 11.11px;">JS</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/NoSQL/" style="font-size: 14.44px;">NoSQL</a> <a href="/tags/Redis/" style="font-size: 13.33px;">Redis</a> <a href="/tags/Spring/" style="font-size: 20px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 14.44px;">SpringBoot</a> <a href="/tags/SpringMVC/" style="font-size: 16.67px;">SpringMVC</a> <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/Util/" style="font-size: 10px;">Util</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/idea/" style="font-size: 14.44px;">idea</a> <a href="/tags/java/" style="font-size: 18.89px;">java</a> <a href="/tags/markdown/" style="font-size: 11.11px;">markdown</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mysql/" style="font-size: 14.44px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/oracle/" style="font-size: 12.22px;">oracle</a> <a href="/tags/sql/" style="font-size: 17.78px;">sql</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/web/" style="font-size: 12.22px;">web</a> <a href="/tags/前端/" style="font-size: 11.11px;">前端</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/服务器软件/" style="font-size: 11.11px;">服务器软件</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a> <a href="/tags/研发工具/" style="font-size: 15.56px;">研发工具</a> <a href="/tags/缓存/" style="font-size: 13.33px;">缓存</a> <a href="/tags/自动配置/" style="font-size: 10px;">自动配置</a>
+            <a href="/tags/Echarts/" style="font-size: 10px;">Echarts</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/JS/" style="font-size: 11.25px;">JS</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/NoSQL/" style="font-size: 18.75px;">NoSQL</a> <a href="/tags/Redis/" style="font-size: 17.5px;">Redis</a> <a href="/tags/Spring/" style="font-size: 20px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 13.75px;">SpringBoot</a> <a href="/tags/SpringMVC/" style="font-size: 16.25px;">SpringMVC</a> <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/Util/" style="font-size: 10px;">Util</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/idea/" style="font-size: 13.75px;">idea</a> <a href="/tags/java/" style="font-size: 18.75px;">java</a> <a href="/tags/markdown/" style="font-size: 11.25px;">markdown</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mysql/" style="font-size: 13.75px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/oracle/" style="font-size: 12.5px;">oracle</a> <a href="/tags/sql/" style="font-size: 17.5px;">sql</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/web/" style="font-size: 12.5px;">web</a> <a href="/tags/前端/" style="font-size: 11.25px;">前端</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/服务器软件/" style="font-size: 11.25px;">服务器软件</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a> <a href="/tags/研发工具/" style="font-size: 15px;">研发工具</a> <a href="/tags/缓存/" style="font-size: 17.5px;">缓存</a> <a href="/tags/自动配置/" style="font-size: 10px;">自动配置</a>
         </div>
     </div>
 </div>
