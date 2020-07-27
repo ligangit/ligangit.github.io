@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>SpringBoot学习-日志 | ligangit</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="LiGang,Li Gang,ligangit">
+  
+  <meta name="description" content="SpringBoot学习-日志SLF4j使用1、如何在系统中使用SLF4j以后开发的时候，日志记录方法的调用，不应该来直接调用日志的实现类，而是调用日志抽象层里面的方法； 给系统里面导入slf4j的jar和logback的实现jar 123456789import org.slf4j.Logger;import org.slf4j.LoggerFactory;public class HelloW">
+<meta name="keywords" content="SpringBoot,日志">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringBoot学习-日志">
+<meta property="og:url" content="http://ligangit.com/2020/07/25/SpringBoot学习-日志/index.html">
+<meta property="og:site_name" content="ligangit">
+<meta property="og:description" content="SpringBoot学习-日志SLF4j使用1、如何在系统中使用SLF4j以后开发的时候，日志记录方法的调用，不应该来直接调用日志的实现类，而是调用日志抽象层里面的方法； 给系统里面导入slf4j的jar和logback的实现jar 123456789import org.slf4j.Logger;import org.slf4j.LoggerFactory;public class HelloW">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://ligangit.com/images/SpringBootStudy/log_slf4j.png">
+<meta property="og:image" content="http://ligangit.com/images/SpringBootStudy/log_slf4j2.png">
+<meta property="og:image" content="http://ligangit.com/images/SpringBootStudy/log_slf4j3.png">
+<meta property="og:updated_time" content="2020-07-27T03:25:59.221Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SpringBoot学习-日志">
+<meta name="twitter:description" content="SpringBoot学习-日志SLF4j使用1、如何在系统中使用SLF4j以后开发的时候，日志记录方法的调用，不应该来直接调用日志的实现类，而是调用日志抽象层里面的方法； 给系统里面导入slf4j的jar和logback的实现jar 123456789import org.slf4j.Logger;import org.slf4j.LoggerFactory;public class HelloW">
+<meta name="twitter:image" content="http://ligangit.com/images/SpringBootStudy/log_slf4j.png">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">Li Gang&#39;s blog</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="/">
+                        <i class="fa fa-home"></i>
+                        <span>主页</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>归档</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>关于</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/logo.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        Li Gang&#39;s blog
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        在码农的世界里挣扎的人
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="Li Gang" target="_blank" href="//ligangit.com">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/ligangit">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="联系QQ"  href="/">
+                            <i class="fa fa-qq fa-2x"></i></a>
+                    
+                        <a title="微信"  href="/">
+                            <i class="fa fa-weixin fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-SpringBoot学习-日志" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      SpringBoot学习-日志
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/SpringBoot/">SpringBoot</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2020-07-25
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <h1 id="SpringBoot学习-日志"><a href="#SpringBoot学习-日志" class="headerlink" title="SpringBoot学习-日志"></a>SpringBoot学习-日志</h1><h2 id="SLF4j使用"><a href="#SLF4j使用" class="headerlink" title="SLF4j使用"></a>SLF4j使用</h2><h3 id="1、如何在系统中使用SLF4j"><a href="#1、如何在系统中使用SLF4j" class="headerlink" title="1、如何在系统中使用SLF4j"></a>1、如何在系统中使用SLF4j</h3><p>以后开发的时候，日志记录方法的调用，不应该来直接调用日志的实现类，而是调用日志抽象层里面的方法；</p>
+<p>给系统里面导入slf4j的jar和logback的实现jar</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.slf4j.Logger;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorld</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    Logger logger = LoggerFactory.getLogger(HelloWorld.class);</span><br><span class="line">    logger.info(<span class="string">"Hello World"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>图示：</p>
+<p><img src="/images/SpringBootStudy/log_slf4j.png" alt="slf4j"></p>
+<p>每一个日志的实现框架都有自己的配置文件。使用slf4j以后，<strong>配置文件还是做成日志实现框架自己本身的配置文件</strong>；</p>
+<h3 id="2、统一日志记录"><a href="#2、统一日志记录" class="headerlink" title="2、统一日志记录"></a>2、统一日志记录</h3><p>a（slf4j+logback）：Spring（commons-logging）、Hibernate（jboss-logging）、Mybatis、xxx</p>
+<p>a系统使用slf4j+logback,但是使用了Spring框架、Hibernate框架、Mybatis框架等，日志框架不一样，此时需要统一日志记录。</p>
+<p>统一日志记录，即：使是别的框架和我一起统一使用slf4j进行输出？</p>
+<p><img src="/images/SpringBootStudy/log_slf4j2.png" alt="统一日志记录"></p>
+<p><strong>如何让系统中所有的日志都统一到slf4j：</strong></p>
+<ol>
+<li>==将系统中其他日志框架先排除出去；==</li>
+<li>==用中间包替换原有的日志框架；==</li>
+<li>==再导入slf4j其他的实现==</li>
+</ol>
+<h2 id="SpringBoot日志关系"><a href="#SpringBoot日志关系" class="headerlink" title="SpringBoot日志关系"></a>SpringBoot日志关系</h2><ol>
+<li><p>必备启动器starter</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.3.1.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">scope</span>&gt;</span>compile<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>SpringBoot使用它来做日志功能：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-logging<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.3.1.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">scope</span>&gt;</span>compile<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>底层依赖关系：</p>
+<p><img src="/images/SpringBootStudy/log_slf4j3.png" alt="底层依赖关系"></p>
+</li>
+<li><p>总结：</p>
+<ul>
+<li>SpringBoot底层使用slf4j+logback的方式进行日志记录；</li>
+<li>SpringBoot把其他的日志都替换成了slf4j；</li>
+<li>如果我们要引入其他框架，一定要把这个框架的默认日志依赖移除掉</li>
+</ul>
+</li>
+</ol>
+<p><strong>SpringBoot能自动适配所有的日志，而且底层使用slf4j+logback的方式记录日志，引入其他框架的时候，只需要把这个框架依赖的日志框架排除掉</strong></p>
+<h2 id="日志使用"><a href="#日志使用" class="headerlink" title="日志使用"></a>日志使用</h2><h3 id="默认配置"><a href="#默认配置" class="headerlink" title="默认配置"></a>默认配置</h3><p>SpringBoot默认帮我们配置好了日志；</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SpringbootDemo1ApplicationTests</span> </span>&#123;</span><br><span class="line">    <span class="comment">//日志记录器</span></span><br><span class="line">    Logger logger = LoggerFactory.getLogger(getClass());</span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testLogging</span><span class="params">()</span> </span>&#123;</span><br><span class="line"><span class="comment">//        System.out.println(person);</span></span><br><span class="line">        <span class="comment">//日志的级别，</span></span><br><span class="line">        <span class="comment">// 由低到高 trace&lt;debug&lt;info&lt;warn&lt;error</span></span><br><span class="line">        <span class="comment">//可以调整输出的日志级别，日志就只会在这个级别及以后的高级别生效</span></span><br><span class="line">        logger.trace(<span class="string">"这是trace日志..."</span>);</span><br><span class="line">        logger.debug(<span class="string">"这是debug日志..."</span>);</span><br><span class="line">        <span class="comment">//SpringBoot默认给我们使用的是info级别的，没有指定级别的就用SpringBoot默认规定的级别；</span></span><br><span class="line">        logger.info(<span class="string">"这是info日志..."</span>);</span><br><span class="line">        logger.warn(<span class="string">"这是warn日志..."</span>);</span><br><span class="line">        logger.error(<span class="string">"这是error日志..."</span>);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>SpringBoot修改日志的默认配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">logging.level.com.ligangit=trace</span><br><span class="line"></span><br><span class="line">logging.file.clean-history-on-start=false</span><br><span class="line">#不指定路径在当前项目下生成sprngboot.log日志</span><br><span class="line">#可以指定完整的路径</span><br><span class="line">#logging.file.name=D:/springbootlog/sprngboot.log</span><br><span class="line"></span><br><span class="line">#在指定路径下生成spring.log日志</span><br><span class="line">logging.file.path=D:/springbootlog</span><br><span class="line"></span><br><span class="line">#在控制台输出的日志的格式</span><br><span class="line">#logging.pattern.console=</span><br><span class="line">#指定文件中日志输出的格式</span><br><span class="line">#logging.pattern.file=</span><br></pre></td></tr></table></figure>
+
+<h3 id="指定配置"><a href="#指定配置" class="headerlink" title="指定配置"></a>指定配置</h3><p>给<strong>类路径</strong>下放上每个日志框架自己的配置文件即可；SpringBoot就不使用他默认配置的了。</p>
+<table>
+<thead>
+<tr>
+<th align="left">Logging System</th>
+<th align="left">Customization</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Logback</td>
+<td align="left"><code>logback-spring.xml</code>, <code>logback-spring.groovy</code>, <code>logback.xml</code>, or <code>logback.groovy</code></td>
+</tr>
+<tr>
+<td align="left">Log4j2</td>
+<td align="left"><code>log4j2-spring.xml</code> or <code>log4j2.xml</code></td>
+</tr>
+<tr>
+<td align="left">JDK (Java Util Logging)</td>
+<td align="left"><code>logging.properties</code></td>
+</tr>
+</tbody></table>
+<p>建议使用带<strong>-spring.xml</strong></p>
+<p>logback.xml：直接就被日志框架识别了</p>
+<p>logback-spring.xml：日志框架就不直接加载日志的配置项，由SpringBoot解析日志配置，可以使用SpringBoot的高级Profile功能</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">springProfile</span> <span class="attr">name</span>=<span class="string">"staging"</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- configuration to be enabled when the "staging" profile is active --&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 可以指定某段配置只在某个环境下生效 --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">springProfile</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="切换日志框架"><a href="#切换日志框架" class="headerlink" title="切换日志框架"></a>切换日志框架</h2><p>可以按照slf4j的日志适配图，进行相关的切换；</p>
+<h3 id="slf4j-log4j的方式："><a href="#slf4j-log4j的方式：" class="headerlink" title="slf4j+log4j的方式："></a>slf4j+log4j的方式：</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">exclusions</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>logback-classic<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>ch.qos.logback<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>log4j-to-slf4j<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.logging.log4j<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">exclusions</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.slf4j<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>slf4j-log4j12<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.0.0-alpha1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">scope</span>&gt;</span>test<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="切换为log4j2："><a href="#切换为log4j2：" class="headerlink" title="切换为log4j2："></a>切换为log4j2：</h3><ol>
+<li>把之前的spring-boot-starter-logging排除</li>
+<li>添加spring-boot-starter-log4j2</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">exclusions</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-logging<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">exclusions</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-log4j2<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2020年07月27日 11:25</p>
+        <p>原始链接： <a class="post-url" href="/2020/07/25/SpringBoot学习-日志/" title="SpringBoot学习-日志">http://ligangit.com/2020/07/25/SpringBoot学习-日志/</a></p>
+        <footer>
+            <a href="http://ligangit.com">
+                <img src="/images/logo.png" alt="Li Gang">
+                Li Gang
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://ligangit.com/2020/07/25/SpringBoot学习-日志/&title=《SpringBoot学习-日志》 — ligangit&pic=images/springboot.jpg" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://ligangit.com/2020/07/25/SpringBoot学习-日志/&title=《SpringBoot学习-日志》 — ligangit&source=在码农的世界里面默默的挣扎着" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://ligangit.com/2020/07/25/SpringBoot学习-日志/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《SpringBoot学习-日志》 — ligangit&url=http://ligangit.com/2020/07/25/SpringBoot学习-日志/&via=http://ligangit.com" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://ligangit.com/2020/07/25/SpringBoot学习-日志/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://ligangit.com/2020/07/25/SpringBoot学习-日志/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/SpringBoot/" class="color1">SpringBoot</a>
+      
+    <a href="/tags/日志/" class="color3">日志</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#SpringBoot学习-日志"><span class="post-toc-text">SpringBoot学习-日志</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#SLF4j使用"><span class="post-toc-text">SLF4j使用</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1、如何在系统中使用SLF4j"><span class="post-toc-text">1、如何在系统中使用SLF4j</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2、统一日志记录"><span class="post-toc-text">2、统一日志记录</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#SpringBoot日志关系"><span class="post-toc-text">SpringBoot日志关系</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#日志使用"><span class="post-toc-text">日志使用</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#默认配置"><span class="post-toc-text">默认配置</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#指定配置"><span class="post-toc-text">指定配置</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#切换日志框架"><span class="post-toc-text">切换日志框架</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#slf4j-log4j的方式："><span class="post-toc-text">slf4j+log4j的方式：</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#切换为log4j2："><span class="post-toc-text">切换为log4j2：</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+    <a href="/2020/07/27/SpringBoot学习-静态资源映射/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          SpringBoot学习-静态资源映射
+        
+      </span>
+    </a>
+  
+  
+    <a href="/2020/07/20/Redis-集群/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">Redis-集群</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2020 Li Gang<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "http://ligangit.com",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/Redis/">Redis</a><a class="category-link" href="/categories/Spring/">Spring</a><a class="category-link" href="/categories/SpringBoot/">SpringBoot</a><a class="category-link" href="/categories/java/">java</a><a class="category-link" href="/categories/sql/">sql</a><a class="category-link" href="/categories/前端/">前端</a><a class="category-link" href="/categories/博客/">博客</a><a class="category-link" href="/categories/服务器软件/">服务器软件</a><a class="category-link" href="/categories/研发工具/">研发工具</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/Echarts/" style="font-size: 10px;">Echarts</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/JS/" style="font-size: 11px;">JS</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/NoSQL/" style="font-size: 19px;">NoSQL</a> <a href="/tags/Redis/" style="font-size: 18px;">Redis</a> <a href="/tags/Spring/" style="font-size: 20px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 14px;">SpringBoot</a> <a href="/tags/SpringMVC/" style="font-size: 16px;">SpringMVC</a> <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/Util/" style="font-size: 10px;">Util</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/idea/" style="font-size: 13px;">idea</a> <a href="/tags/java/" style="font-size: 18px;">java</a> <a href="/tags/markdown/" style="font-size: 11px;">markdown</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mysql/" style="font-size: 13px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/oracle/" style="font-size: 12px;">oracle</a> <a href="/tags/sql/" style="font-size: 17px;">sql</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/web/" style="font-size: 12px;">web</a> <a href="/tags/前端/" style="font-size: 11px;">前端</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/日志/" style="font-size: 10px;">日志</a> <a href="/tags/服务器软件/" style="font-size: 11px;">服务器软件</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a> <a href="/tags/研发工具/" style="font-size: 15px;">研发工具</a> <a href="/tags/缓存/" style="font-size: 18px;">缓存</a> <a href="/tags/自动配置/" style="font-size: 10px;">自动配置</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="/">
+                    <i class="fa fa-home"></i><span>主页</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>归档</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>关于</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/Echarts/" style="font-size: 10px;">Echarts</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/JS/" style="font-size: 11px;">JS</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/NoSQL/" style="font-size: 19px;">NoSQL</a> <a href="/tags/Redis/" style="font-size: 18px;">Redis</a> <a href="/tags/Spring/" style="font-size: 20px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 14px;">SpringBoot</a> <a href="/tags/SpringMVC/" style="font-size: 16px;">SpringMVC</a> <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/Util/" style="font-size: 10px;">Util</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/idea/" style="font-size: 13px;">idea</a> <a href="/tags/java/" style="font-size: 18px;">java</a> <a href="/tags/markdown/" style="font-size: 11px;">markdown</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mysql/" style="font-size: 13px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/oracle/" style="font-size: 12px;">oracle</a> <a href="/tags/sql/" style="font-size: 17px;">sql</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/web/" style="font-size: 12px;">web</a> <a href="/tags/前端/" style="font-size: 11px;">前端</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/日志/" style="font-size: 10px;">日志</a> <a href="/tags/服务器软件/" style="font-size: 11px;">服务器软件</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a> <a href="/tags/研发工具/" style="font-size: 15px;">研发工具</a> <a href="/tags/缓存/" style="font-size: 18px;">缓存</a> <a href="/tags/自动配置/" style="font-size: 10px;">自动配置</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>

@@ -8,18 +8,18 @@
   
     <meta name="keywords" content="LiGang,Li Gang,ligangit">
   
-  <meta name="description" content="Redis-主从复制是什么Redis的复制（Master/Slave） 也就是我们所说的主从复制，主机数据更新后根据配置和策略，自动同步到备机的master/slave机制，Master以写为主，Slave以读为主。 主要作用：  读写分离 容灾恢复  使用步骤 配从（库）不配主（库）  从库配置：slaveof 主库IP 主库端口  每次与master断开之后，都需要重新连接，除非你配置进red">
+  <meta name="description" content="Redis-主从复制是什么Redis的复制（Master/Slave） 也就是我们所说的主从复制，主机数据更新后根据配置和策略，自动同步到备机的master/slave机制，Master以写为主，Slave以读为主。 主要作用：  读写分离，性能扩展 容灾恢复  使用步骤 配从（库）不配主（库）  从库配置：slaveof 主库IP 主库端口  每次与master断开之后，都需要重新连接，除非你配">
 <meta name="keywords" content="NoSQL,Redis,缓存">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Redis-主从复制">
 <meta property="og:url" content="http://ligangit.com/2020/07/16/Redis-主从复制/index.html">
 <meta property="og:site_name" content="ligangit">
-<meta property="og:description" content="Redis-主从复制是什么Redis的复制（Master/Slave） 也就是我们所说的主从复制，主机数据更新后根据配置和策略，自动同步到备机的master/slave机制，Master以写为主，Slave以读为主。 主要作用：  读写分离 容灾恢复  使用步骤 配从（库）不配主（库）  从库配置：slaveof 主库IP 主库端口  每次与master断开之后，都需要重新连接，除非你配置进red">
+<meta property="og:description" content="Redis-主从复制是什么Redis的复制（Master/Slave） 也就是我们所说的主从复制，主机数据更新后根据配置和策略，自动同步到备机的master/slave机制，Master以写为主，Slave以读为主。 主要作用：  读写分离，性能扩展 容灾恢复  使用步骤 配从（库）不配主（库）  从库配置：slaveof 主库IP 主库端口  每次与master断开之后，都需要重新连接，除非你配">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-07-17T03:22:04.226Z">
+<meta property="og:updated_time" content="2020-07-19T15:23:36.273Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redis-主从复制">
-<meta name="twitter:description" content="Redis-主从复制是什么Redis的复制（Master/Slave） 也就是我们所说的主从复制，主机数据更新后根据配置和策略，自动同步到备机的master/slave机制，Master以写为主，Slave以读为主。 主要作用：  读写分离 容灾恢复  使用步骤 配从（库）不配主（库）  从库配置：slaveof 主库IP 主库端口  每次与master断开之后，都需要重新连接，除非你配置进red">
+<meta name="twitter:description" content="Redis-主从复制是什么Redis的复制（Master/Slave） 也就是我们所说的主从复制，主机数据更新后根据配置和策略，自动同步到备机的master/slave机制，Master以写为主，Slave以读为主。 主要作用：  读写分离，性能扩展 容灾恢复  使用步骤 配从（库）不配主（库）  从库配置：slaveof 主库IP 主库端口  每次与master断开之后，都需要重新连接，除非你配">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -147,10 +147,10 @@
       
             
             <h1 id="Redis-主从复制"><a href="#Redis-主从复制" class="headerlink" title="Redis-主从复制"></a>Redis-主从复制</h1><h2 id="是什么"><a href="#是什么" class="headerlink" title="是什么"></a>是什么</h2><p><strong>Redis的复制（Master/Slave）</strong></p>
-<p>也就是我们所说的主从复制，主机数据更新后根据配置和策略，自动同步到备机的master/slave机制，Master以写为主，Slave以读为主。</p>
+<p>也就是我们所说的主从复制，主机数据更新后根据配置和策略，自动同步到备机的master/slave机制，<strong>Master以写为主，Slave以读为主</strong>。</p>
 <p>主要作用：</p>
 <ol>
-<li>读写分离</li>
+<li>读写分离，性能扩展</li>
 <li>容灾恢复</li>
 </ol>
 <h2 id="使用步骤"><a href="#使用步骤" class="headerlink" title="使用步骤"></a>使用步骤</h2><ol>
@@ -167,10 +167,11 @@
 <ul>
 <li>拷贝多个redis.conf文件</li>
 <li>开启daemonize yes</li>
-<li>Pid文件名字</li>
-<li>指定端口</li>
+<li>Pid文件名字pidfile</li>
+<li>指定端口port</li>
 <li>log文件名字</li>
-<li>dump.rdb名字</li>
+<li>dump.rdb名字dbfilenme</li>
+<li>appendonly 关掉或者名字</li>
 </ul>
 </li>
 <li><p>常用3招</p>
@@ -183,9 +184,10 @@
 </ul>
 </li>
 <li>薪火相传<ul>
-<li>上一个slave可以是下一个slave的master，slave同样可以接收其他slaves的连接和同步请求，那么该slave作为了链条中下一个的master，可以有效减轻master的写压力</li>
+<li>上一个slave可以是下一个slave的master，slave同样可以接收其他slaves的连接和同步请求，那么该slave作为了链条中下一个的master，可以有效减轻master的写压力，去中心化降低风险</li>
 <li>中途变更转向：会清除之前的数据，重新建立拷贝最新的</li>
 <li>slaveof 新主库IP 新主库端口</li>
+<li>风险是一旦某个salve宕机，那么它的slave都没法备份</li>
 </ul>
 </li>
 <li>反客为主<ul>
@@ -195,8 +197,41 @@
 </ul>
 </li>
 </ol>
+<h2 id="需要注意的问题"><a href="#需要注意的问题" class="headerlink" title="需要注意的问题"></a>需要注意的问题</h2><ul>
+<li><p>Q：</p>
+<p>切入点问题？slave1、slave2是从头开始复制还是从切入点开始复制？比如从k4进来，那之前的k1、 k2、k3是否也可以复制？</p>
+</li>
+<li><p>A：</p>
+<p>从头开始复制，不管什么时候给主服务器配置了一台从服务器，从服务器都要和主服务器数据保持一致。</p>
+</li>
+<li><p>Q：</p>
+<p>从服务器是否可以写？set可否？</p>
+</li>
+<li><p>A：</p>
+<p>不能。</p>
+</li>
+<li><p>Q：</p>
+<p>主机shutdown之后情况如何？从机上位还是原地待命？</p>
+</li>
+<li><p>A：</p>
+<p>如果没有配置哨兵模式，那么就是原地待命；</p>
+<p>如果配置了哨兵模式，那么从机中有一台自动上位。</p>
+</li>
+<li><p>Q：</p>
+<p>主机又回来后，主机新增记录，从机是否还能顺利复制？</p>
+</li>
+<li><p>A：</p>
+<p>能，一定是主从复制，数据保持一致。</p>
+</li>
+<li><p>Q：</p>
+<p>其中一台从机down后情况如何？依照原有它能根上大部队吗？</p>
+</li>
+<li><p>A：</p>
+<p>不管什么时候，从服务器都要和主服务器数据保持一致。</p>
+</li>
+</ul>
 <h2 id="复制原理"><a href="#复制原理" class="headerlink" title="复制原理"></a>复制原理</h2><ol>
-<li>slave启动成功连接master后会发送一个sync命令</li>
+<li>slave启动成功连接master后，会给master发送一个sync命令</li>
 <li>master接到命令启动后台的存盘进程，同时收集所有接收到的用于修改数据集命令，在后台进程执行完毕之后，master将传送整个数据文件到slave，以完成一次完全同步</li>
 <li>全量复制：而slave服务在接收到数据库文件数据后，将其存盘并加载到内存中</li>
 <li>增量复制：master继续将新的所有收集到的修改命令依次传给slave，完成同步</li>
@@ -204,11 +239,11 @@
 </ol>
 <h2 id="哨兵模式（sentinel）"><a href="#哨兵模式（sentinel）" class="headerlink" title="哨兵模式（sentinel）"></a>哨兵模式（sentinel）</h2><h3 id="是什么-1"><a href="#是什么-1" class="headerlink" title="是什么"></a>是什么</h3><p>反客为主的自动版，能够后台监控主机是否故障，如果故障了根据投票数自动将从数据库转换为主库</p>
 <h3 id="使用步骤-1"><a href="#使用步骤-1" class="headerlink" title="使用步骤"></a>使用步骤</h3><ol>
-<li>调整结构，6379带着80、81</li>
-<li>自定义的redis配置文件目录中新建<strong>sentinel.conf</strong>文件，<strong>名字绝对不能错</strong></li>
+<li>调整结构，6379带着80、81，即调整为一主二仆模式</li>
+<li>自定义的redis配置文件目录中，新建<strong>sentinel.conf</strong>文件，<strong>名字绝对不能错</strong></li>
 <li>配置哨兵，填写内容<ul>
 <li>sentinel monitor 被监控主机名字（自己起的名字） 127.0.0.1 6379 1</li>
-<li>上面最后一个数字1，代表只有一个或一个以上的哨兵认为主服务器不可用的时候，才会进行 <strong>故障切换（failover）</strong>操作</li>
+<li>上面最后一个数字1，代表只有一个或一个以上的哨兵认为主服务器不可用的时候，主服务器才算不可用，才会进行 <strong>故障切换（failover）</strong>操作</li>
 </ul>
 </li>
 <li>启动哨兵<ul>
@@ -217,7 +252,8 @@
 <li>windows启动：redis-server D:/redismy/sentinel.conf –sentinel</li>
 </ul>
 </li>
-<li>正常主从演示</li>
+</ol>
+<h3 id="故障修复"><a href="#故障修复" class="headerlink" title="故障修复"></a>故障修复</h3><ol>
 <li>原有的master挂了</li>
 <li>投票新选</li>
 <li>重新主从继续开工，info replication查看</li>
@@ -234,7 +270,7 @@
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2020年07月17日 11:22</p>
+        <p>最后更新： 2020年07月19日 23:23</p>
         <p>原始链接： <a class="post-url" href="/2020/07/16/Redis-主从复制/" title="Redis-主从复制">http://ligangit.com/2020/07/16/Redis-主从复制/</a></p>
         <footer>
             <a href="http://ligangit.com">
@@ -356,7 +392,7 @@
 
     <aside class="post-toc-pos post-toc-top" id="post-toc">
         <nav class="post-toc-wrap">
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Redis-主从复制"><span class="post-toc-text">Redis-主从复制</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#是什么"><span class="post-toc-text">是什么</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用步骤"><span class="post-toc-text">使用步骤</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#复制原理"><span class="post-toc-text">复制原理</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#哨兵模式（sentinel）"><span class="post-toc-text">哨兵模式（sentinel）</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#是什么-1"><span class="post-toc-text">是什么</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#使用步骤-1"><span class="post-toc-text">使用步骤</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一组sentinel能同时监控多个master"><span class="post-toc-text">一组sentinel能同时监控多个master</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#复制的缺点"><span class="post-toc-text">复制的缺点</span></a></li></ol></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#Redis-主从复制"><span class="post-toc-text">Redis-主从复制</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#是什么"><span class="post-toc-text">是什么</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用步骤"><span class="post-toc-text">使用步骤</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#需要注意的问题"><span class="post-toc-text">需要注意的问题</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#复制原理"><span class="post-toc-text">复制原理</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#哨兵模式（sentinel）"><span class="post-toc-text">哨兵模式（sentinel）</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#是什么-1"><span class="post-toc-text">是什么</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#使用步骤-1"><span class="post-toc-text">使用步骤</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#故障修复"><span class="post-toc-text">故障修复</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一组sentinel能同时监控多个master"><span class="post-toc-text">一组sentinel能同时监控多个master</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#复制的缺点"><span class="post-toc-text">复制的缺点</span></a></li></ol></li></ol>
         </nav>
     </aside>
     
@@ -440,7 +476,7 @@
             <a class="category-link" href="/categories/Redis/">Redis</a><a class="category-link" href="/categories/Spring/">Spring</a><a class="category-link" href="/categories/SpringBoot/">SpringBoot</a><a class="category-link" href="/categories/java/">java</a><a class="category-link" href="/categories/sql/">sql</a><a class="category-link" href="/categories/前端/">前端</a><a class="category-link" href="/categories/博客/">博客</a><a class="category-link" href="/categories/服务器软件/">服务器软件</a><a class="category-link" href="/categories/研发工具/">研发工具</a>
         </div>
         <div id="sidebar-menu-box-tags">
-            <a href="/tags/Echarts/" style="font-size: 10px;">Echarts</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/JS/" style="font-size: 11.25px;">JS</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/NoSQL/" style="font-size: 18.75px;">NoSQL</a> <a href="/tags/Redis/" style="font-size: 17.5px;">Redis</a> <a href="/tags/Spring/" style="font-size: 20px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 13.75px;">SpringBoot</a> <a href="/tags/SpringMVC/" style="font-size: 16.25px;">SpringMVC</a> <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/Util/" style="font-size: 10px;">Util</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/idea/" style="font-size: 13.75px;">idea</a> <a href="/tags/java/" style="font-size: 18.75px;">java</a> <a href="/tags/markdown/" style="font-size: 11.25px;">markdown</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mysql/" style="font-size: 13.75px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/oracle/" style="font-size: 12.5px;">oracle</a> <a href="/tags/sql/" style="font-size: 17.5px;">sql</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/web/" style="font-size: 12.5px;">web</a> <a href="/tags/前端/" style="font-size: 11.25px;">前端</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/服务器软件/" style="font-size: 11.25px;">服务器软件</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a> <a href="/tags/研发工具/" style="font-size: 15px;">研发工具</a> <a href="/tags/缓存/" style="font-size: 17.5px;">缓存</a> <a href="/tags/自动配置/" style="font-size: 10px;">自动配置</a>
+            <a href="/tags/Echarts/" style="font-size: 10px;">Echarts</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/JS/" style="font-size: 11px;">JS</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/NoSQL/" style="font-size: 19px;">NoSQL</a> <a href="/tags/Redis/" style="font-size: 18px;">Redis</a> <a href="/tags/Spring/" style="font-size: 20px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 14px;">SpringBoot</a> <a href="/tags/SpringMVC/" style="font-size: 16px;">SpringMVC</a> <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/Util/" style="font-size: 10px;">Util</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/idea/" style="font-size: 13px;">idea</a> <a href="/tags/java/" style="font-size: 18px;">java</a> <a href="/tags/markdown/" style="font-size: 11px;">markdown</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mysql/" style="font-size: 13px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/oracle/" style="font-size: 12px;">oracle</a> <a href="/tags/sql/" style="font-size: 17px;">sql</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/web/" style="font-size: 12px;">web</a> <a href="/tags/前端/" style="font-size: 11px;">前端</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/日志/" style="font-size: 10px;">日志</a> <a href="/tags/服务器软件/" style="font-size: 11px;">服务器软件</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a> <a href="/tags/研发工具/" style="font-size: 15px;">研发工具</a> <a href="/tags/缓存/" style="font-size: 18px;">缓存</a> <a href="/tags/自动配置/" style="font-size: 10px;">自动配置</a>
         </div>
     </div>
     <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
@@ -473,7 +509,7 @@
     <div class="mobile-header-tag-container">
         <span class="title">Tags</span>
         <div id="mobile-header-container-tags">
-            <a href="/tags/Echarts/" style="font-size: 10px;">Echarts</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/JS/" style="font-size: 11.25px;">JS</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/NoSQL/" style="font-size: 18.75px;">NoSQL</a> <a href="/tags/Redis/" style="font-size: 17.5px;">Redis</a> <a href="/tags/Spring/" style="font-size: 20px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 13.75px;">SpringBoot</a> <a href="/tags/SpringMVC/" style="font-size: 16.25px;">SpringMVC</a> <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/Util/" style="font-size: 10px;">Util</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/idea/" style="font-size: 13.75px;">idea</a> <a href="/tags/java/" style="font-size: 18.75px;">java</a> <a href="/tags/markdown/" style="font-size: 11.25px;">markdown</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mysql/" style="font-size: 13.75px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/oracle/" style="font-size: 12.5px;">oracle</a> <a href="/tags/sql/" style="font-size: 17.5px;">sql</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/web/" style="font-size: 12.5px;">web</a> <a href="/tags/前端/" style="font-size: 11.25px;">前端</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/服务器软件/" style="font-size: 11.25px;">服务器软件</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a> <a href="/tags/研发工具/" style="font-size: 15px;">研发工具</a> <a href="/tags/缓存/" style="font-size: 17.5px;">缓存</a> <a href="/tags/自动配置/" style="font-size: 10px;">自动配置</a>
+            <a href="/tags/Echarts/" style="font-size: 10px;">Echarts</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/JS/" style="font-size: 11px;">JS</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/NoSQL/" style="font-size: 19px;">NoSQL</a> <a href="/tags/Redis/" style="font-size: 18px;">Redis</a> <a href="/tags/Spring/" style="font-size: 20px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 14px;">SpringBoot</a> <a href="/tags/SpringMVC/" style="font-size: 16px;">SpringMVC</a> <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/Util/" style="font-size: 10px;">Util</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/idea/" style="font-size: 13px;">idea</a> <a href="/tags/java/" style="font-size: 18px;">java</a> <a href="/tags/markdown/" style="font-size: 11px;">markdown</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mysql/" style="font-size: 13px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/oracle/" style="font-size: 12px;">oracle</a> <a href="/tags/sql/" style="font-size: 17px;">sql</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/web/" style="font-size: 12px;">web</a> <a href="/tags/前端/" style="font-size: 11px;">前端</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/日志/" style="font-size: 10px;">日志</a> <a href="/tags/服务器软件/" style="font-size: 11px;">服务器软件</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a> <a href="/tags/研发工具/" style="font-size: 15px;">研发工具</a> <a href="/tags/缓存/" style="font-size: 18px;">缓存</a> <a href="/tags/自动配置/" style="font-size: 10px;">自动配置</a>
         </div>
     </div>
 </div>

@@ -16,10 +16,12 @@
 <meta property="og:site_name" content="ligangit">
 <meta property="og:description" content="SpringBoot学习-配置文件和注解1、配置文件SpringBoot使用一个全局的配置文件，配置文件名是固定的：  application.properties application.yml  配置文件的作用：修改SpringBoot自动配置的默认值；SpringBoot在底层都给我们自动配置好； YAML( YAML Ain’t a Markup Language ) ​">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-07-18T16:03:35.463Z">
+<meta property="og:image" content="http://ligangit.com/images/SpringBootStudy/config_con1.png">
+<meta property="og:updated_time" content="2020-07-25T07:22:19.346Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringBoot学习-配置文件">
 <meta name="twitter:description" content="SpringBoot学习-配置文件和注解1、配置文件SpringBoot使用一个全局的配置文件，配置文件名是固定的：  application.properties application.yml  配置文件的作用：修改SpringBoot自动配置的默认值；SpringBoot在底层都给我们自动配置好； YAML( YAML Ain’t a Markup Language ) ​">
+<meta name="twitter:image" content="http://ligangit.com/images/SpringBootStudy/config_con1.png">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -164,7 +166,7 @@
 <p>​        XML：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">server</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">port</span>&gt;</span>8081<span class="tag">&lt;/<span class="name">port</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">server</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="2、YAML语法"><a href="#2、YAML语法" class="headerlink" title="2、YAML语法"></a>2、YAML语法</h2><h3 id="1、基本语法"><a href="#1、基本语法" class="headerlink" title="1、基本语法"></a>1、基本语法</h3><p>​    k:[空格]v 表示一对键值对（空格必须有）；</p>
+<h2 id="2、YAML语法"><a href="#2、YAML语法" class="headerlink" title="2、YAML语法"></a>2、YAML语法</h2><h3 id="1、基本语法"><a href="#1、基本语法" class="headerlink" title="1、基本语法"></a>1、基本语法</h3><p>​    <strong>k:[空格]v 表示一对键值对（空格必须有）</strong>；</p>
 <p>​    以空格的缩进来控制层级关系；只要是左对齐的一列数据，都是同一个层级的;</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line">	<span class="attr">port:</span> <span class="number">8081</span></span><br><span class="line">	<span class="attr">path:</span> <span class="string">/hello</span></span><br></pre></td></tr></table></figure>
 
@@ -172,23 +174,23 @@
 <h3 id="2、值的写法"><a href="#2、值的写法" class="headerlink" title="2、值的写法"></a>2、值的写法</h3><ol>
 <li><p>字面量： 普通的值（数字，字符串，布尔）</p>
 <p>k: v ：字面直接来写：</p>
-<p>​        字符串默认不用加上单引号或者双引号；</p>
+<p>​        <strong>字符串默认不用加上单引号或者双引号</strong>；</p>
 <p>​        “”：双引号；不会转义字符串里面的特殊字符；特殊字符会作为本身想表示的意思</p>
 <p>​                name: “zhangsan \n lisi” ：输出：zhangsan  换行  lisi</p>
 <p>​        ‘’：单引号；会转义特殊字符，特殊字符最终只是一个普通的字符数据</p>
 <p>​                name: ‘zhangsan \n lisi’：输出：zhangsan \n lisi</p>
 </li>
 <li><p>对象、Map（属性值）（键值对）：</p>
-<p>k: v ：在下一行来写对象的属性和值的关系；注意缩进</p>
+<p>k: v ：在下一行来写对象的属性和值的关系；<strong>注意缩进</strong></p>
 <p>​        对象还是k: v的方式</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">friends:</span></span><br><span class="line">	<span class="attr">lastName:</span> <span class="string">zhangsan</span></span><br><span class="line">	<span class="attr">age:</span> <span class="number">20</span></span><br></pre></td></tr></table></figure>
 
 <p>行内写法</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">friends:</span> <span class="string">&#123;lastName:</span> <span class="string">zhangsan,age:</span> <span class="number">18</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">friends:</span> <span class="string">&#123;lastName:</span> <span class="string">zhangsan,age:</span> <span class="number">18</span><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>数组（List、Set）</p>
 <p>用- 值表示数组中的一个元素</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">pets:</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">cat</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">dog</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">pig</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">pets:</span></span><br><span class="line"><span class="bullet"> -</span> <span class="string">cat</span></span><br><span class="line"><span class="bullet"> -</span> <span class="string">dog</span></span><br><span class="line"><span class="bullet"> -</span> <span class="string">pig</span></span><br></pre></td></tr></table></figure>
 
 <p>行内写法</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">pets:</span> <span class="string">[cat,dog,pig]</span></span><br></pre></td></tr></table></figure>
@@ -252,11 +254,11 @@
 <p><strong>@ConfigurationProperties(prefix = “person”)默认从全局配置文件中获取</strong>。</p>
 <h2 id="5、配置文件注入值数据校验"><a href="#5、配置文件注入值数据校验" class="headerlink" title="5、配置文件注入值数据校验"></a>5、配置文件注入值数据校验</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@ConfigurationProperties</span>(prefix = <span class="string">"person"</span>)</span><br><span class="line"><span class="meta">@Validated</span> <span class="comment">//添加数据校验</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Email</span> <span class="comment">//lastName必须是邮箱格式 （@ConfigurationProperties才支持）</span></span><br><span class="line"><span class="comment">//    @Value("$&#123;person.last-name&#125;") //支持</span></span><br><span class="line"><span class="comment">//    @Value("$&#123;person.lastName&#125;") //不支持（-n替换为N）</span></span><br><span class="line">    <span class="keyword">private</span> String lastName;</span><br><span class="line"><span class="comment">//    @Value("#&#123;11*2&#125;")</span></span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line"><span class="comment">//    @Value("true")</span></span><br><span class="line">    <span class="keyword">private</span> Boolean boss;</span><br><span class="line">    <span class="keyword">private</span> Date birth;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Map&lt;String,Object&gt; maps;</span><br><span class="line">    <span class="keyword">private</span> List&lt;Object&gt; lists;</span><br><span class="line">    <span class="keyword">private</span> Dog dog;</span><br></pre></td></tr></table></figure>
 
-<h2 id="6、-PropertySource和-ImportResource"><a href="#6、-PropertySource和-ImportResource" class="headerlink" title="6、@PropertySource和@ImportResource"></a>6、@PropertySource和@ImportResource</h2><p>​    <strong>@PropertySource</strong>：加载指定的配置文件；</p>
+<h2 id="6、-PropertySource和-ImportResource"><a href="#6、-PropertySource和-ImportResource" class="headerlink" title="6、@PropertySource和@ImportResource"></a>6、@PropertySource和@ImportResource</h2><h3 id="PropertySource"><a href="#PropertySource" class="headerlink" title="@PropertySource"></a>@PropertySource</h3><p>​    <strong>@PropertySource</strong>：加载指定的配置文件；</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/* 将配置文件中配置的每一个属性的值，映射到组件中</span></span><br><span class="line"><span class="comment">*   @ConfigurationProperties：告诉SpringBoot将本类中的所有属性和配置文件中相关的配置进行绑定</span></span><br><span class="line"><span class="comment">*       prefix = "person" ：配置文件中哪个下面的所有属性进行一一映射</span></span><br><span class="line"><span class="comment">*    只有这个组件是容器中的组件，才能还用容器@ConfigurationProperties提供的功能</span></span><br><span class="line"><span class="comment">*    @ConfigurationProperties(prefix = "person")默认从全局配置文件中获取</span></span><br><span class="line"><span class="comment">* */</span></span><br><span class="line"><span class="meta">@PropertySource</span>(value = &#123;<span class="string">"classpath:person.properties"</span>&#125;)</span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@ConfigurationProperties</span>(prefix = <span class="string">"person"</span>)</span><br><span class="line"><span class="comment">//@Validated //添加数据校验</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    <span class="comment">//    @Email //lastName必须是邮箱格式 （@ConfigurationProperties才支持）</span></span><br><span class="line"><span class="comment">//    @Value("$&#123;person.last-name&#125;")</span></span><br><span class="line"><span class="comment">//    @Value("$&#123;person.lastName&#125;") //（不支持-n替换为N）</span></span><br><span class="line">    <span class="keyword">private</span> String lastName;</span><br><span class="line"><span class="comment">//    @Value("#&#123;11*2&#125;")</span></span><br><span class="line">    <span class="keyword">private</span> Integer age;</span><br><span class="line"><span class="comment">//    @Value("true")</span></span><br><span class="line">    <span class="keyword">private</span> Boolean boss;</span><br></pre></td></tr></table></figure>
 
-<p>​    <strong>@ImportResource</strong>：导入Spring的配置文件，让配置文件里面的内容生效；</p>
-<p>Spring Boot里面，没有Spring的配置文件，我们自己编写的配置文件，也不能自动识别；想让Spring的配置文件生效，加载进来；<strong>@ImportResource</strong>标注在一个配置类上；</p>
+<h3 id="ImportResource"><a href="#ImportResource" class="headerlink" title="@ImportResource"></a>@ImportResource</h3><p>​    <strong>@ImportResource</strong>：导入Spring的配置文件，让配置文件里面的内容生效；</p>
+<p>Spring Boot里面，没有Spring的配置文件，我们自己编写的配置文件，也不能自动识别；想让Spring的配置文件生效，加载进来；需要把<strong>@ImportResource</strong>标注在一个配置类上；</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Spring的配置文件，让其生效</span></span><br><span class="line"><span class="meta">@ImportResource</span>(locations = &#123;<span class="string">"classpath:bean.xml"</span>&#125;)</span><br></pre></td></tr></table></figure>
 
 <p>​    现在不在编写Spring的配置文件</p>
@@ -267,6 +269,8 @@
 <li><p>配置类====Spring配置文件</p>
 </li>
 <li><p>使用@Bean给容器中添加组件</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Configuration</span> 指明当前类是一个配置类，就是来替代之前的Spring配置文件</span></span><br><span class="line"><span class="comment"> * 在配置文件中使用&lt;bean&gt;&lt;/bean&gt;标签添加组件</span></span><br><span class="line"><span class="comment"> * 现在使用<span class="doctag">@Bean</span>给容器中添加组件</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyAppConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//将方法的返回值添加到容器中，容器中这个组件默认的id就是方法名</span></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> HelloService <span class="title">helloService</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"配置类中@Bean给容器中添加组件了。。。"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> HelloService();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 </li>
 </ol>
 <h2 id="7、配置文件中的占位符"><a href="#7、配置文件中的占位符" class="headerlink" title="7、配置文件中的占位符"></a>7、配置文件中的占位符</h2><ol>
@@ -275,45 +279,69 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$&#123;random.value&#125;、$&#123;random.int&#125;、$&#123;random.long&#125;</span><br><span class="line">$&#123;random.int(10)&#125;、$&#123;random.int[1024,65536]&#125;</span><br></pre></td></tr></table></figure>
 
 <ol start="2">
-<li>占位符获取之前配置的值，如果没有可以用:指定默认值</li>
+<li>占位符获取之前配置的值，如果没有，那么值默认是表达式，也可以用“:”指定默认值（如 ${person.hello:hello}）</li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">person.last-name=zhangsan$&#123;random.uuid&#125;</span><br><span class="line">person.age=$&#123;random.int&#125;</span><br><span class="line">person.boss=false</span><br><span class="line">person.birth=2017/12/12</span><br><span class="line">person.maps.k1=v1</span><br><span class="line">person.maps.k2=v4</span><br><span class="line">person.lists=a,b,c</span><br><span class="line">person.dog.name=$&#123;person.hello:hello&#125;_小狗</span><br><span class="line">person.dog.age=2</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">person.last-name=张三$&#123;random.uuid&#125;</span><br><span class="line">person.age=$&#123;random.int&#125;</span><br><span class="line">person.boss=false</span><br><span class="line">person.birth=2017/12/12</span><br><span class="line">person.maps.k1=v1</span><br><span class="line">person.maps.k2=v4</span><br><span class="line">person.lists=a,b,c</span><br><span class="line">#person.dog.name=$&#123;person.last-name&#125;_小狗</span><br><span class="line">#如果占位符的值没有，那么值默认是表达式，如$&#123;person.hello&#125;，那么输出$&#123;person.hello&#125;</span><br><span class="line"># 也可以设置默认值，如$&#123;person.hello:hello&#125;，那么输出hello</span><br><span class="line">person.dog.name=$&#123;person.hello:hello&#125;_小狗</span><br><span class="line">person.dog.age=2</span><br></pre></td></tr></table></figure>
 
-<h2 id="8、Profile"><a href="#8、Profile" class="headerlink" title="8、Profile"></a>8、Profile</h2><p>​    Profile是Spring对不同环境提供不同配置功能的支持，可以激活、指定参数等方式快速切换环境</p>
-<ol>
-<li><p>多Profile文件格式</p>
-<p>在主配置文件编写的时候，文件名可以是 application-{profile}.properties/yml；</p>
+<h2 id="8、Profile"><a href="#8、Profile" class="headerlink" title="8、Profile"></a>8、Profile</h2><p><strong>Profile是Spring对不同环境提供不同配置功能的支持，可以激活、指定参数等方式快速切换环境</strong></p>
+<h3 id="多Profile文件格式"><a href="#多Profile文件格式" class="headerlink" title="多Profile文件格式"></a>多Profile文件格式</h3><p>在主配置文件编写的时候，文件名可以是 application-{profile}.properties/yml；</p>
 <p>默认使用application.properties的配置；</p>
-</li>
-<li><p>yml支持多文档块方式</p>
-<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">8081</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  profiles:</span></span><br><span class="line"><span class="attr">    active:</span><span class="string">prod</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">8082</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  profiles:</span><span class="string">dev</span></span><br><span class="line"></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">8084</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  profiles:</span><span class="string">prod</span> <span class="bullet">--指定属于哪个环境</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>激活指定profile</p>
-<ol>
+<h3 id="yml支持多文档块方式"><a href="#yml支持多文档块方式" class="headerlink" title="yml支持多文档块方式"></a>yml支持多文档块方式</h3><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">8081</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  profiles:</span></span><br><span class="line"><span class="attr">    active:</span><span class="string">prod</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">8082</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  profiles:</span><span class="string">dev</span></span><br><span class="line"></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line"><span class="attr">  port:</span> <span class="number">8084</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  profiles:</span><span class="string">prod</span> <span class="bullet">--指定属于哪个环境</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="激活指定profile"><a href="#激活指定profile" class="headerlink" title="激活指定profile"></a>激活指定profile</h3><ol>
 <li><p>在配置文件中指定  spring.profiles.active=dev</p>
 </li>
 <li><p>命令行：</p>
+<ul>
+<li><p>打包后启动的时候</p>
+<p>java -jar hello.jar –spring.profiles.active=dev</p>
+</li>
+<li><p>直接在测试的时候，配置传入命令行参数</p>
 <p>–spring.profiles.active=dev</p>
+<p><img src="/images/SpringBootStudy/config_con1.png" alt="命令行"></p>
+</li>
+</ul>
 </li>
 <li><p>虚拟机参数：</p>
 <p>-Dspring.profiles.active=dev</p>
 </li>
 </ol>
-</li>
-</ol>
 <h2 id="9、配置文件加载位置"><a href="#9、配置文件加载位置" class="headerlink" title="9、配置文件加载位置"></a>9、配置文件加载位置</h2><p>​        SpringBoot启动会扫描application.properties或者application.yml文件作为springboot的配置文件。默认创建项目生成application.properties/yml位置在classpath目录下，也可以在以下<strong>4个地方创建，优先级自上而下由高到低</strong>，SpringBoot会从这四个位置<strong>全部加载主配置文件</strong>，各个配置文件成<strong>互补状态</strong>存在，<strong>高优先级的配置会覆盖低优先级的配置</strong>。</p>
-<p>　　 -file: ./config/</p>
-<p>　　 -file: ./</p>
-<p>　　-classpath: /config/</p>
-<p>　　-classpath:/</p>
-<p>​        ==还可以通过spring.config.location来改变默认的配置文件位置==</p>
-<p>​        项目打包好后，可以使用命令行参数的形式，启动项目的时候来指定配置文件的新位置；指定配置文件和默认加载的这些配置文件共同其作用形成互补配置。</p>
-<p>​        ==<strong>首先看有没有带profile，然后再看配置文件在jar包内还是外，带profile&gt;没带profile，jar包外&gt;jar包内；</strong>==</p>
-<p>​    <strong>有jar包外向jar包内进行寻找，优先加载待profile的配置文件，在加载不带profile的配置文件</strong></p>
+<p>　　 -file: ./config/        当前项目下的config文件夹</p>
+<p>　　 -file: ./        当前项目下</p>
+<p>　　-classpath: /config/    类路径下的config文件夹</p>
+<p>　　-classpath:/        类路径的根目录</p>
+<p>​        ==还可以通过spring.config.location来改变默认的配置文件位置（在配置文件中配置是没有用的，必须在打包后使用此命令）==</p>
+<p>​        使用示例：java -jar hello.jar –spring.config.location=D:/application.properties</p>
+<p>​        <strong>项目打包好后，可以使用命令行参数的形式，启动项目的时候来指定配置文件的新位置；指定配置文件和默认加载的这些配置文件共同其作用形成互补配置。</strong></p>
+<h2 id="10、外部配置加载顺序"><a href="#10、外部配置加载顺序" class="headerlink" title="10、外部配置加载顺序"></a>10、外部配置加载顺序</h2><p><strong>SpringBoot也可以从以下位置加载配置：优先级从高到底，高优先级的配置覆盖低优先级的配置，所有的配置会形成互补配置</strong></p>
+<ol>
+<li><strong>命令行参数</strong><ul>
+<li>java -jar hello.jar –server.port=8087 –server.context-path=/abc</li>
+<li>多个配置用空格分开；–配置项=值</li>
+</ul>
+</li>
+<li>来自java:comp/env的JNDI属性</li>
+<li>Java系统属性（System.getProperties()）</li>
+<li>操作系统环境变量</li>
+<li>RandomValuePropertySource配置的random.*属性值</li>
+<li><strong>jar包外部的application-{profile}.properties或application.yml(带spring.profile)配置文件</strong><ul>
+<li>直接将配置文件放在和jar包同级的目录下</li>
+<li>直接使用 java -jar 启动就OK</li>
+</ul>
+</li>
+<li><strong>jar包内部的application-{profile}.properties或application.yml(带spring.profile)配置文件</strong></li>
+<li><strong>jar包外部的application.properties或application.yml(不带spring.profile)配置文件</strong></li>
+<li><strong>jar包内部的application.properties或application.yml(不带spring.profile)配置文件</strong></li>
+<li>@Configuration注解类上的@PropertySource</li>
+<li>通过SpringApplication.setDefaultProperties指定的默认属性</li>
+</ol>
+<p>​        <strong>首先看有没有带profile，然后再看配置文件在jar包内还是外，带profile&gt;没带profile，jar包外&gt;jar包内；</strong></p>
+<p>​    <strong>==有jar包外向jar包内进行寻找，优先加载带profile的配置文件，再加载不带profile的配置文件==</strong></p>
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2020年07月19日 00:03</p>
+        <p>最后更新： 2020年07月25日 15:22</p>
         <p>原始链接： <a class="post-url" href="/2019/12/14/SpringBoot学习-配置文件/" title="SpringBoot学习-配置文件">http://ligangit.com/2019/12/14/SpringBoot学习-配置文件/</a></p>
         <footer>
             <a href="http://ligangit.com">
@@ -433,19 +461,19 @@
 
     <aside class="post-toc-pos post-toc-top" id="post-toc">
         <nav class="post-toc-wrap">
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#SpringBoot学习-配置文件和注解"><span class="post-toc-text">SpringBoot学习-配置文件和注解</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1、配置文件"><span class="post-toc-text">1、配置文件</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2、YAML语法"><span class="post-toc-text">2、YAML语法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1、基本语法"><span class="post-toc-text">1、基本语法</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2、值的写法"><span class="post-toc-text">2、值的写法</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3、配置文件值注入"><span class="post-toc-text">3、配置文件值注入</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#4、-ConfigurationProperties和-Vlaue获取值比较"><span class="post-toc-text">4、@ConfigurationProperties和@Vlaue获取值比较</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#5、配置文件注入值数据校验"><span class="post-toc-text">5、配置文件注入值数据校验</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#6、-PropertySource和-ImportResource"><span class="post-toc-text">6、@PropertySource和@ImportResource</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#7、配置文件中的占位符"><span class="post-toc-text">7、配置文件中的占位符</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#8、Profile"><span class="post-toc-text">8、Profile</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#9、配置文件加载位置"><span class="post-toc-text">9、配置文件加载位置</span></a></li></ol></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#SpringBoot学习-配置文件和注解"><span class="post-toc-text">SpringBoot学习-配置文件和注解</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1、配置文件"><span class="post-toc-text">1、配置文件</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2、YAML语法"><span class="post-toc-text">2、YAML语法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1、基本语法"><span class="post-toc-text">1、基本语法</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2、值的写法"><span class="post-toc-text">2、值的写法</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3、配置文件值注入"><span class="post-toc-text">3、配置文件值注入</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#4、-ConfigurationProperties和-Vlaue获取值比较"><span class="post-toc-text">4、@ConfigurationProperties和@Vlaue获取值比较</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#5、配置文件注入值数据校验"><span class="post-toc-text">5、配置文件注入值数据校验</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#6、-PropertySource和-ImportResource"><span class="post-toc-text">6、@PropertySource和@ImportResource</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#PropertySource"><span class="post-toc-text">@PropertySource</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#ImportResource"><span class="post-toc-text">@ImportResource</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#7、配置文件中的占位符"><span class="post-toc-text">7、配置文件中的占位符</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#8、Profile"><span class="post-toc-text">8、Profile</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#多Profile文件格式"><span class="post-toc-text">多Profile文件格式</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#yml支持多文档块方式"><span class="post-toc-text">yml支持多文档块方式</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#激活指定profile"><span class="post-toc-text">激活指定profile</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#9、配置文件加载位置"><span class="post-toc-text">9、配置文件加载位置</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#10、外部配置加载顺序"><span class="post-toc-text">10、外部配置加载顺序</span></a></li></ol></li></ol>
         </nav>
     </aside>
     
 
 <nav id="article-nav">
   
-    <a href="/2020/01/18/SprongBoot学习-自动配置原理/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2020/01/18/SpringBoot学习-自动配置原理/" id="article-nav-newer" class="article-nav-link-wrap">
 
       <span class="article-nav-title">
         <i class="fa fa-hand-o-left" aria-hidden="true"></i>
         
-          SprongBoot学习-自动配置原理
+          SpringBoot学习-自动配置原理
         
       </span>
     </a>
@@ -517,7 +545,7 @@
             <a class="category-link" href="/categories/Redis/">Redis</a><a class="category-link" href="/categories/Spring/">Spring</a><a class="category-link" href="/categories/SpringBoot/">SpringBoot</a><a class="category-link" href="/categories/java/">java</a><a class="category-link" href="/categories/sql/">sql</a><a class="category-link" href="/categories/前端/">前端</a><a class="category-link" href="/categories/博客/">博客</a><a class="category-link" href="/categories/服务器软件/">服务器软件</a><a class="category-link" href="/categories/研发工具/">研发工具</a>
         </div>
         <div id="sidebar-menu-box-tags">
-            <a href="/tags/Echarts/" style="font-size: 10px;">Echarts</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/JS/" style="font-size: 11.25px;">JS</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/NoSQL/" style="font-size: 18.75px;">NoSQL</a> <a href="/tags/Redis/" style="font-size: 17.5px;">Redis</a> <a href="/tags/Spring/" style="font-size: 20px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 13.75px;">SpringBoot</a> <a href="/tags/SpringMVC/" style="font-size: 16.25px;">SpringMVC</a> <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/Util/" style="font-size: 10px;">Util</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/idea/" style="font-size: 13.75px;">idea</a> <a href="/tags/java/" style="font-size: 18.75px;">java</a> <a href="/tags/markdown/" style="font-size: 11.25px;">markdown</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mysql/" style="font-size: 13.75px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/oracle/" style="font-size: 12.5px;">oracle</a> <a href="/tags/sql/" style="font-size: 17.5px;">sql</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/web/" style="font-size: 12.5px;">web</a> <a href="/tags/前端/" style="font-size: 11.25px;">前端</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/服务器软件/" style="font-size: 11.25px;">服务器软件</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a> <a href="/tags/研发工具/" style="font-size: 15px;">研发工具</a> <a href="/tags/缓存/" style="font-size: 17.5px;">缓存</a> <a href="/tags/自动配置/" style="font-size: 10px;">自动配置</a>
+            <a href="/tags/Echarts/" style="font-size: 10px;">Echarts</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/JS/" style="font-size: 11px;">JS</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/NoSQL/" style="font-size: 19px;">NoSQL</a> <a href="/tags/Redis/" style="font-size: 18px;">Redis</a> <a href="/tags/Spring/" style="font-size: 20px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 14px;">SpringBoot</a> <a href="/tags/SpringMVC/" style="font-size: 16px;">SpringMVC</a> <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/Util/" style="font-size: 10px;">Util</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/idea/" style="font-size: 13px;">idea</a> <a href="/tags/java/" style="font-size: 18px;">java</a> <a href="/tags/markdown/" style="font-size: 11px;">markdown</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mysql/" style="font-size: 13px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/oracle/" style="font-size: 12px;">oracle</a> <a href="/tags/sql/" style="font-size: 17px;">sql</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/web/" style="font-size: 12px;">web</a> <a href="/tags/前端/" style="font-size: 11px;">前端</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/日志/" style="font-size: 10px;">日志</a> <a href="/tags/服务器软件/" style="font-size: 11px;">服务器软件</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a> <a href="/tags/研发工具/" style="font-size: 15px;">研发工具</a> <a href="/tags/缓存/" style="font-size: 18px;">缓存</a> <a href="/tags/自动配置/" style="font-size: 10px;">自动配置</a>
         </div>
     </div>
     <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
@@ -550,7 +578,7 @@
     <div class="mobile-header-tag-container">
         <span class="title">Tags</span>
         <div id="mobile-header-container-tags">
-            <a href="/tags/Echarts/" style="font-size: 10px;">Echarts</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/JS/" style="font-size: 11.25px;">JS</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/NoSQL/" style="font-size: 18.75px;">NoSQL</a> <a href="/tags/Redis/" style="font-size: 17.5px;">Redis</a> <a href="/tags/Spring/" style="font-size: 20px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 13.75px;">SpringBoot</a> <a href="/tags/SpringMVC/" style="font-size: 16.25px;">SpringMVC</a> <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/Util/" style="font-size: 10px;">Util</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/idea/" style="font-size: 13.75px;">idea</a> <a href="/tags/java/" style="font-size: 18.75px;">java</a> <a href="/tags/markdown/" style="font-size: 11.25px;">markdown</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mysql/" style="font-size: 13.75px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/oracle/" style="font-size: 12.5px;">oracle</a> <a href="/tags/sql/" style="font-size: 17.5px;">sql</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/web/" style="font-size: 12.5px;">web</a> <a href="/tags/前端/" style="font-size: 11.25px;">前端</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/服务器软件/" style="font-size: 11.25px;">服务器软件</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a> <a href="/tags/研发工具/" style="font-size: 15px;">研发工具</a> <a href="/tags/缓存/" style="font-size: 17.5px;">缓存</a> <a href="/tags/自动配置/" style="font-size: 10px;">自动配置</a>
+            <a href="/tags/Echarts/" style="font-size: 10px;">Echarts</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/JS/" style="font-size: 11px;">JS</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/NoSQL/" style="font-size: 19px;">NoSQL</a> <a href="/tags/Redis/" style="font-size: 18px;">Redis</a> <a href="/tags/Spring/" style="font-size: 20px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 14px;">SpringBoot</a> <a href="/tags/SpringMVC/" style="font-size: 16px;">SpringMVC</a> <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/Util/" style="font-size: 10px;">Util</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/idea/" style="font-size: 13px;">idea</a> <a href="/tags/java/" style="font-size: 18px;">java</a> <a href="/tags/markdown/" style="font-size: 11px;">markdown</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mysql/" style="font-size: 13px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/oracle/" style="font-size: 12px;">oracle</a> <a href="/tags/sql/" style="font-size: 17px;">sql</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/web/" style="font-size: 12px;">web</a> <a href="/tags/前端/" style="font-size: 11px;">前端</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/日志/" style="font-size: 10px;">日志</a> <a href="/tags/服务器软件/" style="font-size: 11px;">服务器软件</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a> <a href="/tags/研发工具/" style="font-size: 15px;">研发工具</a> <a href="/tags/缓存/" style="font-size: 18px;">缓存</a> <a href="/tags/自动配置/" style="font-size: 10px;">自动配置</a>
         </div>
     </div>
 </div>
