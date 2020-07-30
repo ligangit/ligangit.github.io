@@ -8,17 +8,21 @@
   
     <meta name="keywords" content="LiGang,Li Gang,ligangit">
   
-  <meta name="description" content="在码农的世界里面默默的挣扎着">
+  <meta name="description" content="SpringBoot学习-静态资源映射映射规则 设置和静态资源有关的参数，如缓存时间等 12345@ConfigurationProperties(    prefix = &quot;spring.resources&quot;,    ignoreUnknownFields = false)public class ResourceProperties &amp;#123;  静态资源映射 123456789101112">
+<meta name="keywords" content="SpringBoot,webjars">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SpringBoot学习-静态资源映射">
 <meta property="og:url" content="http://ligangit.com/2020/07/27/SpringBoot学习-静态资源映射/index.html">
 <meta property="og:site_name" content="ligangit">
-<meta property="og:description" content="在码农的世界里面默默的挣扎着">
+<meta property="og:description" content="SpringBoot学习-静态资源映射映射规则 设置和静态资源有关的参数，如缓存时间等 12345@ConfigurationProperties(    prefix = &quot;spring.resources&quot;,    ignoreUnknownFields = false)public class ResourceProperties &amp;#123;  静态资源映射 123456789101112">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-07-27T03:26:15.873Z">
+<meta property="og:image" content="http://ligangit.com/images/SpringBootStudy/static_webjars.png">
+<meta property="og:image" content="http://ligangit.com/images/SpringBootStudy/static_dir.png">
+<meta property="og:updated_time" content="2020-07-27T07:00:43.070Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringBoot学习-静态资源映射">
-<meta name="twitter:description" content="在码农的世界里面默默的挣扎着">
+<meta name="twitter:description" content="SpringBoot学习-静态资源映射映射规则 设置和静态资源有关的参数，如缓存时间等 12345@ConfigurationProperties(    prefix = &quot;spring.resources&quot;,    ignoreUnknownFields = false)public class ResourceProperties &amp;#123;  静态资源映射 123456789101112">
+<meta name="twitter:image" content="http://ligangit.com/images/SpringBootStudy/static_webjars.png">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -121,6 +125,13 @@
     <div class="post-title-bar">
       <ul>
           
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/SpringBoot/">SpringBoot</a>
+                  
+              </li>
+          
         <li>
           <i class="fa fa-calendar"></i>  2020-07-27
         </li>
@@ -138,10 +149,48 @@
     <div class="article-entry post-content" itemprop="articleBody">
       
             
-            
+            <h1 id="SpringBoot学习-静态资源映射"><a href="#SpringBoot学习-静态资源映射" class="headerlink" title="SpringBoot学习-静态资源映射"></a>SpringBoot学习-静态资源映射</h1><h2 id="映射规则"><a href="#映射规则" class="headerlink" title="映射规则"></a>映射规则</h2><ol>
+<li><p>设置和静态资源有关的参数，如缓存时间等</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ConfigurationProperties</span>(</span><br><span class="line">    prefix = <span class="string">"spring.resources"</span>,</span><br><span class="line">    ignoreUnknownFields = <span class="keyword">false</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ResourceProperties</span> </span>&#123;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>静态资源映射</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">      <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addResourceHandlers</span><span class="params">(ResourceHandlerRegistry registry)</span> </span>&#123;</span><br><span class="line">          <span class="keyword">if</span> (!<span class="keyword">this</span>.resourceProperties.isAddMappings()) &#123;</span><br><span class="line">              logger.debug(<span class="string">"Default resource handling disabled"</span>);</span><br><span class="line">          &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">              Duration cachePeriod = <span class="keyword">this</span>.resourceProperties.getCache().getPeriod();</span><br><span class="line">              CacheControl cacheControl = <span class="keyword">this</span>.resourceProperties.getCache().getCachecontrol().toHttpCacheControl();</span><br><span class="line">              <span class="keyword">if</span> (!registry.hasMappingForPattern(<span class="string">"/webjars/**"</span>)) &#123;</span><br><span class="line">                  <span class="keyword">this</span>.customizeResourceHandlerRegistration(registry.addResourceHandler(<span class="keyword">new</span> String[]&#123;<span class="string">"/webjars/**"</span>&#125;).addResourceLocations(<span class="keyword">new</span> String[]&#123;<span class="string">"classpath:/META-INF/resources/webjars/"</span>&#125;).setCachePeriod(<span class="keyword">this</span>.getSeconds(cachePeriod)).setCacheControl(cacheControl));</span><br><span class="line">              &#125;</span><br><span class="line">   </span><br><span class="line">              String staticPathPattern = <span class="keyword">this</span>.mvcProperties.getStaticPathPattern();</span><br><span class="line">              <span class="keyword">if</span> (!registry.hasMappingForPattern(staticPathPattern)) &#123;</span><br><span class="line">                  <span class="keyword">this</span>.customizeResourceHandlerRegistration(registry.addResourceHandler(<span class="keyword">new</span> String[]&#123;staticPathPattern&#125;).addResourceLocations(WebMvcAutoConfiguration.getResourceLocations(<span class="keyword">this</span>.resourceProperties.getStaticLocations())).setCachePeriod(<span class="keyword">this</span>.getSeconds(cachePeriod)).setCacheControl(cacheControl));</span><br><span class="line">              &#125;</span><br><span class="line">   </span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line"><span class="comment">//配置欢迎页映射</span></span><br><span class="line">      <span class="meta">@Bean</span></span><br><span class="line">      <span class="function"><span class="keyword">public</span> WelcomePageHandlerMapping <span class="title">welcomePageHandlerMapping</span><span class="params">(ApplicationContext applicationContext, FormattingConversionService mvcConversionService, ResourceUrlProvider mvcResourceUrlProvider)</span> </span>&#123;</span><br><span class="line">          WelcomePageHandlerMapping welcomePageHandlerMapping = <span class="keyword">new</span> WelcomePageHandlerMapping(<span class="keyword">new</span> TemplateAvailabilityProviders(applicationContext), applicationContext, <span class="keyword">this</span>.getWelcomePage(), <span class="keyword">this</span>.mvcProperties.getStaticPathPattern());</span><br><span class="line">          welcomePageHandlerMapping.setInterceptors(<span class="keyword">this</span>.getInterceptors(mvcConversionService, mvcResourceUrlProvider));</span><br><span class="line">          welcomePageHandlerMapping.setCorsConfigurations(<span class="keyword">this</span>.getCorsConfigurations());</span><br><span class="line">          <span class="keyword">return</span> welcomePageHandlerMapping;</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="映射方式"><a href="#映射方式" class="headerlink" title="映射方式"></a>映射方式</h2><h3 id="一、-webjars"><a href="#一、-webjars" class="headerlink" title="一、/webjars/**"></a>一、/webjars/**</h3><p><strong>所有/webjars/，都去classpath:/META-INF/resources/webjars/找资源</strong></p>
+<p>webjars：以jar包的方式引入静态资源</p>
+<p>官网： <a href="https://www.webjars.org/" target="_blank" rel="noopener">https://www.webjars.org/</a> </p>
+<p>示例：</p>
+<ol>
+<li><p>引入依赖：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--引入jquery-webjars--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.webjars<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jquery<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.5.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>静态资源目录结构</p>
+<p><img src="/images/SpringBootStudy/static_webjars.png" alt="webjars"></p>
+</li>
+<li><p>资源请求路径</p>
+<p>在访问的时候，只需要写webjars下面资源的名称即可</p>
+<p>请求路径：<a href="http://localhost:8080/webjars/jquery/3.5.1/jquery.js" target="_blank" rel="noopener">http://localhost:8080/webjars/jquery/3.5.1/jquery.js</a></p>
+</li>
+</ol>
+<h3 id="二、-访问当前项目的任何资源"><a href="#二、-访问当前项目的任何资源" class="headerlink" title="二、/**访问当前项目的任何资源"></a>二、/**访问当前项目的任何资源</h3><p><strong>/**访问当前项目的任何资源，都是在静态资源的文件夹找</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&quot;classpath:/META-INF/resources/&quot;, </span><br><span class="line">&quot;classpath:/resources/&quot;, </span><br><span class="line">&quot;classpath:/static/&quot;, </span><br><span class="line">&quot;classpath:/public/&quot;</span><br><span class="line">&quot;/&quot; 当前项目的根路径</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/SpringBootStudy/static_dir.png" alt="静态资源文件夹"></p>
+<p> <a href="http://localhost:8080/jquery4.js" target="_blank" rel="noopener">http://localhost:8080/jquery4.js</a>  去静态资源文件夹下找jquery4.js</p>
+<h3 id="三、index-html欢迎页"><a href="#三、index-html欢迎页" class="headerlink" title="三、index.html欢迎页"></a>三、index.html欢迎页</h3><p><strong>欢迎页：静态资源文件夹下的所有index.html;被/</strong>映射；**</p>
+<p> <a href="http://localhost:8080" target="_blank" rel="noopener">http://localhost:8080</a> 找index页面</p>
+<h3 id="四、-favicon-ico图标"><a href="#四、-favicon-ico图标" class="headerlink" title="四、**/favicon.ico图标"></a>四、**/favicon.ico图标</h3><p><strong>所有的/**favicon.ico 都是在静态资源文件下找</strong></p>
+<p>注意： </p>
+<ul>
+<li>Spring Boot2.2.x版本及之后版本中，将默认的favicon.ico移除，同时也不再提供application.properties中的属性配置：spring.mvc.favicon.enabled</li>
+<li>想设置图标只需要将图标文件 favicon.ico 放在静态资源文件夹下或者自己配置映射就可以了。</li>
+</ul>
+
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2020年07月27日 11:26</p>
+        <p>最后更新： 2020年07月27日 15:00</p>
         <p>原始链接： <a class="post-url" href="/2020/07/27/SpringBoot学习-静态资源映射/" title="SpringBoot学习-静态资源映射">http://ligangit.com/2020/07/27/SpringBoot学习-静态资源映射/</a></p>
         <footer>
             <a href="http://ligangit.com">
@@ -199,7 +248,7 @@
     <div class="post-share-list" id="share-list">
         <ul class="share-icons">
           <li>
-            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://ligangit.com/2020/07/27/SpringBoot学习-静态资源映射/&title=《SpringBoot学习-静态资源映射》 — ligangit&pic=http://ligangit.comimages/logo.png" data-title="微博">
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://ligangit.com/2020/07/27/SpringBoot学习-静态资源映射/&title=《SpringBoot学习-静态资源映射》 — ligangit&pic=images/springboot.jpg" data-title="微博">
               <i class="fa fa-weibo"></i>
             </a>
           </li>
@@ -243,6 +292,15 @@
         <ul class="article-footer-menu">
             
             
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/SpringBoot/" class="color1">SpringBoot</a>
+      
+    <a href="/tags/webjars/" class="color3">webjars</a>
+      
+  </li>
+
         </ul>
         
     </footer>
@@ -250,8 +308,24 @@
 </article>
 
 
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#SpringBoot学习-静态资源映射"><span class="post-toc-text">SpringBoot学习-静态资源映射</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#映射规则"><span class="post-toc-text">映射规则</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#映射方式"><span class="post-toc-text">映射方式</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#一、-webjars"><span class="post-toc-text">一、/webjars/**</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#二、-访问当前项目的任何资源"><span class="post-toc-text">二、/**访问当前项目的任何资源</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#三、index-html欢迎页"><span class="post-toc-text">三、index.html欢迎页</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#四、-favicon-ico图标"><span class="post-toc-text">四、**/favicon.ico图标</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+    
 
 <nav id="article-nav">
+  
+    <a href="/2020/07/27/SpringBoot学习-模板引引擎-thymeleaf/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          SpringBoot学习-模板引引擎_thymeleaf
+        
+      </span>
+    </a>
   
   
     <a href="/2020/07/25/SpringBoot学习-日志/" id="article-nav-older" class="article-nav-link-wrap">
@@ -320,7 +394,7 @@
             <a class="category-link" href="/categories/Redis/">Redis</a><a class="category-link" href="/categories/Spring/">Spring</a><a class="category-link" href="/categories/SpringBoot/">SpringBoot</a><a class="category-link" href="/categories/java/">java</a><a class="category-link" href="/categories/sql/">sql</a><a class="category-link" href="/categories/前端/">前端</a><a class="category-link" href="/categories/博客/">博客</a><a class="category-link" href="/categories/服务器软件/">服务器软件</a><a class="category-link" href="/categories/研发工具/">研发工具</a>
         </div>
         <div id="sidebar-menu-box-tags">
-            <a href="/tags/Echarts/" style="font-size: 10px;">Echarts</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/JS/" style="font-size: 11px;">JS</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/NoSQL/" style="font-size: 19px;">NoSQL</a> <a href="/tags/Redis/" style="font-size: 18px;">Redis</a> <a href="/tags/Spring/" style="font-size: 20px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 14px;">SpringBoot</a> <a href="/tags/SpringMVC/" style="font-size: 16px;">SpringMVC</a> <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/Util/" style="font-size: 10px;">Util</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/idea/" style="font-size: 13px;">idea</a> <a href="/tags/java/" style="font-size: 18px;">java</a> <a href="/tags/markdown/" style="font-size: 11px;">markdown</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mysql/" style="font-size: 13px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/oracle/" style="font-size: 12px;">oracle</a> <a href="/tags/sql/" style="font-size: 17px;">sql</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/web/" style="font-size: 12px;">web</a> <a href="/tags/前端/" style="font-size: 11px;">前端</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/日志/" style="font-size: 10px;">日志</a> <a href="/tags/服务器软件/" style="font-size: 11px;">服务器软件</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a> <a href="/tags/研发工具/" style="font-size: 15px;">研发工具</a> <a href="/tags/缓存/" style="font-size: 18px;">缓存</a> <a href="/tags/自动配置/" style="font-size: 10px;">自动配置</a>
+            <a href="/tags/Echarts/" style="font-size: 10px;">Echarts</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/JS/" style="font-size: 11px;">JS</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/NoSQL/" style="font-size: 18px;">NoSQL</a> <a href="/tags/Redis/" style="font-size: 17px;">Redis</a> <a href="/tags/Spring/" style="font-size: 20px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 19px;">SpringBoot</a> <a href="/tags/SpringMVC/" style="font-size: 15px;">SpringMVC</a> <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/Util/" style="font-size: 10px;">Util</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/idea/" style="font-size: 13px;">idea</a> <a href="/tags/java/" style="font-size: 17px;">java</a> <a href="/tags/markdown/" style="font-size: 11px;">markdown</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mysql/" style="font-size: 13px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/oracle/" style="font-size: 12px;">oracle</a> <a href="/tags/sql/" style="font-size: 16px;">sql</a> <a href="/tags/thymeleaf/" style="font-size: 10px;">thymeleaf</a> <a href="/tags/tomcat/" style="font-size: 11px;">tomcat</a> <a href="/tags/web/" style="font-size: 12px;">web</a> <a href="/tags/webjars/" style="font-size: 10px;">webjars</a> <a href="/tags/前端/" style="font-size: 11px;">前端</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/异常处理/" style="font-size: 11px;">异常处理</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/日志/" style="font-size: 10px;">日志</a> <a href="/tags/服务器软件/" style="font-size: 12px;">服务器软件</a> <a href="/tags/注解/" style="font-size: 11px;">注解</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a> <a href="/tags/研发工具/" style="font-size: 14px;">研发工具</a> <a href="/tags/缓存/" style="font-size: 17px;">缓存</a> <a href="/tags/自动配置/" style="font-size: 10px;">自动配置</a>
         </div>
     </div>
     <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
@@ -353,7 +427,7 @@
     <div class="mobile-header-tag-container">
         <span class="title">Tags</span>
         <div id="mobile-header-container-tags">
-            <a href="/tags/Echarts/" style="font-size: 10px;">Echarts</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/JS/" style="font-size: 11px;">JS</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/NoSQL/" style="font-size: 19px;">NoSQL</a> <a href="/tags/Redis/" style="font-size: 18px;">Redis</a> <a href="/tags/Spring/" style="font-size: 20px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 14px;">SpringBoot</a> <a href="/tags/SpringMVC/" style="font-size: 16px;">SpringMVC</a> <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/Util/" style="font-size: 10px;">Util</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/idea/" style="font-size: 13px;">idea</a> <a href="/tags/java/" style="font-size: 18px;">java</a> <a href="/tags/markdown/" style="font-size: 11px;">markdown</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mysql/" style="font-size: 13px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/oracle/" style="font-size: 12px;">oracle</a> <a href="/tags/sql/" style="font-size: 17px;">sql</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/web/" style="font-size: 12px;">web</a> <a href="/tags/前端/" style="font-size: 11px;">前端</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/日志/" style="font-size: 10px;">日志</a> <a href="/tags/服务器软件/" style="font-size: 11px;">服务器软件</a> <a href="/tags/注解/" style="font-size: 10px;">注解</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a> <a href="/tags/研发工具/" style="font-size: 15px;">研发工具</a> <a href="/tags/缓存/" style="font-size: 18px;">缓存</a> <a href="/tags/自动配置/" style="font-size: 10px;">自动配置</a>
+            <a href="/tags/Echarts/" style="font-size: 10px;">Echarts</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/JS/" style="font-size: 11px;">JS</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/NoSQL/" style="font-size: 18px;">NoSQL</a> <a href="/tags/Redis/" style="font-size: 17px;">Redis</a> <a href="/tags/Spring/" style="font-size: 20px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 19px;">SpringBoot</a> <a href="/tags/SpringMVC/" style="font-size: 15px;">SpringMVC</a> <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/Util/" style="font-size: 10px;">Util</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/idea/" style="font-size: 13px;">idea</a> <a href="/tags/java/" style="font-size: 17px;">java</a> <a href="/tags/markdown/" style="font-size: 11px;">markdown</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mysql/" style="font-size: 13px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/oracle/" style="font-size: 12px;">oracle</a> <a href="/tags/sql/" style="font-size: 16px;">sql</a> <a href="/tags/thymeleaf/" style="font-size: 10px;">thymeleaf</a> <a href="/tags/tomcat/" style="font-size: 11px;">tomcat</a> <a href="/tags/web/" style="font-size: 12px;">web</a> <a href="/tags/webjars/" style="font-size: 10px;">webjars</a> <a href="/tags/前端/" style="font-size: 11px;">前端</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/异常处理/" style="font-size: 11px;">异常处理</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/日志/" style="font-size: 10px;">日志</a> <a href="/tags/服务器软件/" style="font-size: 12px;">服务器软件</a> <a href="/tags/注解/" style="font-size: 11px;">注解</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a> <a href="/tags/研发工具/" style="font-size: 14px;">研发工具</a> <a href="/tags/缓存/" style="font-size: 17px;">缓存</a> <a href="/tags/自动配置/" style="font-size: 10px;">自动配置</a>
         </div>
     </div>
 </div>
