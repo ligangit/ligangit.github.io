@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>SpringBoot学习-整合RabbitMQ | ligangit</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="LiGang,Li Gang,ligangit">
+  
+  <meta name="description" content="SpringBoot学习-整合RabbitMQ简介在SpringBoot中，只需要引入对应的amqp启动器依赖即可，方便的使用RabbitTemplate发送消息，使用注解接收消息。 一般开发过程中： 生产者工程：  application.yml文件配置RabbitMQ相关信息； 在生产者工程中编写配置类，用于创建交换机和队列，并进行绑定； 注入RabbitTemplate对象，通过Rabbit">
+<meta name="keywords" content="RabbitMQ,SpringBoot">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringBoot学习-整合RabbitMQ">
+<meta property="og:url" content="http://ligangit.com/2020/08/22/SpringBoot学习-整合RabbitMQ/index.html">
+<meta property="og:site_name" content="ligangit">
+<meta property="og:description" content="SpringBoot学习-整合RabbitMQ简介在SpringBoot中，只需要引入对应的amqp启动器依赖即可，方便的使用RabbitTemplate发送消息，使用注解接收消息。 一般开发过程中： 生产者工程：  application.yml文件配置RabbitMQ相关信息； 在生产者工程中编写配置类，用于创建交换机和队列，并进行绑定； 注入RabbitTemplate对象，通过Rabbit">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://ligangit.com/images/RabbitMQ/result9.png">
+<meta property="og:image" content="http://ligangit.com/images/RabbitMQ/result10.png">
+<meta property="og:image" content="http://ligangit.com/images/RabbitMQ/result11.png">
+<meta property="og:updated_time" content="2020-08-22T04:47:33.771Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SpringBoot学习-整合RabbitMQ">
+<meta name="twitter:description" content="SpringBoot学习-整合RabbitMQ简介在SpringBoot中，只需要引入对应的amqp启动器依赖即可，方便的使用RabbitTemplate发送消息，使用注解接收消息。 一般开发过程中： 生产者工程：  application.yml文件配置RabbitMQ相关信息； 在生产者工程中编写配置类，用于创建交换机和队列，并进行绑定； 注入RabbitTemplate对象，通过Rabbit">
+<meta name="twitter:image" content="http://ligangit.com/images/RabbitMQ/result9.png">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">Li Gang&#39;s blog</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="/">
+                        <i class="fa fa-home"></i>
+                        <span>主页</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>归档</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>关于</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/logo.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        Li Gang&#39;s blog
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        在码农的世界里挣扎的人
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="Li Gang" target="_blank" href="//ligangit.com">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/ligangit">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="联系QQ"  href="/">
+                            <i class="fa fa-qq fa-2x"></i></a>
+                    
+                        <a title="微信"  href="/">
+                            <i class="fa fa-weixin fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-SpringBoot学习-整合RabbitMQ" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      SpringBoot学习-整合RabbitMQ
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/SpringBoot/">SpringBoot</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2020-08-22
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <h1 id="SpringBoot学习-整合RabbitMQ"><a href="#SpringBoot学习-整合RabbitMQ" class="headerlink" title="SpringBoot学习-整合RabbitMQ"></a>SpringBoot学习-整合RabbitMQ</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在SpringBoot中，只需要引入对应的amqp启动器依赖即可，方便的使用RabbitTemplate发送消息，使用注解接收消息。</p>
+<p>一般开发过程中：</p>
+<p><strong>生产者工程：</strong></p>
+<ol>
+<li>application.yml文件配置RabbitMQ相关信息；</li>
+<li>在生产者工程中编写配置类，用于创建交换机和队列，并进行绑定；</li>
+<li>注入RabbitTemplate对象，通过RabbitTemplate对象发送消息到交换机。</li>
+</ol>
+<p><strong>消费者工程：</strong></p>
+<ol>
+<li>application.yml文件配置RabbitMQ相关信息；</li>
+<li>创建消息处理类，用于接收队列中的消息并进行处理。</li>
+</ol>
+<h2 id="搭建生产者工程"><a href="#搭建生产者工程" class="headerlink" title="搭建生产者工程"></a>搭建生产者工程</h2><ol>
+<li><p>创建SpringBoot工程</p>
+</li>
+<li><p>引入依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--引入RabbitMQ依赖--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-amqp<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--使用SpringMVC进行测试--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编写配置文件</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#RabbitMQ配置</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  rabbitmq:</span></span><br><span class="line"><span class="attr">    host:</span> <span class="number">192.168</span><span class="number">.0</span><span class="number">.8</span></span><br><span class="line"><span class="attr">    port:</span> <span class="number">5672</span></span><br><span class="line"><span class="attr">    virtual-host:</span> <span class="string">/ligangit</span></span><br><span class="line"><span class="attr">    username:</span> <span class="string">ligangit</span></span><br><span class="line"><span class="attr">    password:</span> <span class="string">ligangit</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>绑定交换机和队列</p>
+<p>创建RabbitMQ队列与交换机绑定的配置类RabbitMQConfig</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * RabbitMQ配置类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RabbitMQConfig</span> </span>&#123;</span><br><span class="line">    <span class="comment">//交换机名称</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String ITEM_TOPIC_EXCHANGE = <span class="string">"item_topic_exchange"</span>;</span><br><span class="line">    <span class="comment">//队列名称</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String IMTE_QUEUE = <span class="string">"item_queue"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//声明交换机</span></span><br><span class="line">    <span class="meta">@Bean</span>(<span class="string">"itemTopicExchange"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Exchange <span class="title">topicExchange</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> ExchangeBuilder.topicExchange(ITEM_TOPIC_EXCHANGE).durable(<span class="keyword">true</span>).build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//声明队列</span></span><br><span class="line">    <span class="meta">@Bean</span>(<span class="string">"itemQueue"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Queue <span class="title">itemQueue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> QueueBuilder.durable(IMTE_QUEUE).build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//绑定队列和交换机</span></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Binding <span class="title">itemQueueExchange</span><span class="params">(@Qualifier(<span class="string">"itemQueue"</span>)</span> Queue queue, @<span class="title">Qualifier</span><span class="params">(<span class="string">"itemTopicExchange"</span>)</span> Exchange exchange) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> BindingBuilder.bind(queue).to(exchange).with(<span class="string">"item.#"</span>).noargs();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>消息发送Controller</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 发送消息的测试类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SendMsgController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//注入RabbitTemplate模板</span></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> RabbitTemplate rabbitTemplate;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 测试</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/sendmsg"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">sendMsg</span><span class="params">(@RequestParam String msg, @RequestParam String key)</span> </span>&#123;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 发送消息</span></span><br><span class="line"><span class="comment">         * 参数一：交换机名称</span></span><br><span class="line"><span class="comment">         * 参数二：路由key</span></span><br><span class="line"><span class="comment">         * 参数三：发送的消息</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        rabbitTemplate.convertAndSend(RabbitMQConfig.ITEM_TOPIC_EXCHANGE,key,msg);</span><br><span class="line">        <span class="comment">//返回信息</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">"发送消息成功"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<ol start="6">
+<li><p>测试</p>
+<p> <a href="http://localhost:8888/sendmsg?msg=helloSpringboot&amp;key=item.insert" target="_blank" rel="noopener">http://localhost:8888/sendmsg?msg=helloSpringboot&amp;key=item.insert</a> </p>
+</li>
+<li><p>结果</p>
+<p><img src="/images/RabbitMQ/result9.png" alt="访问"></p>
+<p><img src="/images/RabbitMQ/result10.png" alt="MQ中数据"></p>
+</li>
+</ol>
+<h2 id="搭建消费者工程"><a href="#搭建消费者工程" class="headerlink" title="搭建消费者工程"></a>搭建消费者工程</h2><ol>
+<li><p>创建SpringBoot工程</p>
+</li>
+<li><p>引入依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--引入RabbitMQ依赖--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-amqp<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--使用SpringMVC进行测试--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编写配置文件</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#RabbitMQ配置</span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  rabbitmq:</span></span><br><span class="line"><span class="attr">    host:</span> <span class="number">192.168</span><span class="number">.0</span><span class="number">.8</span></span><br><span class="line"><span class="attr">    port:</span> <span class="number">5672</span></span><br><span class="line"><span class="attr">    virtual-host:</span> <span class="string">/ligangit</span></span><br><span class="line"><span class="attr">    username:</span> <span class="string">ligangit</span></span><br><span class="line"><span class="attr">    password:</span> <span class="string">ligangit</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编写消息监听处理类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 消费者监听类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyListener</span> </span>&#123;</span><br><span class="line">    <span class="meta">@RabbitListener</span>(queues = <span class="string">"item_queue"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">msg</span><span class="params">(String msg)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"消费者消费消息了："</span>+msg);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>测试</p>
+<p> <a href="http://localhost:8888/sendmsg?msg=helloSpringbootConsumer&amp;key=item.insert" target="_blank" rel="noopener">http://localhost:8888/sendmsg?msg=helloSpringbootConsumer&amp;key=item.insert</a> </p>
+</li>
+<li><p>结果</p>
+<p><img src="/images/RabbitMQ/result11.png" alt="结果"></p>
+</li>
+</ol>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2020年08月22日 12:47</p>
+        <p>原始链接： <a class="post-url" href="/2020/08/22/SpringBoot学习-整合RabbitMQ/" title="SpringBoot学习-整合RabbitMQ">http://ligangit.com/2020/08/22/SpringBoot学习-整合RabbitMQ/</a></p>
+        <footer>
+            <a href="http://ligangit.com">
+                <img src="/images/logo.png" alt="Li Gang">
+                Li Gang
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://ligangit.com/2020/08/22/SpringBoot学习-整合RabbitMQ/&title=《SpringBoot学习-整合RabbitMQ》 — ligangit&pic=images/springboot.jpg" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://ligangit.com/2020/08/22/SpringBoot学习-整合RabbitMQ/&title=《SpringBoot学习-整合RabbitMQ》 — ligangit&source=在码农的世界里面默默的挣扎着" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://ligangit.com/2020/08/22/SpringBoot学习-整合RabbitMQ/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《SpringBoot学习-整合RabbitMQ》 — ligangit&url=http://ligangit.com/2020/08/22/SpringBoot学习-整合RabbitMQ/&via=http://ligangit.com" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://ligangit.com/2020/08/22/SpringBoot学习-整合RabbitMQ/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://ligangit.com/2020/08/22/SpringBoot学习-整合RabbitMQ/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/RabbitMQ/" class="color4">RabbitMQ</a>
+      
+    <a href="/tags/SpringBoot/" class="color1">SpringBoot</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#SpringBoot学习-整合RabbitMQ"><span class="post-toc-text">SpringBoot学习-整合RabbitMQ</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#简介"><span class="post-toc-text">简介</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#搭建生产者工程"><span class="post-toc-text">搭建生产者工程</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#搭建消费者工程"><span class="post-toc-text">搭建消费者工程</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+    <a href="/2020/08/22/RabbitMQ-过期时间TTL/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          RabbitMQ-过期时间TTL
+        
+      </span>
+    </a>
+  
+  
+    <a href="/2020/08/21/RabbitMQ-工作模式/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">RabbitMQ-工作模式</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2020 Li Gang<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "http://ligangit.com",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/RabbitMQ/">RabbitMQ</a><a class="category-link" href="/categories/Redis/">Redis</a><a class="category-link" href="/categories/Spring/">Spring</a><a class="category-link" href="/categories/SpringBoot/">SpringBoot</a><a class="category-link" href="/categories/java/">java</a><a class="category-link" href="/categories/sql/">sql</a><a class="category-link" href="/categories/前端/">前端</a><a class="category-link" href="/categories/博客/">博客</a><a class="category-link" href="/categories/服务器软件/">服务器软件</a><a class="category-link" href="/categories/研发工具/">研发工具</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/Echarts/" style="font-size: 10px;">Echarts</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/JS/" style="font-size: 10.91px;">JS</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/NoSQL/" style="font-size: 18.18px;">NoSQL</a> <a href="/tags/RabbitMQ/" style="font-size: 14.55px;">RabbitMQ</a> <a href="/tags/Redis/" style="font-size: 17.27px;">Redis</a> <a href="/tags/Spring/" style="font-size: 19.09px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringMVC/" style="font-size: 15.45px;">SpringMVC</a> <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/Util/" style="font-size: 10px;">Util</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/idea/" style="font-size: 12.73px;">idea</a> <a href="/tags/java/" style="font-size: 18.18px;">java</a> <a href="/tags/markdown/" style="font-size: 10.91px;">markdown</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mysql/" style="font-size: 12.73px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/oracle/" style="font-size: 11.82px;">oracle</a> <a href="/tags/sql/" style="font-size: 16.36px;">sql</a> <a href="/tags/thymeleaf/" style="font-size: 10px;">thymeleaf</a> <a href="/tags/tomcat/" style="font-size: 10.91px;">tomcat</a> <a href="/tags/web/" style="font-size: 11.82px;">web</a> <a href="/tags/webjars/" style="font-size: 10px;">webjars</a> <a href="/tags/中间件/" style="font-size: 13.64px;">中间件</a> <a href="/tags/前端/" style="font-size: 10.91px;">前端</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/异常处理/" style="font-size: 10.91px;">异常处理</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/日志/" style="font-size: 10px;">日志</a> <a href="/tags/服务器软件/" style="font-size: 11.82px;">服务器软件</a> <a href="/tags/注解/" style="font-size: 10.91px;">注解</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a> <a href="/tags/研发工具/" style="font-size: 14.55px;">研发工具</a> <a href="/tags/缓存/" style="font-size: 17.27px;">缓存</a> <a href="/tags/自动配置/" style="font-size: 10px;">自动配置</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="/">
+                    <i class="fa fa-home"></i><span>主页</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>归档</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>关于</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/Echarts/" style="font-size: 10px;">Echarts</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/JS/" style="font-size: 10.91px;">JS</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/NoSQL/" style="font-size: 18.18px;">NoSQL</a> <a href="/tags/RabbitMQ/" style="font-size: 14.55px;">RabbitMQ</a> <a href="/tags/Redis/" style="font-size: 17.27px;">Redis</a> <a href="/tags/Spring/" style="font-size: 19.09px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringMVC/" style="font-size: 15.45px;">SpringMVC</a> <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/Util/" style="font-size: 10px;">Util</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/idea/" style="font-size: 12.73px;">idea</a> <a href="/tags/java/" style="font-size: 18.18px;">java</a> <a href="/tags/markdown/" style="font-size: 10.91px;">markdown</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mysql/" style="font-size: 12.73px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/oracle/" style="font-size: 11.82px;">oracle</a> <a href="/tags/sql/" style="font-size: 16.36px;">sql</a> <a href="/tags/thymeleaf/" style="font-size: 10px;">thymeleaf</a> <a href="/tags/tomcat/" style="font-size: 10.91px;">tomcat</a> <a href="/tags/web/" style="font-size: 11.82px;">web</a> <a href="/tags/webjars/" style="font-size: 10px;">webjars</a> <a href="/tags/中间件/" style="font-size: 13.64px;">中间件</a> <a href="/tags/前端/" style="font-size: 10.91px;">前端</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/异常处理/" style="font-size: 10.91px;">异常处理</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/日志/" style="font-size: 10px;">日志</a> <a href="/tags/服务器软件/" style="font-size: 11.82px;">服务器软件</a> <a href="/tags/注解/" style="font-size: 10.91px;">注解</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a> <a href="/tags/研发工具/" style="font-size: 14.55px;">研发工具</a> <a href="/tags/缓存/" style="font-size: 17.27px;">缓存</a> <a href="/tags/自动配置/" style="font-size: 10px;">自动配置</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>
