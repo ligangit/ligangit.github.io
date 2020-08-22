@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>RabbitMQ-问题 | ligangit</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="LiGang,Li Gang,ligangit">
+  
+  <meta name="description" content="RabbitMQ-问题消息堆积消息堆积的影响 可能导致新消息无法进入队列 可能导致旧消息无法丢失 消息等待时间过长，超出了业务容忍范围  产生堆积的情况 生产者突然大量发布消息 消费者消费失败 消费者出现性能瓶颈 消费者挂掉  解决办法 排查消费者的消费性能瓶颈 增加消费者的多线程处理 部署增加多个消费者  消息已经堆积如何解决 看消费者是否产生了异常，先解决异常； 消息队列堆积，想办法把消息转移">
+<meta name="keywords" content="RabbitMQ,中间件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RabbitMQ-问题">
+<meta property="og:url" content="http://ligangit.com/2020/08/22/RabbitMQ-问题/index.html">
+<meta property="og:site_name" content="ligangit">
+<meta property="og:description" content="RabbitMQ-问题消息堆积消息堆积的影响 可能导致新消息无法进入队列 可能导致旧消息无法丢失 消息等待时间过长，超出了业务容忍范围  产生堆积的情况 生产者突然大量发布消息 消费者消费失败 消费者出现性能瓶颈 消费者挂掉  解决办法 排查消费者的消费性能瓶颈 增加消费者的多线程处理 部署增加多个消费者  消息已经堆积如何解决 看消费者是否产生了异常，先解决异常； 消息队列堆积，想办法把消息转移">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://ligangit.com/images/RabbitMQ/problem1.png">
+<meta property="og:image" content="http://ligangit.com/images/RabbitMQ/result_problem1.png">
+<meta property="og:image" content="http://ligangit.com/images/RabbitMQ/problem2.png">
+<meta property="og:image" content="http://ligangit.com/images/RabbitMQ/result_problem2.png">
+<meta property="og:updated_time" content="2020-08-22T12:06:51.417Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RabbitMQ-问题">
+<meta name="twitter:description" content="RabbitMQ-问题消息堆积消息堆积的影响 可能导致新消息无法进入队列 可能导致旧消息无法丢失 消息等待时间过长，超出了业务容忍范围  产生堆积的情况 生产者突然大量发布消息 消费者消费失败 消费者出现性能瓶颈 消费者挂掉  解决办法 排查消费者的消费性能瓶颈 增加消费者的多线程处理 部署增加多个消费者  消息已经堆积如何解决 看消费者是否产生了异常，先解决异常； 消息队列堆积，想办法把消息转移">
+<meta name="twitter:image" content="http://ligangit.com/images/RabbitMQ/problem1.png">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">Li Gang&#39;s blog</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="/">
+                        <i class="fa fa-home"></i>
+                        <span>主页</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>归档</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>关于</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/logo.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        Li Gang&#39;s blog
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        在码农的世界里挣扎的人
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="Li Gang" target="_blank" href="//ligangit.com">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/ligangit">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="联系QQ"  href="/">
+                            <i class="fa fa-qq fa-2x"></i></a>
+                    
+                        <a title="微信"  href="/">
+                            <i class="fa fa-weixin fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-RabbitMQ-问题" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      RabbitMQ-问题
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/RabbitMQ/">RabbitMQ</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2020-08-22
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <h1 id="RabbitMQ-问题"><a href="#RabbitMQ-问题" class="headerlink" title="RabbitMQ-问题"></a>RabbitMQ-问题</h1><h2 id="消息堆积"><a href="#消息堆积" class="headerlink" title="消息堆积"></a>消息堆积</h2><h3 id="消息堆积的影响"><a href="#消息堆积的影响" class="headerlink" title="消息堆积的影响"></a>消息堆积的影响</h3><ul>
+<li>可能导致新消息无法进入队列</li>
+<li>可能导致旧消息无法丢失</li>
+<li>消息等待时间过长，超出了业务容忍范围</li>
+</ul>
+<h3 id="产生堆积的情况"><a href="#产生堆积的情况" class="headerlink" title="产生堆积的情况"></a>产生堆积的情况</h3><ul>
+<li>生产者突然大量发布消息</li>
+<li>消费者消费失败</li>
+<li>消费者出现性能瓶颈</li>
+<li>消费者挂掉</li>
+</ul>
+<h3 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h3><ul>
+<li>排查消费者的消费性能瓶颈</li>
+<li>增加消费者的多线程处理</li>
+<li>部署增加多个消费者</li>
+</ul>
+<h3 id="消息已经堆积如何解决"><a href="#消息已经堆积如何解决" class="headerlink" title="消息已经堆积如何解决"></a>消息已经堆积如何解决</h3><ul>
+<li>看消费者是否产生了异常，先解决异常；</li>
+<li>消息队列堆积，想办法把消息转移到一个新的队列，增加服务器慢慢来消费这个消息即可</li>
+<li>生产环境的队列就可以恢复为可用状态</li>
+</ul>
+<h2 id="消息丢失"><a href="#消息丢失" class="headerlink" title="消息丢失"></a>消息丢失</h2><p>主要分为：消息在生产者丢失，消息在RabbitMQ丢失，消息在消费者丢失  </p>
+<h3 id="消息在生产者丢失"><a href="#消息在生产者丢失" class="headerlink" title="消息在生产者丢失"></a>消息在生产者丢失</h3><p>一般是网络不稳定的原因</p>
+<p><strong>解决方案：</strong></p>
+<p>采用RabbitMQ发送方消息确认机制，当消息成功被MQ接收到时，会给生产者发送一个确认消息，表示接收成功。RabbitMQ发送消息确认模式有以下三种：普通确认模式，批量确认模式，异步监听确认模式。Spring整合RabbitMQ后只使用了异步监听确认模式。</p>
+<p>如果没确认，可以重发。</p>
+<p><strong>说明：</strong>异步监听模式，可以实现边发送消息边进行确认，不影响主线程任务执行。</p>
+<h3 id="消息在RabbitMQ丢失"><a href="#消息在RabbitMQ丢失" class="headerlink" title="消息在RabbitMQ丢失"></a>消息在RabbitMQ丢失</h3><p>MQ服务器宕机或者重启才会出现这种情况</p>
+<p><strong>解决方案：</strong></p>
+<p>持久化交换机、队列、消息，确保MQ服务器重启时依然能从磁盘回复对应的交换机、队列和消息。Spring整合后默认开启交换机、队列、消息的持久化，所以不修改任何设置就可以保证消息不在RabbitMQ丢失。但是为了以防万一，还是可以声明下。</p>
+<h3 id="消息在消费者丢失"><a href="#消息在消费者丢失" class="headerlink" title="消息在消费者丢失"></a>消息在消费者丢失</h3><p>消费者消费消息的时候，如果设置为自动回复MQ，消费者端收到消息后会自动回复MQ服务器，MQ则会删除该条消息，如果消息已经在MQ被删除但是消费者的业务出现异常或者消费者服务器宕机，那么就会导致该消息没有处理成功从而导致该条消息丢失。</p>
+<p><strong>解决方案：</strong></p>
+<p>设置为手动回复MQ服务器，当消费者出现异常或者服务器宕机时，MQ服务器不会删除该消息，而是会把消息重发给绑定该队列的消费者，如果该队列只绑定了一个消费者，那么该消息会一直保存在MQ服务器，直到消费能被正常消费为止。本解决方案以一个队列绑定多个消费者为例来说明，一般在生产环境上也会让一个队列绑定多个消费者也就是工作队列模式来减轻压力，提高消息处理效率。</p>
+<p>MQ重发消息场景</p>
+<ol>
+<li>消费者未响应ACK，主动关闭频道或连接</li>
+<li>消费者未响应ACK</li>
+</ol>
+<h2 id="有序消费消息"><a href="#有序消费消息" class="headerlink" title="有序消费消息"></a>有序消费消息</h2><p><strong>场景一：</strong></p>
+<p>RabbitMQ采用work Queue模式，此时只会有一个Queue，但是会有多个消费者，同时多个消费者直接是竞争关系，此时就会出现MQ消息乱序的问题。</p>
+<p><img src="/images/RabbitMQ/problem1.png" alt="场景一"></p>
+<p><strong>解决方案：将3个消费者一个队列改为3个消费者3个队列</strong></p>
+<p>生产者根据商品id算出一个hash值然后再对我们的队列的个数取余，就可以让相同id的所有操作压在同一个队列，并且每一个队列都只有一个消费者，此时就不会出现乱序的情况。</p>
+<p><img src="/images/RabbitMQ/result_problem1.png" alt="场景二"></p>
+<p><strong>场景二：</strong></p>
+<p>当RabbitMQ采用简单队列模式的时候，如果消费者采用多线程的方式来加速消息的处理，此时也会出现消息乱序的问题。</p>
+<p><img src="/images/RabbitMQ/problem2.png" alt="场景二"></p>
+<p><strong>解决方案：增加一个内存队列，一个线程执行一个内存队列</strong></p>
+<p>消费者拉取消息，然后根据id算出一个hash值后，把同id的商品压到同一个内存队列，让同一个线程去处理，此时就保证了有序性。</p>
+<p><img src="/images/RabbitMQ/result_problem2.png" alt="场景二"></p>
+<h2 id="重复消费"><a href="#重复消费" class="headerlink" title="重复消费"></a>重复消费</h2><p>为防止消息在消费端丢失，会采用手动回复MQ的方式来解决，同时也引出了一个问题，消费者处理消息成功，手动回复MQ时由于网络不稳定，断开连接，导致MQ没有收到消费者回复的消息，那么该条消息还会保存在MQ消息队列，由于MQ的消息重发机制，会重新把该条消息发给和该队列绑定的消费者处理，这样就会导致消息重复消费。而有些操作是不允许重复消费的，比如下单，减库存，扣款等操作。</p>
+<p>MQ重发消息场景：</p>
+<ol>
+<li>消费者未响应ACK，主动关闭频道或连接</li>
+<li>消费者未响应ACK，消费者服务挂掉</li>
+</ol>
+<p><strong>解决方案：</strong></p>
+<p>如果消费者的业务是幕等操作（同一个操作执行多次，结果不变）就算重复消费也没问题，可以不做处理，如果不支持幂等操作，如：下单、减库存、扣款等，那么可以在消费者端每次消费成功后将该消息id保存到数据库，每次消费前查询该消息id，如果该条消息id已经存在，那么表示已经消费过就不再消费，否则就消费。本方案采用redis存储消息id，因为redis是单线程的，并且性能也非常好，提供了很多原子性的命令，本方案使用setnx命令存储消息id。</p>
+<p><strong>说明：</strong>setnx(key,value)：如果key不存在则插入成功返回1，如果key存在，则不进行任何操作，返回0.</p>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2020年08月22日 20:06</p>
+        <p>原始链接： <a class="post-url" href="/2020/08/22/RabbitMQ-问题/" title="RabbitMQ-问题">http://ligangit.com/2020/08/22/RabbitMQ-问题/</a></p>
+        <footer>
+            <a href="http://ligangit.com">
+                <img src="/images/logo.png" alt="Li Gang">
+                Li Gang
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://ligangit.com/2020/08/22/RabbitMQ-问题/&title=《RabbitMQ-问题》 — ligangit&pic=images/RabbitMQ.jpg" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://ligangit.com/2020/08/22/RabbitMQ-问题/&title=《RabbitMQ-问题》 — ligangit&source=在码农的世界里面默默的挣扎着" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://ligangit.com/2020/08/22/RabbitMQ-问题/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《RabbitMQ-问题》 — ligangit&url=http://ligangit.com/2020/08/22/RabbitMQ-问题/&via=http://ligangit.com" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://ligangit.com/2020/08/22/RabbitMQ-问题/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=http://ligangit.com/2020/08/22/RabbitMQ-问题/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/RabbitMQ/" class="color4">RabbitMQ</a>
+      
+    <a href="/tags/中间件/" class="color4">中间件</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#RabbitMQ-问题"><span class="post-toc-text">RabbitMQ-问题</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#消息堆积"><span class="post-toc-text">消息堆积</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#消息堆积的影响"><span class="post-toc-text">消息堆积的影响</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#产生堆积的情况"><span class="post-toc-text">产生堆积的情况</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#解决办法"><span class="post-toc-text">解决办法</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#消息已经堆积如何解决"><span class="post-toc-text">消息已经堆积如何解决</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#消息丢失"><span class="post-toc-text">消息丢失</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#消息在生产者丢失"><span class="post-toc-text">消息在生产者丢失</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#消息在RabbitMQ丢失"><span class="post-toc-text">消息在RabbitMQ丢失</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#消息在消费者丢失"><span class="post-toc-text">消息在消费者丢失</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#有序消费消息"><span class="post-toc-text">有序消费消息</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#重复消费"><span class="post-toc-text">重复消费</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+  
+    <a href="/2020/08/22/RabbitMQ-消息追踪/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">RabbitMQ-消息追踪</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2020 Li Gang<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "http://ligangit.com",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/RabbitMQ/">RabbitMQ</a><a class="category-link" href="/categories/Redis/">Redis</a><a class="category-link" href="/categories/Spring/">Spring</a><a class="category-link" href="/categories/SpringBoot/">SpringBoot</a><a class="category-link" href="/categories/java/">java</a><a class="category-link" href="/categories/sql/">sql</a><a class="category-link" href="/categories/前端/">前端</a><a class="category-link" href="/categories/博客/">博客</a><a class="category-link" href="/categories/服务器软件/">服务器软件</a><a class="category-link" href="/categories/研发工具/">研发工具</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/Echarts/" style="font-size: 10px;">Echarts</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/JS/" style="font-size: 10.91px;">JS</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/NoSQL/" style="font-size: 18.18px;">NoSQL</a> <a href="/tags/RabbitMQ/" style="font-size: 15.45px;">RabbitMQ</a> <a href="/tags/Redis/" style="font-size: 17.27px;">Redis</a> <a href="/tags/Spring/" style="font-size: 19.09px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringMVC/" style="font-size: 15.45px;">SpringMVC</a> <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/Util/" style="font-size: 10px;">Util</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/idea/" style="font-size: 12.73px;">idea</a> <a href="/tags/java/" style="font-size: 18.18px;">java</a> <a href="/tags/markdown/" style="font-size: 10.91px;">markdown</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mysql/" style="font-size: 12.73px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/oracle/" style="font-size: 11.82px;">oracle</a> <a href="/tags/sql/" style="font-size: 16.36px;">sql</a> <a href="/tags/thymeleaf/" style="font-size: 10px;">thymeleaf</a> <a href="/tags/tomcat/" style="font-size: 10.91px;">tomcat</a> <a href="/tags/web/" style="font-size: 11.82px;">web</a> <a href="/tags/webjars/" style="font-size: 10px;">webjars</a> <a href="/tags/中间件/" style="font-size: 14.55px;">中间件</a> <a href="/tags/前端/" style="font-size: 10.91px;">前端</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/异常处理/" style="font-size: 10.91px;">异常处理</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/日志/" style="font-size: 10px;">日志</a> <a href="/tags/服务器软件/" style="font-size: 11.82px;">服务器软件</a> <a href="/tags/注解/" style="font-size: 10.91px;">注解</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a> <a href="/tags/研发工具/" style="font-size: 13.64px;">研发工具</a> <a href="/tags/缓存/" style="font-size: 17.27px;">缓存</a> <a href="/tags/自动配置/" style="font-size: 10px;">自动配置</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="/">
+                    <i class="fa fa-home"></i><span>主页</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>归档</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>关于</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/Echarts/" style="font-size: 10px;">Echarts</a> <a href="/tags/Gradle/" style="font-size: 10px;">Gradle</a> <a href="/tags/JS/" style="font-size: 10.91px;">JS</a> <a href="/tags/MyBatis/" style="font-size: 10px;">MyBatis</a> <a href="/tags/NoSQL/" style="font-size: 18.18px;">NoSQL</a> <a href="/tags/RabbitMQ/" style="font-size: 15.45px;">RabbitMQ</a> <a href="/tags/Redis/" style="font-size: 17.27px;">Redis</a> <a href="/tags/Spring/" style="font-size: 19.09px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a> <a href="/tags/SpringMVC/" style="font-size: 15.45px;">SpringMVC</a> <a href="/tags/Typoras/" style="font-size: 10px;">Typoras</a> <a href="/tags/Util/" style="font-size: 10px;">Util</a> <a href="/tags/bug/" style="font-size: 10px;">bug</a> <a href="/tags/hibernate/" style="font-size: 10px;">hibernate</a> <a href="/tags/idea/" style="font-size: 12.73px;">idea</a> <a href="/tags/java/" style="font-size: 18.18px;">java</a> <a href="/tags/markdown/" style="font-size: 10.91px;">markdown</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mysql/" style="font-size: 12.73px;">mysql</a> <a href="/tags/nginx/" style="font-size: 10px;">nginx</a> <a href="/tags/object/" style="font-size: 10px;">object</a> <a href="/tags/oracle/" style="font-size: 11.82px;">oracle</a> <a href="/tags/sql/" style="font-size: 16.36px;">sql</a> <a href="/tags/thymeleaf/" style="font-size: 10px;">thymeleaf</a> <a href="/tags/tomcat/" style="font-size: 10.91px;">tomcat</a> <a href="/tags/web/" style="font-size: 11.82px;">web</a> <a href="/tags/webjars/" style="font-size: 10px;">webjars</a> <a href="/tags/中间件/" style="font-size: 14.55px;">中间件</a> <a href="/tags/前端/" style="font-size: 10.91px;">前端</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/存储过程/" style="font-size: 10px;">存储过程</a> <a href="/tags/定时任务/" style="font-size: 10px;">定时任务</a> <a href="/tags/异常处理/" style="font-size: 10.91px;">异常处理</a> <a href="/tags/操作系统/" style="font-size: 10px;">操作系统</a> <a href="/tags/数据处理/" style="font-size: 10px;">数据处理</a> <a href="/tags/日志/" style="font-size: 10px;">日志</a> <a href="/tags/服务器软件/" style="font-size: 11.82px;">服务器软件</a> <a href="/tags/注解/" style="font-size: 10.91px;">注解</a> <a href="/tags/游标/" style="font-size: 10px;">游标</a> <a href="/tags/研发工具/" style="font-size: 13.64px;">研发工具</a> <a href="/tags/缓存/" style="font-size: 17.27px;">缓存</a> <a href="/tags/自动配置/" style="font-size: 10px;">自动配置</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>
